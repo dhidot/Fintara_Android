@@ -2,6 +2,6 @@
     <string name="app_name">Fintara</string>
     <string-array name="jenis_kelamin">
         <item>PEREMPUAN</item>
-        <item>LAKI-LAKI</item>
+        <item>LAKI_LAKI</item>
     </string-array>
 </resources>

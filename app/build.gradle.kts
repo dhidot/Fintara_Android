@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -60,5 +63,14 @@ dependencies {
 
     // svg
     implementation("com.caverock:androidsvg:1.4")
+
+    // serializedName
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    // SnackBar
+    implementation("com.google.android.material:material:1.9.0")
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
 }

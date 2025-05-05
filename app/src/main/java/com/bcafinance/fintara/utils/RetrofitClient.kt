@@ -1,4 +1,4 @@
-import com.bcafinance.fintara.data.network.ApiService
+import com.bcafinance.fintara.config.network.ApiService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

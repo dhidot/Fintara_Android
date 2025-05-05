@@ -1,16 +1,14 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="476dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="157dp"
         android:layout_marginEnd="14dp"
@@ -19,26 +17,7 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Nama" />
-
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/input_field"
-            android:fontFamily="@font/poppins_medium"
-            android:hint="Name"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:paddingVertical="12dp" />
-
+        <!-- Email Field -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +28,6 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/etName"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/input_field"
@@ -60,6 +38,7 @@
             android:padding="10dp"
             android:paddingVertical="12dp" />
 
+        <!-- Password Field -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +49,6 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerJenisKelamin"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/input_field"
@@ -81,33 +59,24 @@
             android:padding="10dp"
             android:paddingVertical="12dp" />
 
-        <Spinner
-            android:id="@+id/spinnerJenisKelamin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/etPassword"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/poppins_medium"
-            android:minHeight="48dp"
-            android:paddingVertical="12dp" />
-
+        <!-- Button Login -->
         <FrameLayout
-            android:id="@+id/btnRegisterContainer"
+            android:id="@+id/btnLoginContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
 
             <Button
-                android:id="@+id/btnRegister"
+                android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_button"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Register"
+                android:text="Login"
                 android:textSize="17sp" />
 
             <ProgressBar
-                android:id="@+id/progressRegister"
+                android:id="@+id/progressLogin"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
