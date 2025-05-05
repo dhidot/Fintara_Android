@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fintara</string>
+    <string-array name="jenis_kelamin">
+        <item>PEREMPUAN</item>
+        <item>LAKI-LAKI</item>
+    </string-array>
+</resources>
