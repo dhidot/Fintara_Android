@@ -11,8 +11,8 @@ import retrofit2.http.POST
 
 interface ApiService {
     @POST("api/v1/auth/register/customer")
-    suspend fun registerCustomer(@Body request: RegisterRequest): Response<RegisterCustomerResponse>
+    suspend fun registerUser(@Body request: RegisterRequest): Response<RegisterCustomerResponse>
 
-    @POST("api/v1/auth/login-customer") // Ganti dengan endpoint login yang sesuai
-    fun loginUser(@Body loginRequest: LoginRequest): Call<LoginResponse>
+    @POST("api/v1/auth/login-customer")
+    suspend fun loginUser(@Body loginRequest: LoginRequest): Response<LoginResponse>
 }

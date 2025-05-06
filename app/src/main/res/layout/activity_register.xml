@@ -6,13 +6,13 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="476dp"
+        android:layout_height="574dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="157dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="98dp"
         android:background="@drawable/rectangle"
@@ -49,7 +49,6 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/etName"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/input_field"
@@ -70,7 +69,6 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerJenisKelamin"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/input_field"
@@ -81,11 +79,16 @@
             android:padding="10dp"
             android:paddingVertical="12dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Jenis Kelamin" />
+
         <Spinner
             android:id="@+id/spinnerJenisKelamin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/etPassword"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/poppins_medium"
             android:minHeight="48dp"
@@ -111,10 +114,20 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:visibility="gone"
-                android:indeterminate="true" />
+                android:indeterminate="true"
+                android:visibility="gone" />
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/tvLoginLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="Already have an account? Login here"
+            android:textColor="@android:color/holo_blue_dark" />
     </LinearLayout>
 
 </RelativeLayout>

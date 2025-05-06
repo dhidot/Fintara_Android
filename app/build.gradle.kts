@@ -73,4 +73,12 @@ dependencies {
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
+    // splash screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.0")
+
+
 }

@@ -1,9 +1,14 @@
 package com.bcafinance.fintara.data.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bcafinance.fintara.data.model.LoginRequest
-import com.bcafinance.fintara.data.repository.UserRepository
+import com.bcafinance.fintara.data.repository.AuthRepository
+import com.bcafinance.fintara.utils.parseErrorMessage
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class LoginViewModel : ViewModel() {
 
@@ -12,17 +17,26 @@ class LoginViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String>()
     val token = MutableLiveData<String>()
 
-    private val userRepository = UserRepository()
+    private val authRepository = AuthRepository()
 
     fun loginUser(request: LoginRequest) {
         isLoading.value = true
-        userRepository.login(request, { message, jwtToken ->
+        Log.d("LoginViewModel", "Login request: $request")
+        viewModelScope.launch {
+            val result = authRepository.login(request)
             isLoading.value = false
-            successMessage.value = message
-            token.value = jwtToken // Menyimpan token ke LiveData
-        }, { error ->
-            isLoading.value = false
-            errorMessage.value = error
-        })
+
+            result.fold(
+                onSuccess = { (message, jwtToken) ->
+                    Log.d("LoginViewModel", "Login success, message: $message, token: $jwtToken")
+                    successMessage.value = message
+                    token.value = jwtToken // Menyimpan token ke LiveData
+                },
+                onFailure = { error ->
+                    Log.e("LoginViewModel", "Login failed, error: ${error.localizedMessage}")
+                    errorMessage.value = parseErrorMessage(error.localizedMessage)  // Gunakan helper function
+                }
+            )
+        }
     }
 }

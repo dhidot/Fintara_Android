@@ -4,31 +4,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.MutableLiveData
 import com.bcafinance.fintara.data.model.RegisterRequest
-import com.bcafinance.fintara.utils.parseApiError
+import com.bcafinance.fintara.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
 
-    val isLoading = MutableLiveData(false)
+    val isLoading = MutableLiveData<Boolean>()
     val successMessage = MutableLiveData<String>()
     val errorMessage = MutableLiveData<String>()
 
     fun registerUser(request: RegisterRequest) {
+        isLoading.value = true
         viewModelScope.launch {
-            isLoading.value = true
-            try {
-                val response = RetrofitClient.apiService.registerCustomer(request)
-                if (response.isSuccessful && response.body() != null) {
-                    successMessage.value = response.body()?.message ?: "Registrasi berhasil"
-                } else {
-                    val error = response.errorBody().parseApiError<Any>()
-                    errorMessage.value = error?.getFormattedMessages() ?: "Terjadi kesalahan"
+            repository.register(
+                request = request,
+                onSuccess = { message ->
+                    isLoading.value = false
+                    successMessage.value = message
+                },
+                onError = { error ->
+                    isLoading.value = false
+                    // Pastikan error message berformat string yang bisa diproses
+                    errorMessage.value = error // Error bisa berupa JSON atau string biasa
                 }
-            } catch (e: Exception) {
-                errorMessage.value = "Unexpected error: ${e.message}"
-            } finally {
-                isLoading.value = false
-            }
+            )
         }
     }
 }
