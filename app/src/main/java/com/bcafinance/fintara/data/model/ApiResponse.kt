@@ -3,7 +3,7 @@ package com.bcafinance.fintara.data.model
 data class ApiResponse<T>(
     val timestamp: String?,
     val status: Int,
-    val message: Any, // Bisa String atau List<String>
+    val message: Any?, // Bisa String atau List<String>
     val data: T?
 ) {
     fun getFormattedMessages(): String {

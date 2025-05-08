@@ -11,10 +11,11 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.bcafinance.fintara.data.model.LoginRequest
+import com.bcafinance.fintara.data.model.dto.LoginRequest
 import com.bcafinance.fintara.data.viewModel.LoginViewModel
 import com.bcafinance.fintara.databinding.ActivityLoginBinding
 import com.bcafinance.fintara.ui.dashboard.DashboardActivity
+import com.bcafinance.fintara.ui.firstTimeUpdate.FirstTimeUpdateActivity
 import com.bcafinance.fintara.ui.register.RegisterActivity
 import com.bcafinance.fintara.utils.showSnackbar
 import com.bcafinance.fintara.utils.SessionManager
@@ -59,30 +60,52 @@ class LoginActivity : AppCompatActivity() {
             binding.btnLogin.isEnabled = !it
         }
 
-        viewModel.successMessage.observe(this) {
-            showSnackbar(it, true)
-            viewModel.token.observe(this) { token ->
-                // Simpan token di SharedPreferences atau lainnya
-                Log.d("LoginActivity", "Token: $token")
+        viewModel.successMessage.observe(this) { message ->
+            showSnackbar(message, true)
+
+            val token = viewModel.token.value
+            val isFirstLogin = viewModel.firstLogin.value ?: false
+            val userName = viewModel.userName.value ?: "Nama Pengguna"
+
+            Log.d("LoginActivity", "Login success, token: $token, firstLogin: $isFirstLogin")
+
+            if (!token.isNullOrBlank()) {
+                sessionManager.saveToken(token)
+                sessionManager.saveUserName(userName)
+
+                val intent = if (isFirstLogin) {
+                    Intent(this, FirstTimeUpdateActivity::class.java)
+                } else {
+                    Intent(this, DashboardActivity::class.java)
+                }
+
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            } else {
+                showSnackbar("Token kosong, login gagal", false)
             }
         }
+
 
         viewModel.errorMessage.observe(this, Observer { message ->
             showSnackbar(message, false)  // Menampilkan pesan error yang diproses
         })
 
-        viewModel.token.observe(this) { token ->
-            // Simpan token
-            sessionManager.saveToken(token)
+        viewModel.loginResult.observe(this) { result ->
+            showSnackbar(result.message, true)
 
-            // Sementara hardcode nama user
-            sessionManager.saveUserName("Nama Pengguna") // Ganti jika backend mengirim nama
+            sessionManager.saveToken(result.token)
 
-            // Arahkan ke DashboardActivity
-            val intent = Intent(this, DashboardActivity::class.java)
+            val intent = if (result.firstLogin) {
+                Intent(this, FirstTimeUpdateActivity::class.java)
+            } else {
+                Intent(this, DashboardActivity::class.java)
+            }
+
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            finish()
         }
-
     }
 }

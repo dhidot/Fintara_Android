@@ -1,90 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/homeScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:fillViewport="true">
+    android:padding="16dp">
 
     <LinearLayout
-        android:id="@+id/linearContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <!-- Card 1: Promo -->
-        <androidx.cardview.widget.CardView
+        <!-- 1. Header -->
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Halo, Selamat Datang di Fintara!"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <!-- 2. Banner Promo (placeholder image) -->
+        <ImageView
+            android:id="@+id/imgBanner"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery"
+            android:background="@drawable/bg_rounded_blue"
+            android:contentDescription="Promo Banner"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 3. Simulasi Pinjaman -->
+        <TextView
+            android:text="Simulasi Pinjaman"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp">
+            android:hint="Masukkan jumlah pinjaman"
+            android:inputType="number"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerTenor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnSimulate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Simulasikan" />
+
+        <Button
+            android:id="@+id/btnAjukanPromo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ajukan Sekarang"
+            android:layout_marginTop="12dp" />
+
+        <!-- Hasil simulasi (nanti bisa disembunyikan jika belum ditekan) -->
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estimasi cicilan: Rp0/bulan"
+            android:textStyle="italic"
+            android:layout_marginTop="8dp"
+            android:visibility="gone" />
+
+        <!-- 4. Jenis Produk -->
+        <TextView
+            android:text="Pilih Jenis Pinjaman"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="3">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:background="@drawable/bg_card_rounded"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:contentDescription="Multiguna" />
 
                 <TextView
-                    android:text="Promo Spesial Bunga 0%"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    />
-
-                <TextView
-                    android:text="Ajukan pinjaman sekarang dan nikmati bunga 0% selama 3 bulan!"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    />
-
-                <Button
-                    android:id="@+id/btnAjukanPromo"
+                    android:text="Multiguna"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ajukan Sekarang"
-                    android:layout_marginTop="12dp" />
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Card 2: Produk lainnya -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:background="@drawable/bg_card_rounded"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:contentDescription="Kendaraan" />
 
                 <TextView
-                    android:text="Pembiayaan Kendaraan"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
+                    android:text="Kendaraan"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    />
-
-                <TextView
-                    android:text="Dapatkan pembiayaan kendaraan baru dengan proses cepat dan bunga ringan."
-                    android:layout_marginTop="4dp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    />
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:background="@drawable/bg_card_rounded"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:contentDescription="Pendidikan" />
+
+                <TextView
+                    android:text="Pendidikan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 5. CTA -->
+        <Button
+            android:id="@+id/btnAjukanSekarang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajukan Sekarang"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/primary" />
 
     </LinearLayout>
 </ScrollView>

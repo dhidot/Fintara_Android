@@ -1,11 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
-        android:title="Home" />
+        android:title="@string/home"
+        android:icon="@drawable/home_icon"
+        />
     <item
         android:id="@+id/menu_ajukan"
-        android:title="Ajukan" />
+        android:title="@string/ajukan"
+        android:icon="@drawable/loan_icon"
+        />
+    <item
+        android:id="@+id/menu_history"
+        android:title="@string/history"
+        android:icon="@drawable/history_icon"
+        />
     <item
         android:id="@+id/menu_akun"
-        android:title="Akun" />
+        android:title="@string/akun"
+        android:icon="@drawable/user_icon"
+        />
 </menu>

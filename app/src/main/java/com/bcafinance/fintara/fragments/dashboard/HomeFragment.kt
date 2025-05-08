@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.fragments
+package com.bcafinance.fintara.fragments.dashboard
 
 import androidx.fragment.app.Fragment
 import com.bcafinance.fintara.R
@@ -9,7 +9,6 @@ import com.bcafinance.fintara.databinding.FragmentHomeBinding
 import com.bcafinance.fintara.ui.login.LoginActivity
 import com.bcafinance.fintara.ui.pengajuan.SimulasiActivity
 import com.bcafinance.fintara.utils.SessionManager
-import com.bcafinance.fintara.utils.showSnackbar
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 

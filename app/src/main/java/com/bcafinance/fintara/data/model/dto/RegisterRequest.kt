@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.data.model
+package com.bcafinance.fintara.data.model.dto
 import com.google.gson.annotations.SerializedName
 
 data class RegisterRequest(

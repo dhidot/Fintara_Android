@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bcafinance.fintara.R
 import com.bcafinance.fintara.databinding.ActivityDashboardBinding
-import com.bcafinance.fintara.fragments.AkunFragment
-import com.bcafinance.fintara.fragments.HomeFragment
-import com.bcafinance.fintara.fragments.AjukanFragment
+import com.bcafinance.fintara.fragments.dashboard.AkunFragment
+import com.bcafinance.fintara.fragments.dashboard.HomeFragment
+import com.bcafinance.fintara.fragments.dashboard.AjukanFragment
+import com.bcafinance.fintara.fragments.dashboard.HistoryFragment
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -18,27 +19,34 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set default fragment
-        replaceFragment(HomeFragment())
+        // Set default fragment to HomeFragment
+        loadFragment(HomeFragment())
 
-        val destination = intent.getStringExtra("navigate_to")
-        if (destination == "ajukan") {
-            binding.bottomNavigation.selectedItemId = R.id.menu_ajukan
+        // Check if navigation to a specific fragment is requested
+        intent.getStringExtra("navigate_to")?.let {
+            if (it == "ajukan") {
+                binding.bottomNavigation.selectedItemId = R.id.menu_ajukan
+            }
         }
 
+        // Handle bottom navigation item selection
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.menu_home -> replaceFragment(HomeFragment())
-                R.id.menu_ajukan -> replaceFragment(AjukanFragment())
-                R.id.menu_akun -> replaceFragment(AkunFragment())
+            val fragment: Fragment = when (item.itemId) {
+                R.id.menu_home -> HomeFragment()
+                R.id.menu_ajukan -> AjukanFragment()
+                R.id.menu_akun -> AkunFragment()
+                R.id.menu_history -> HistoryFragment()
+                else -> HomeFragment()  // Default fallback
             }
+            loadFragment(fragment)
             true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
     }
 }
+

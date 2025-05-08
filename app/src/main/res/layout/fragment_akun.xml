@@ -1,53 +1,188 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutAkun"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
-    <!-- Layout saat belum login -->
-    <LinearLayout
-        android:id="@+id/layoutBelumLogin"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutAkun"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:padding="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Layout saat belum login -->
+        <LinearLayout
+            android:id="@+id/layoutBelumLogin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Anda belum login"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
-            android:id="@+id/btnLoginNow"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anda belum login"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/btnLoginNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login Sekarang" />
+        </LinearLayout>
+
+        <!-- Layout saat sudah login -->
+        <LinearLayout
+            android:id="@+id/layoutSudahLogin"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Login Sekarang" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/layoutBelumLogin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Layout saat sudah login -->
-    <LinearLayout
-        android:id="@+id/layoutSudahLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/tvNamaUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Halo, User"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp" />
+                />
 
-        <TextView
-            android:id="@+id/tvNamaUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Halo, User"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Email" />
 
-        <Button
-            android:id="@+id/btnLengkapiProfil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lengkapi Profil"
-            android:layout_marginTop="16dp" />
-    </LinearLayout>
-</LinearLayout>
+            <!-- Card plafond -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/userPlafondCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvPlafond"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Plafond: "
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/tvPlafondType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipe: "
+                        android:textSize="14sp"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card berisi daftar menu -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardMenuList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDetailAkun"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Detail Akun"
+                        android:textSize="16sp"
+                        android:padding="16dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:textColor="@android:color/black"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#DDDDDD" />
+
+                    <TextView
+                        android:id="@+id/tvUbahPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ubah Password"
+                        android:textSize="16sp"
+                        android:padding="16dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:textColor="@android:color/black"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#DDDDDD" />
+
+                    <TextView
+                        android:id="@+id/tvTanyaFintara"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tanya Fintara"
+                        android:textSize="16sp"
+                        android:padding="16dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:textColor="@android:color/black"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/danger_button"
+                android:text="Logout"
+                android:layout_marginTop="32dp"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressBarLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:layout_marginTop="32dp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

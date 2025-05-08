@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- Style untuk Label -->
+    <style name="LabelStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <!-- Style untuk Value -->
+    <style name="ValueStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
+</resources>

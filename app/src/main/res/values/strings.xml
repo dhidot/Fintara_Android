@@ -1,5 +1,26 @@
 <resources>
     <string name="app_name">Fintara</string>
+    <string name="nama">Nama</string>
+    <string name="email">Email</string>
+    <string name="jenis_kelamin">Jenis Kelamin</string>
+    <string name="tanggal_lahir">Tanggal Lahir</string>
+    <string name="alamat">Alamat</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="nik">NIK</string>
+    <string name="nama_ibu_kandung">Nama Ibu Kandung</string>
+    <string name="pekerjaan">Pekerjaan</string>
+    <string name="gaji">Gaji</string>
+    <string name="no_rekening">No Rekening</string>
+    <string name="status_rumah">Status Rumah</string>
+    <string name="tipe_plafond">Tipe Plafond</string>
+    <string name="plafond_maksimal">Plafond Maksimal</string>
+    <string name="bunga">Bunga</string>
+    <string name="tenor">Tenor</string>
+    <string name="data_pengguna">Data Pengguna</string>
+    <string name="home">Home</string>
+    <string name="ajukan">Ajukan</string>
+    <string name="akun">Akun</string>
+    <string name="history">History</string>
     <string-array name="jenis_kelamin">
         <item>PEREMPUAN</item>
         <item>LAKI_LAKI</item>

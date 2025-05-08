@@ -1,7 +1,5 @@
-package com.bcafinance.fintara.fragments
+package com.bcafinance.fintara.fragments.dashboard
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import com.bcafinance.fintara.R
 

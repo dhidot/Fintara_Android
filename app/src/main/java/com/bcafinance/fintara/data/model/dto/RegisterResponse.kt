@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.data.model
+package com.bcafinance.fintara.data.model.dto
 
 data class RegisterCustomerResponse(
     val timestamp: String,

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <!-- Bagian Atas: Tombol Kembali dan Judul -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kembali" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/data_pengguna"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_medium" />
+    </LinearLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:fontFamily="@font/poppins_black">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="start">
+
+            <!-- Nama -->
+            <TextView
+                android:id="@+id/tvNamaLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nama"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvNama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Email -->
+            <TextView
+                android:id="@+id/tvEmailLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Jenis Kelamin -->
+            <TextView
+                android:id="@+id/tvJenisKelaminLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/jenis_kelamin"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvJenisKelamin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Tanggal Lahir -->
+            <TextView
+                android:id="@+id/tvTtlLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tanggal_lahir"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvTtl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Alamat -->
+            <TextView
+                android:id="@+id/tvAlamatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alamat"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvAlamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Nomor Telepon -->
+            <TextView
+                android:id="@+id/tvPhoneLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nomor_telepon"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- NIK -->
+            <TextView
+                android:id="@+id/tvNIKLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nik"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvNIK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Nama Ibu Kandung -->
+            <TextView
+                android:id="@+id/tvNamaIbuLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nama_ibu_kandung"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvNamaIbu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Pekerjaan -->
+            <TextView
+                android:id="@+id/tvPekerjaanLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pekerjaan"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvPekerjaan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Gaji -->
+            <TextView
+                android:id="@+id/tvGajiLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gaji"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvGaji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- No Rekening -->
+            <TextView
+                android:id="@+id/tvRekeningLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_rekening"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvRekening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Status Rumah -->
+            <TextView
+                android:id="@+id/tvStatusRumahLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/status_rumah"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvStatusRumah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Plafond Type -->
+            <TextView
+                android:id="@+id/tvPlafondTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tipe_plafond"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvPlafondType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Plafond Max -->
+            <TextView
+                android:id="@+id/tvPlafondMaxLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plafond_maksimal"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvPlafondMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Bunga -->
+            <TextView
+                android:id="@+id/tvBungaLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bunga"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvBunga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <!-- Tenor -->
+            <TextView
+                android:id="@+id/tvTenorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tenor"
+                style="@style/LabelStyle" />
+
+            <TextView
+                android:id="@+id/tvTenor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ValueStyle" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnLengkapiProfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lengkapi Profil"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
+

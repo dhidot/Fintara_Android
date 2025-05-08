@@ -82,7 +82,7 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_button"
+                android:background="@drawable/primary_button"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Login"
                 android:textSize="17sp" />

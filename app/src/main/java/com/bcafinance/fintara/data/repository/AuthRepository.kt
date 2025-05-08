@@ -1,23 +1,15 @@
 package com.bcafinance.fintara.data.repository
 
-import RetrofitClient.apiService
 import android.util.Log
-import com.bcafinance.fintara.data.model.LoginRequest
-import com.bcafinance.fintara.data.model.LoginResponse
-import com.bcafinance.fintara.data.model.RegisterCustomerResponse
-import com.bcafinance.fintara.data.model.RegisterRequest
+import com.bcafinance.fintara.data.model.dto.LoginRequest
+import com.bcafinance.fintara.data.model.dto.LoginResponse
+import com.bcafinance.fintara.data.model.dto.RegisterRequest
 import com.bcafinance.fintara.utils.parseApiError
-import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 class AuthRepository {
 
-    val apiService = RetrofitClient.apiService
+    val apiService = RetrofitClient.authApiService
 
     // Fungsi register dengan coroutine
     suspend fun register(
@@ -40,7 +32,7 @@ class AuthRepository {
     }
 
 
-    suspend fun login(request: LoginRequest): Result<Pair<String, String>> {
+    suspend fun login(request: LoginRequest): Result<Triple<String, String, Boolean>> {
         return try {
             Log.d("UserRepository", "Sending login request: $request")
             val response = apiService.loginUser(request)
@@ -48,10 +40,14 @@ class AuthRepository {
 
             if (response.isSuccessful) {
                 val loginResponse = response.body()
-                val token = loginResponse?.data?.data?.jwt?.token ?: ""
+                val token = loginResponse?.data?.jwt?.token ?: ""
                 val message = loginResponse?.message ?: "Login successful"
-                Log.d("UserRepository", "Login successful, token: $token")
-                Result.success(Pair(message, token))
+                val firstLogin = loginResponse?.data?.firstLogin ?: false
+                val userName = loginResponse?.data?.jwt?.username ?: "Unknown"
+
+                Log.d("UserRepository", "Login successful, token: $token, firstLogin: $firstLogin")
+                // Return message, token, and firstLogin status
+                Result.success(Triple(message, token, firstLogin))
             } else {
                 val errorMessage = parseErrorBody(response)
                 Log.e("UserRepository", "Login failed, error: $errorMessage")
@@ -59,6 +55,15 @@ class AuthRepository {
             }
         } catch (e: Exception) {
             Log.e("UserRepository", "Exception during login: ${e.localizedMessage}", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun logout(token: String): Result<String> {
+        return try {
+            val response = apiService.logout("Bearer $token")
+            Result.success(response.data ?: "Logout berhasil")
+        } catch (e: Exception) {
             Result.failure(e)
         }
     }

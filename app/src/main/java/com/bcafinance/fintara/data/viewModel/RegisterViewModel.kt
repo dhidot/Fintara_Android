@@ -3,7 +3,7 @@ package com.bcafinance.fintara.data.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.MutableLiveData
-import com.bcafinance.fintara.data.model.RegisterRequest
+import com.bcafinance.fintara.data.model.dto.RegisterRequest
 import com.bcafinance.fintara.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 
