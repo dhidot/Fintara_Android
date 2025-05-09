@@ -16,27 +16,11 @@ import retrofit2.http.Part
 
 interface CustomerApiService {
     @GET("api/v1/customer/me")
-    suspend fun getMyProfile(@Header("Authorization") token: String): ApiResponse<UserWithCustomerResponse>
+    suspend fun getMyProfile(): ApiResponse<UserWithCustomerResponse>
 
-    @Multipart
-    @PUT("api/v1/profilecustomer/update")
-    suspend fun submitFirstLoginDataWithFile(
-        @Header("Authorization") token: String, // <-- tambahkan ini!
-        @Part("textData") textData: RequestBody,
-        @Part ktp: MultipartBody.Part,   // Pastikan parameter ini ada
-        @Part selfie: MultipartBody.Part
+    @PUT("api/v1/profilecustomer/first-time_update")
+    suspend fun updateFirstTimeProfile(
+        @Body request: FirstTimeUpdateRequest
     ): ApiResponse<String>
-
-    @PUT("api/v1/profilecustomer/update")
-    suspend fun submitFirstLoginData(
-        @Header("Authorization") token: String,
-        @Body data: FirstTimeUpdateRequest
-    ): ApiResponse<String>
-
-    @Multipart
-    @POST("/api/v1/cloudinary/upload")
-    suspend fun uploadPhotos(
-        @Part ktpPhoto: MultipartBody.Part,
-        @Part selfiePhoto: MultipartBody.Part
-    ): Response<Map<String, String>>
 }
+

@@ -48,4 +48,19 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    fun loginWithGoogle(idToken: String) {
+        viewModelScope.launch {
+            try {
+                isLoading.value = true
+                val response = authRepository.loginWithGoogle(idToken)
+                // Lanjutkan proses seperti login biasa (save token, navigasi, dll)
+            } catch (e: Exception) {
+                errorMessage.value = "Login Google gagal: ${e.message}"
+            } finally {
+                isLoading.value = false
+            }
+        }
+    }
+
+
 }

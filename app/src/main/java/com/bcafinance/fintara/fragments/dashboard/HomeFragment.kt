@@ -8,7 +8,7 @@ import android.view.View
 import com.bcafinance.fintara.databinding.FragmentHomeBinding
 import com.bcafinance.fintara.ui.login.LoginActivity
 import com.bcafinance.fintara.ui.pengajuan.SimulasiActivity
-import com.bcafinance.fintara.utils.SessionManager
+import com.bcafinance.fintara.config.network.SessionManager
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 

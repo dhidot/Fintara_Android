@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124749850521",
+    "project_id": "fintara-001",
+    "storage_bucket": "fintara-001.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124749850521:android:ad026ff940d6e1778ed508",
+        "android_client_info": {
+          "package_name": "com.bcafinance.fintara"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_3WLkluukL5TCIBRMGdXlx3laFFM-oVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

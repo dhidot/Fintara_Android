@@ -7,7 +7,6 @@ data class UserWithCustomerResponse(
     val name: String,
     val email: String,
     val role: String,
-    val jenisKelamin: String,
     val customerDetails: CustomerDetails?
 )
 

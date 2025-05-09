@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.bcafinance.fintara.MainActivity
 import com.bcafinance.fintara.R
 import com.bcafinance.fintara.data.repository.CustomerRepository
@@ -16,7 +17,9 @@ import com.bcafinance.fintara.ui.customer.DetailAkunActivity
 import com.bcafinance.fintara.ui.factory.CustomerViewModelFactory
 import com.bcafinance.fintara.ui.login.LoginActivity
 import com.bcafinance.fintara.ui.plafond.PlafondActivity
-import com.bcafinance.fintara.utils.SessionManager
+import com.bcafinance.fintara.config.network.SessionManager
+import com.bcafinance.fintara.ui.document.DokumenPribadiActivity
+import com.bcafinance.fintara.ui.factory.LogoutViewModelFactory
 import com.bcafinance.fintara.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -25,9 +28,9 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
     private var _binding: FragmentAkunBinding? = null
     private val binding get() = _binding!!
     private lateinit var sessionManager: SessionManager
-    private val logoutViewModel: LogoutViewModel by viewModels()
+    private lateinit var logoutViewModel: LogoutViewModel
     private val customerViewModel: CustomerViewModel by viewModels {
-        CustomerViewModelFactory(CustomerRepository(RetrofitClient.customerService))
+        CustomerViewModelFactory(CustomerRepository(RetrofitClient.customerApiService))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,18 +55,51 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
 
         val token = sessionManager.getToken()
         if (!token.isNullOrBlank()) {
-            customerViewModel.fetchProfile(token)
+            val shimmer = binding.shimmerPlafond
+            val content = binding.plafondContent
+
+            // Menambahkan shimmer untuk Nama dan Email
+            val shimmerNama = binding.shimmerNama
+            val shimmerEmail = binding.shimmerEmail
+            val contentNama = binding.tvNamaUser
+            val contentEmail = binding.tvEmail
+
+            shimmer.visibility = View.VISIBLE
+            shimmer.startShimmer()
+            content.visibility = View.GONE
+
+            // Menampilkan shimmer untuk Nama dan Email
+            shimmerNama.visibility = View.VISIBLE
+            shimmerEmail.visibility = View.VISIBLE
+            shimmerNama.startShimmer()
+            shimmerEmail.startShimmer()
+
+            // Menyembunyikan konten asli sebelum data dimuat
+            contentNama.visibility = View.GONE
+            contentEmail.visibility = View.GONE
+
+            customerViewModel.fetchProfile()
 
             customerViewModel.profile.observe(viewLifecycleOwner) { profile ->
-                tvNamaUser.text = "Halo, ${profile?.name}"
-                tvEmail.text = "Email: ${profile?.email}"
+                // Update Nama dan Email
+                contentNama.text = "Halo, ${profile?.name}"
+                contentEmail.text = "Email: ${profile?.email}"
+
+                // Matikan shimmer dan tampilkan konten
+                shimmerNama.stopShimmer()
+                shimmerEmail.stopShimmer()
+                shimmerNama.visibility = View.GONE
+                shimmerEmail.visibility = View.GONE
+
+                // Tampilkan Nama dan Email
+                contentNama.visibility = View.VISIBLE
+                contentEmail.visibility = View.VISIBLE
 
                 val plafond = profile?.customerDetails?.plafond
                 if (plafond != null) {
-                    tvPlafond.text = "Plafond: Rp${plafond?.maxAmount}"
-                    tvPlafondType.text = "Tipe: ${plafond?.name}"
+                    binding.tvPlafond.text = "Plafond: Rp${plafond.maxAmount}"
+                    binding.tvPlafondType.text = "Tipe: ${plafond.name}"
 
-                    // Set the color of the card based on the plafond type
                     val plafondCard = binding.userPlafondCard
                     when (plafond.name) {
                         "Bronze" -> plafondCard.setBackgroundResource(R.drawable.card_bronze)
@@ -73,20 +109,23 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
                         else -> plafondCard.setBackgroundResource(R.drawable.card_default)
                     }
 
-                    // Add onClickListener here
                     plafondCard.setOnClickListener {
-                        Log.d("AkunFragment", "Plafond card clicked")
                         val intent = Intent(requireContext(), PlafondActivity::class.java)
                         startActivity(intent)
                     }
+
+                    // Matikan shimmer dan tampilkan konten plafond
+                    shimmer.stopShimmer()
+                    shimmer.visibility = View.GONE
+                    content.visibility = View.VISIBLE
                 }
             }
-
-            customerViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+        }
+        customerViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
                 requireActivity().showSnackbar(errorMessage, isSuccess = false)
             }
         }
-    }
+
 
 
     private fun showLoggedOutUI() = with(binding) {
@@ -99,8 +138,12 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
             startActivity(Intent(requireContext(), LoginActivity::class.java))
         }
 
-        tvDetailAkun.setOnClickListener {
+        itemDetailAkun.setOnClickListener {
             startActivity(Intent(requireContext(), DetailAkunActivity::class.java))
+        }
+
+        itemDokumenPribadi.setOnClickListener {
+            startActivity(Intent(requireContext(), DokumenPribadiActivity::class.java))
         }
 
         btnLogout.setOnClickListener {
@@ -122,23 +165,19 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
         binding.progressBarLogout.visibility = View.VISIBLE
         binding.btnLogout.visibility = View.GONE
 
-        sessionManager.getToken()?.let { token ->
-            logoutViewModel.logout(
-                token,
-                onSuccess = { message ->
-                    sessionManager.clearSession()
-                    requireActivity().showSnackbar(message, isSuccess = true)
-                    goToHome()
-                },
-                onError = { errorMessage ->
-                    requireActivity().showSnackbar(errorMessage, isSuccess = false)
-                    showLogoutButtonAgain()
-                }
-            )
-        } ?: run {
-            requireActivity().showSnackbar("Token tidak ditemukan", isSuccess = false)
-            showLogoutButtonAgain()
-        }
+        val sessionManager = SessionManager(requireContext())  // Inisialisasi dengan konteks
+
+        logoutViewModel.logout(
+            onSuccess = { message ->
+                sessionManager.clearSession() // Hapus session setelah logout berhasil
+                requireActivity().showSnackbar(message, isSuccess = true)
+                goToHome()
+            },
+            onError = { errorMessage ->
+                requireActivity().showSnackbar(errorMessage, isSuccess = false)
+                showLogoutButtonAgain() // Tampilkan kembali tombol logout jika gagal
+            }
+        )
     }
 
     private fun showLogoutButtonAgain() = with(binding) {

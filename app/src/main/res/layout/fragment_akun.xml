@@ -1,188 +1,397 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutAkun"
+    <!-- 🔼 Toolbar tetap di atas -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="0dp">
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:title="Akun Saya"
+        android:titleTextColor="@android:color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <!-- Layout saat belum login -->
-        <LinearLayout
-            android:id="@+id/layoutBelumLogin"
+    <!-- 🔽 Konten scrollable -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutAkun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:padding="0dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Anda belum login"
-                android:textSize="18sp"
-                android:layout_marginBottom="16dp" />
-
-            <Button
-                android:id="@+id/btnLoginNow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login Sekarang" />
-        </LinearLayout>
-
-        <!-- Layout saat sudah login -->
-        <LinearLayout
-            android:id="@+id/layoutSudahLogin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/layoutBelumLogin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <TextView
-                android:id="@+id/tvNamaUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Halo, User"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp" />
-                />
-
-            <TextView
-                android:id="@+id/tvEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="Email" />
-
-            <!-- Card plafond -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/userPlafondCard"
+            <!-- 🟡 semua isi kamu sebelumnya tetap di sini -->
+            <!-- Layout saat belum login -->
+            <LinearLayout
+                android:id="@+id/layoutBelumLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tvPlafond"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Plafond: "
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF" />
-
-                    <TextView
-                        android:id="@+id/tvPlafondType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tipe: "
-                        android:textSize="14sp"
-                        android:textColor="#FFFFFF" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Card berisi daftar menu -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardMenuList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvDetailAkun"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Detail Akun"
-                        android:textSize="16sp"
-                        android:padding="16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:textColor="@android:color/black"
-                        android:clickable="true"
-                        android:focusable="true" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#DDDDDD" />
-
-                    <TextView
-                        android:id="@+id/tvUbahPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Ubah Password"
-                        android:textSize="16sp"
-                        android:padding="16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:textColor="@android:color/black"
-                        android:clickable="true"
-                        android:focusable="true" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#DDDDDD" />
-
-                    <TextView
-                        android:id="@+id/tvTanyaFintara"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tanya Fintara"
-                        android:textSize="16sp"
-                        android:padding="16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:textColor="@android:color/black"
-                        android:clickable="true"
-                        android:focusable="true" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/danger_button"
-                android:text="Logout"
-                android:layout_marginTop="32dp"
-                android:visibility="gone" />
-
-            <ProgressBar
-                android:id="@+id/progressBarLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:visibility="gone"
-                android:indeterminate="true"
-                android:layout_marginTop="32dp" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Anda belum login"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="16dp" />
+
+                <Button
+                    android:id="@+id/btnLoginNow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Login Sekarang" />
+            </LinearLayout>
+
+            <!-- Layout saat sudah login -->
+            <LinearLayout
+                android:id="@+id/layoutSudahLogin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/layoutBelumLogin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+
+                <!-- Card utama -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginTop="0dp"
+                    app:cardCornerRadius="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- 🔄 Shimmer Nama -->
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmerNama"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:visibility="visible"
+                            app:shimmer_auto_start="true"
+                            app:shimmer_duration="1000">
+
+                            <View
+                                android:layout_width="160dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/bg_placeholder" />
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        <!-- ✅ Nama asli -->
+                        <TextView
+                            android:id="@+id/tvNamaUser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Halo, User"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp"
+                            android:visibility="gone" />
+
+                        <!-- 🔄 Shimmer Email -->
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmerEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:visibility="visible"
+                            app:shimmer_auto_start="true"
+                            app:shimmer_duration="1000">
+
+                            <View
+                                android:layout_width="200dp"
+                                android:layout_height="16dp"
+                                android:background="@drawable/bg_placeholder" />
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        <!-- ✅ Email asli -->
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="email@example.com"
+                            android:layout_marginBottom="16dp"
+                            android:visibility="gone" />
+
+
+                        <!-- Card plafond (di dalam card utama) -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/userPlafondCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp">
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="16dp">
+
+                                <!-- 🔄 Skeleton Loading -->
+                                <com.facebook.shimmer.ShimmerFrameLayout
+                                    android:id="@+id/shimmerPlafond"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:visibility="visible"
+                                    app:shimmer_auto_start="true"
+                                    app:shimmer_duration="1000">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"
+                                        android:gravity="bottom">
+
+                                        <View
+                                            android:layout_width="120dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginBottom="8dp"
+                                            android:background="@drawable/bg_placeholder" />
+
+                                        <View
+                                            android:layout_width="80dp"
+                                            android:layout_height="16dp"
+                                            android:background="@drawable/bg_placeholder" />
+                                    </LinearLayout>
+                                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                                <!-- ✅ Konten Sebenarnya -->
+                                <LinearLayout
+                                    android:id="@+id/plafondContent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom|start"
+                                    android:orientation="vertical"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:id="@+id/tvPlafond"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Plafond: "
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:textColor="#FFFFFF" />
+
+                                    <TextView
+                                        android:id="@+id/tvPlafondType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="14sp"
+                                        android:fontFamily="@font/poppins_regular"
+                                        android:textColor="#FFFFFF" />
+                                </LinearLayout>
+                            </FrameLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Card berisi daftar menu -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMenuList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/white"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Detail Akun -->
+                        <LinearLayout
+                            android:id="@+id/itemDetailAkun"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/person_svgrepo_com"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="16dp"
+                                android:text="Detail Akun"
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/chevron_right" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#DDDDDD" />
+
+                        <!--  Dokumen Pribadi  -->
+                        <LinearLayout
+                            android:id="@+id/itemDokumenPribadi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/document"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="16dp"
+                                android:text="Dokumen Pribadi"
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/chevron_right" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#DDDDDD" />
+
+                        <!-- Ubah Password -->
+                        <LinearLayout
+                            android:id="@+id/itemUbahPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/lock_open_svgrepo_com"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="16dp"
+                                android:text="Ubah Password"
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/chevron_right" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#DDDDDD" />
+
+                        <!-- Tanya Fintara -->
+                        <LinearLayout
+                            android:id="@+id/itemTanyaFintara"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/comments_svgrepo_com"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="16dp"
+                                android:text="Tanya Fintara"
+                                android:textSize="16sp"
+                                android:textColor="@android:color/black" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/chevron_right" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <Button
+                    android:id="@+id/btnLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/danger_button"
+                    android:text="Logout"
+                    android:layout_marginTop="32dp"
+                    android:visibility="gone" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    android:layout_marginTop="32dp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

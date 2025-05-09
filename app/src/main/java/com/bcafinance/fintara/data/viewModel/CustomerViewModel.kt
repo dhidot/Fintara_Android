@@ -16,10 +16,10 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
-    fun fetchProfile(token: String) {
+    fun fetchProfile() {
         viewModelScope.launch {
             try {
-                val response = repository.getProfile(token)
+                val response = repository.getProfile()
                 _profile.postValue(response.data)
             } catch (e: Exception) {
                 _error.postValue(e.message ?: "Terjadi kesalahan")

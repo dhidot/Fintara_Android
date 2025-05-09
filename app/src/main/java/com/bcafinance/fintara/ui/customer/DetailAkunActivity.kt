@@ -7,7 +7,7 @@ import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.CustomerViewModel
 import com.bcafinance.fintara.databinding.ActivityDetailAkunBinding
 import com.bcafinance.fintara.ui.factory.CustomerViewModelFactory
-import com.bcafinance.fintara.utils.SessionManager
+import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.utils.showSnackbar
 
 class DetailAkunActivity : AppCompatActivity() {
@@ -16,7 +16,7 @@ class DetailAkunActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
 
     private val customerViewModel: CustomerViewModel by viewModels {
-        CustomerViewModelFactory(CustomerRepository(RetrofitClient.customerService))
+        CustomerViewModelFactory(CustomerRepository(RetrofitClient.customerApiService))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class DetailAkunActivity : AppCompatActivity() {
             // Tampilkan ProgressBar
             binding.progressBar.visibility = android.view.View.VISIBLE
 
-            customerViewModel.fetchProfile(token)
+            customerViewModel.fetchProfile()
 
             customerViewModel.profile.observe(this) { profile ->
                 // Sembunyikan ProgressBar setelah data berhasil di-fetch
@@ -39,7 +39,7 @@ class DetailAkunActivity : AppCompatActivity() {
 
                 binding.tvNama.text = "${profile?.name ?: "-"}"
                 binding.tvEmail.text = "${profile?.email ?: "-"}"
-                binding.tvJenisKelamin.text = "${profile?.jenisKelamin ?: "-"}"
+                binding.tvJenisKelamin.text = "${profile?.customerDetails?.jenisKelamin ?: "-"}"
                 binding.tvTtl.text = "${profile?.customerDetails?.ttl ?: "-"}"
                 binding.tvAlamat.text = "${profile?.customerDetails?.alamat ?: "-"}"
                 binding.tvPhone.text = "${profile?.customerDetails?.noTelp ?: "-"}"

@@ -1,10 +1,12 @@
 package com.bcafinance.fintara.data.repository
 
 import android.util.Log
+import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.data.model.dto.LoginRequest
 import com.bcafinance.fintara.data.model.dto.LoginResponse
 import com.bcafinance.fintara.data.model.dto.RegisterRequest
 import com.bcafinance.fintara.utils.parseApiError
+import retrofit2.HttpException
 import retrofit2.Response
 
 class AuthRepository {
@@ -30,7 +32,6 @@ class AuthRepository {
             onError("Network error: ${e.message}")
         }
     }
-
 
     suspend fun login(request: LoginRequest): Result<Triple<String, String, Boolean>> {
         return try {
@@ -59,11 +60,45 @@ class AuthRepository {
         }
     }
 
-    suspend fun logout(token: String): Result<String> {
+    suspend fun loginWithGoogle(idToken: String): Result<Pair<String, Boolean>> {
         return try {
-            val response = apiService.logout("Bearer $token")
-            Result.success(response.data ?: "Logout berhasil")
+            val response = apiService.loginWithGoogle(idToken)
+            val loginResponse = response.body()
+            if (response.isSuccessful) {
+                val loginResponse = response.body()
+                val token = loginResponse?.data?.jwt?.token ?: ""
+                val message = loginResponse?.message ?: "Login successful"
+                val firstLogin = loginResponse?.data?.firstLogin ?: false
+                val userName = loginResponse?.data?.jwt?.username ?: "Unknown"
+
+                // Kembalikan token dan status login pertama kali
+                Result.success(token to firstLogin)
+            } else {
+                Result.failure(Exception("Login failed: "))
+            }
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            Log.e("LoginError", "HTTP ${e.code()}, body: $errorBody", e)
+            Result.failure(Exception("HTTP ${e.code()} - $errorBody"))
         } catch (e: Exception) {
+            Log.e("UserRepository", "Exception during login: ${e.localizedMessage}", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun logout(): Result<String> {
+        return try {
+            val response = apiService.logout()
+            if (response.isSuccessful) {
+                val message = response.body()?: "Logout berhasil"
+                Result.success(message)
+            } else {
+                val errorBody = response.errorBody()?.string()
+                Log.e("Logout", "Error 500 body: $errorBody")
+                Result.failure(Exception("Logout gagal: $errorBody"))
+            }
+        } catch (e: Exception) {
+            Log.e("Logout", "Exception saat logout: ${e.localizedMessage}", e)
             Result.failure(e)
         }
     }

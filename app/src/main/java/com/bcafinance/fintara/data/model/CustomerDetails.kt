@@ -4,6 +4,7 @@ import java.math.BigDecimal
 
 data class CustomerDetails(
     val id: String,
+    val jenisKelamin: String?,
     val ttl: String?,
     val alamat: String?,
     val noTelp: String?,

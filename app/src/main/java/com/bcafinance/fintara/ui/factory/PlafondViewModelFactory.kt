@@ -6,13 +6,13 @@ import com.bcafinance.fintara.data.repository.PlafondRepository
 import com.bcafinance.fintara.data.viewModel.PlafondViewModel
 
 class PlafondViewModelFactory(
-    private val repository: PlafondRepository
+    private val plafondRepository: PlafondRepository
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PlafondViewModel::class.java)) {
-            return PlafondViewModel(repository) as T
+            return PlafondViewModel(plafondRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

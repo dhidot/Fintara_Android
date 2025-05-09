@@ -1,113 +1,92 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:background="@drawable/bg_gradient">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="574dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
         android:layout_marginEnd="14dp"
-        android:layout_marginBottom="98dp"
-        android:background="@drawable/rectangle"
         android:orientation="vertical"
+        android:background="@drawable/rectangle"
         android:padding="20dp">
 
-        <TextView
+        <!-- Nama -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Nama" />
+            android:layout_marginBottom="12dp"
+            android:hint="Nama"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primary">
 
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/input_field"
-            android:fontFamily="@font/poppins_medium"
-            android:hint="Name"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:paddingVertical="12dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <!-- Email -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Email" />
-
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/input_field"
-            android:fontFamily="@font/poppins_medium"
+            android:layout_marginBottom="12dp"
             android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:paddingVertical="12dp" />
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primary">
 
-        <TextView
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Password -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Password" />
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/input_field"
-            android:fontFamily="@font/poppins_medium"
+            android:layout_marginBottom="12dp"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:paddingVertical="12dp" />
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primary"
+            app:passwordToggleEnabled="true">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Jenis Kelamin" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinnerJenisKelamin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/poppins_medium"
-            android:minHeight="48dp"
-            android:paddingVertical="12dp" />
-
+        <!-- Button Register -->
         <FrameLayout
             android:id="@+id/btnRegisterContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/primary_button"
-                android:fontFamily="@font/poppins_medium"
                 android:text="Register"
-                android:textSize="17sp" />
+                android:textAllCaps="false"
+                android:textSize="17sp"
+                app:cornerRadius="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:backgroundTint="@color/primary" />
 
             <ProgressBar
                 android:id="@+id/progressRegister"
@@ -118,16 +97,18 @@
                 android:visibility="gone" />
         </FrameLayout>
 
+        <!-- Login Link -->
         <TextView
             android:id="@+id/tvLoginLink"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:gravity="center"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:text="Already have an account? Login here"
-            android:textColor="@android:color/holo_blue_dark" />
+            android:textColor="@android:color/holo_blue_dark"
+            android:fontFamily="@font/poppins_medium" />
     </LinearLayout>
 
 </RelativeLayout>

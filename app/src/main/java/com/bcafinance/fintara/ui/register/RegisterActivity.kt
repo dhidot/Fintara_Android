@@ -40,16 +40,14 @@ class RegisterActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_item
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerJenisKelamin.adapter = spinnerAdapter
 
         binding.btnRegister.setOnClickListener {
             val name = binding.etName.text.toString()
             val email = binding.etEmail.text.toString()
-            val jenisKelamin = binding.spinnerJenisKelamin.selectedItem.toString()
             val password = binding.etPassword.text.toString()
 
             if (name.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
-                val registerRequest = RegisterRequest(name, email, jenisKelamin, password)
+                val registerRequest = RegisterRequest(name, email, password)
                 viewModel.registerUser(registerRequest)
             } else {
                 showSnackbar("All fields are required", false)
