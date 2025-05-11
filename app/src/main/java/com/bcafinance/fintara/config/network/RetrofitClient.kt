@@ -14,7 +14,7 @@ object RetrofitClient {
     // Ganti dengan URL API kamu
     //https://d7aa-114-124-209-179.ngrok-free.app
     //http://34.28.17.46/
-    private const val BASE_URL = "https://b5d5-114-124-209-179.ngrok-free.app"
+    private const val BASE_URL = "https://055f-182-1-105-130.ngrok-free.app"
     private lateinit var retrofit: Retrofit
 
     // Service instances

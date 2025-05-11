@@ -22,6 +22,7 @@ class LoginViewModel : ViewModel() {
     private val authRepository = AuthRepository()
 
     val loginResult = MutableLiveData<LoginResult>()
+    val googleLoginResult: MutableLiveData<Result<Pair<String, Boolean>>> = MutableLiveData()
 
     fun loginUser(request: LoginRequest) {
         isLoading.value = true
@@ -50,17 +51,8 @@ class LoginViewModel : ViewModel() {
 
     fun loginWithGoogle(idToken: String) {
         viewModelScope.launch {
-            try {
-                isLoading.value = true
-                val response = authRepository.loginWithGoogle(idToken)
-                // Lanjutkan proses seperti login biasa (save token, navigasi, dll)
-            } catch (e: Exception) {
-                errorMessage.value = "Login Google gagal: ${e.message}"
-            } finally {
-                isLoading.value = false
-            }
+            val result = authRepository.loginWithGoogle(idToken)
+            googleLoginResult.value = result
         }
     }
-
-
 }

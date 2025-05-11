@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.ui.factory
+package com.bcafinance.fintara.data.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

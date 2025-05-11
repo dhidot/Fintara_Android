@@ -89,9 +89,9 @@ dependencies {
     // google oauth
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
-
-
-
-
+    // room implementation
+    implementation("androidx.room:room-runtime:2.4.3")
+    annotationProcessor("androidx.room:room-compiler:2.4.3")
+    implementation("androidx.room:room-ktx:2.4.3")
 
 }

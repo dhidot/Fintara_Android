@@ -3,7 +3,6 @@ package com.bcafinance.fintara.ui.firstTimeUpdate
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,7 @@ import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.FirstTimeUpdateViewModel
 import com.bcafinance.fintara.databinding.ActivityFirstTimeUpdateBinding
 import com.bcafinance.fintara.ui.dashboard.DashboardActivity
-import com.bcafinance.fintara.ui.factory.FirstTimeUpdateViewModelFactory
+import com.bcafinance.fintara.data.factory.FirstTimeUpdateViewModelFactory
 import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.utils.showSnackbar
 import java.util.Calendar

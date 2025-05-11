@@ -1,13 +1,14 @@
 package com.bcafinance.fintara.ui.plafond
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bcafinance.fintara.data.repository.PlafondRepository
 import com.bcafinance.fintara.databinding.ActivityPlafondBinding
 import com.bcafinance.fintara.data.viewModel.PlafondViewModel
-import com.bcafinance.fintara.ui.factory.PlafondViewModelFactory
+import com.bcafinance.fintara.data.factory.PlafondViewModelFactory
 
 class PlafondActivity : AppCompatActivity() {
 
@@ -20,18 +21,14 @@ class PlafondActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityPlafondBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Set MaterialToolbar as ActionBar
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.customToolbar.toolbar)
+        binding.customToolbar.tvTitle.text = "Level Plafond"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // Handle back button click
-        binding.toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // Setup ViewPager2 adapter
         plafondAdapter = PlafondAdapter()
@@ -56,5 +53,16 @@ class PlafondActivity : AppCompatActivity() {
         // Static text
         binding.tvBenefit.text = "Benefit: Dapatkan akses ke lebih banyak fitur dengan setiap level plafon."
         binding.tvUpgrade.text = "How to Upgrade: Untuk naik level, kamu perlu memenuhi persyaratan tertentu dan melakukan upgrade."
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                // Kembali ke activity sebelumnya saat tombol back ditekan
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

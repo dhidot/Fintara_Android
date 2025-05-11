@@ -90,18 +90,16 @@ class AuthRepository {
         return try {
             val response = apiService.logout()
             if (response.isSuccessful) {
-                val message = response.body()?: "Logout berhasil"
-                Result.success(message)
+                Result.success(response.body()?.message?.toString() ?: "Logout berhasil")
             } else {
-                val errorBody = response.errorBody()?.string()
-                Log.e("Logout", "Error 500 body: $errorBody")
-                Result.failure(Exception("Logout gagal: $errorBody"))
+                val error = response.errorBody()?.string()
+                Result.failure(Exception("Logout gagal: $error"))
             }
         } catch (e: Exception) {
-            Log.e("Logout", "Exception saat logout: ${e.localizedMessage}", e)
             Result.failure(e)
         }
     }
+
 
     private fun parseErrorBody(response: Response<LoginResponse>): String {
         return try {

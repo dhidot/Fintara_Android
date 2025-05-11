@@ -12,7 +12,7 @@ import com.bcafinance.fintara.data.model.dto.RegisterRequest
 import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.data.viewModel.RegisterViewModel
 import com.bcafinance.fintara.databinding.ActivityRegisterBinding
-import com.bcafinance.fintara.ui.factory.RegisterViewModelFactory
+import com.bcafinance.fintara.data.factory.RegisterViewModelFactory
 import com.bcafinance.fintara.ui.login.LoginActivity
 import com.bcafinance.fintara.utils.showSnackbar
 import com.bcafinance.fintara.utils.parseFieldValidationErrors

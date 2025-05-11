@@ -2,32 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
     <!-- Bagian Atas: Tombol Kembali dan Judul -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="16dp">
 
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kembali" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/data_pengguna"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:fontFamily="@font/poppins_medium" />
-    </LinearLayout>
+    <include
+        layout="@layout/toolbar_custom"
+        android:id="@+id/customToolbar"/>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -39,9 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/white"
             android:gravity="start">
 
-            <!-- Nama -->
+            <!-- Shimmer Nama -->
             <TextView
                 android:id="@+id/tvNamaLabel"
                 android:layout_width="wrap_content"
@@ -49,6 +31,22 @@
                 android:text="@string/nama"
                 style="@style/LabelStyle" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerNama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!--    value nama    -->
             <TextView
                 android:id="@+id/tvNama"
                 android:layout_width="wrap_content"
@@ -63,6 +61,23 @@
                 android:text="@string/email"
                 style="@style/LabelStyle" />
 
+            <!-- Shimmer email -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!--    value email    -->
             <TextView
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
@@ -76,6 +91,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/jenis_kelamin"
                 style="@style/LabelStyle" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerJenisKelamin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/tvJenisKelamin"
@@ -91,6 +121,21 @@
                 android:text="@string/tanggal_lahir"
                 style="@style/LabelStyle" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerTtl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tvTtl"
                 android:layout_width="wrap_content"
@@ -104,6 +149,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/alamat"
                 style="@style/LabelStyle" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerAlamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/tvAlamat"
@@ -119,6 +179,21 @@
                 android:text="@string/nomor_telepon"
                 style="@style/LabelStyle" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tvPhone"
                 android:layout_width="wrap_content"
@@ -132,6 +207,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nik"
                 style="@style/LabelStyle" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerNIK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/tvNIK"
@@ -147,6 +237,21 @@
                 android:text="@string/nama_ibu_kandung"
                 style="@style/LabelStyle" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerNamaIbu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tvNamaIbu"
                 android:layout_width="wrap_content"
@@ -160,6 +265,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/pekerjaan"
                 style="@style/LabelStyle" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerPekerjaan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/tvPekerjaan"
@@ -175,6 +295,21 @@
                 android:text="@string/gaji"
                 style="@style/LabelStyle" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerGaji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tvGaji"
                 android:layout_width="wrap_content"
@@ -188,6 +323,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/no_rekening"
                 style="@style/LabelStyle" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerRekening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/tvRekening"
@@ -203,6 +353,21 @@
                 android:text="@string/status_rumah"
                 style="@style/LabelStyle" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerStatusRumah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tvStatusRumah"
                 android:layout_width="wrap_content"
@@ -216,6 +381,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tipe_plafond"
                 style="@style/LabelStyle" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerPlafondType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/tvPlafondType"
@@ -231,6 +411,21 @@
                 android:text="@string/plafond_maksimal"
                 style="@style/LabelStyle" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerPlafondMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tvPlafondMax"
                 android:layout_width="wrap_content"
@@ -244,6 +439,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/bunga"
                 style="@style/LabelStyle" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerBunga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/tvBunga"
@@ -259,18 +469,26 @@
                 android:text="@string/tenor"
                 style="@style/LabelStyle" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerTenor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tvTenor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/ValueStyle" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnLengkapiProfil"

@@ -4,30 +4,9 @@
     android:layout_height="match_parent">
 
   <!-- AppBar Layout for the back button and title -->
-  <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="?attr/colorPrimary"
-      android:elevation="4dp">
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Level Plafond"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:layout_gravity="center"/>
-
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="start|center_vertical"
-        android:src="@drawable/arrow_left"
-        android:padding="16dp"/>
-  </androidx.appcompat.widget.Toolbar>
+  <include
+  layout="@layout/toolbar_custom"
+  android:id="@+id/customToolbar"/>
 
   <!-- Main content layout -->
   <ScrollView

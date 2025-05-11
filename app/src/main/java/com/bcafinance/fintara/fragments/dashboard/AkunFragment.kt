@@ -2,7 +2,6 @@ package com.bcafinance.fintara.fragments.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,12 +13,13 @@ import com.bcafinance.fintara.data.viewModel.CustomerViewModel
 import com.bcafinance.fintara.data.viewModel.LogoutViewModel
 import com.bcafinance.fintara.databinding.FragmentAkunBinding
 import com.bcafinance.fintara.ui.customer.DetailAkunActivity
-import com.bcafinance.fintara.ui.factory.CustomerViewModelFactory
+import com.bcafinance.fintara.data.factory.CustomerViewModelFactory
 import com.bcafinance.fintara.ui.login.LoginActivity
 import com.bcafinance.fintara.ui.plafond.PlafondActivity
 import com.bcafinance.fintara.config.network.SessionManager
+import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.ui.document.DokumenPribadiActivity
-import com.bcafinance.fintara.ui.factory.LogoutViewModelFactory
+import com.bcafinance.fintara.data.factory.LogoutViewModelFactory
 import com.bcafinance.fintara.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -37,7 +37,10 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAkunBinding.bind(view)
         sessionManager = SessionManager(requireContext())
-
+        logoutViewModel = ViewModelProvider(
+            this,
+            LogoutViewModelFactory(AuthRepository())
+        )[LogoutViewModel::class.java]
         if (sessionManager.getToken() != null) {
             showLoggedInUI()
         } else {

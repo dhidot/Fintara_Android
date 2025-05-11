@@ -1,14 +1,19 @@
 package com.bcafinance.fintara.ui.customer
 
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.CustomerViewModel
 import com.bcafinance.fintara.databinding.ActivityDetailAkunBinding
-import com.bcafinance.fintara.ui.factory.CustomerViewModelFactory
+import com.bcafinance.fintara.data.factory.CustomerViewModelFactory
 import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.utils.showSnackbar
+import java.math.BigDecimal
+import java.text.NumberFormat
+import java.util.Locale
 
 class DetailAkunActivity : AppCompatActivity() {
 
@@ -24,57 +29,96 @@ class DetailAkunActivity : AppCompatActivity() {
         binding = ActivityDetailAkunBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupToolbar()
         sessionManager = SessionManager(this)
+
         val token = sessionManager.getToken()
-
-        if (!token.isNullOrEmpty()) {
-            // Tampilkan ProgressBar
-            binding.progressBar.visibility = android.view.View.VISIBLE
-
-            customerViewModel.fetchProfile()
-
-            customerViewModel.profile.observe(this) { profile ->
-                // Sembunyikan ProgressBar setelah data berhasil di-fetch
-                binding.progressBar.visibility = android.view.View.GONE
-
-                binding.tvNama.text = "${profile?.name ?: "-"}"
-                binding.tvEmail.text = "${profile?.email ?: "-"}"
-                binding.tvJenisKelamin.text = "${profile?.customerDetails?.jenisKelamin ?: "-"}"
-                binding.tvTtl.text = "${profile?.customerDetails?.ttl ?: "-"}"
-                binding.tvAlamat.text = "${profile?.customerDetails?.alamat ?: "-"}"
-                binding.tvPhone.text = "${profile?.customerDetails?.noTelp ?: "-"}"
-                binding.tvNIK.text = "${profile?.customerDetails?.nik ?: "-"}"
-                binding.tvNamaIbu.text = "${profile?.customerDetails?.namaIbuKandung ?: "-"}"
-                binding.tvPekerjaan.text = "${profile?.customerDetails?.pekerjaan ?: "-"}"
-                binding.tvGaji.text = "${profile?.customerDetails?.gaji ?: "-"}"
-                binding.tvRekening.text = "${profile?.customerDetails?.noRek ?: "-"}"
-                binding.tvStatusRumah.text = "${profile?.customerDetails?.statusRumah ?: "-"}"
-
-                val plafond = profile?.customerDetails?.plafond
-                binding.tvPlafondType.text = "${plafond?.name ?: "-"}"
-                binding.tvPlafondMax.text = "Rp${plafond?.maxAmount ?: "-"}"
-                binding.tvBunga.text = "${plafond?.interestRate ?: "-"}%"
-                binding.tvTenor.text = "${plafond?.minTenor} - ${plafond?.maxTenor} bulan"
-            }
-
-            customerViewModel.error.observe(this) { error ->
-                // Sembunyikan ProgressBar jika error terjadi
-                binding.progressBar.visibility = android.view.View.GONE
-                showSnackbar(error, isSuccess = false)
-            }
-
-        } else {
+        if (token.isNullOrEmpty()) {
             showSnackbar("Token tidak ditemukan. Silakan login ulang.", isSuccess = false)
             finish()
+            return
         }
 
+        startAllShimmers()
+        customerViewModel.fetchProfile()
+
+        observeViewModel()
         setupButtonActions()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.customToolbar.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    private fun observeViewModel() {
+        customerViewModel.profile.observe(this) { profile ->
+            with(binding) {
+                tvNama.text = profile?.name ?: "-"
+                tvEmail.text = profile?.email ?: "-"
+                tvJenisKelamin.text = profile?.customerDetails?.jenisKelamin ?: "-"
+                tvTtl.text = profile?.customerDetails?.ttl ?: "-"
+                tvAlamat.text = profile?.customerDetails?.alamat ?: "-"
+                tvPhone.text = profile?.customerDetails?.noTelp ?: "-"
+                tvNIK.text = profile?.customerDetails?.nik ?: "-"
+                tvNamaIbu.text = profile?.customerDetails?.namaIbuKandung ?: "-"
+                tvPekerjaan.text = profile?.customerDetails?.pekerjaan ?: "-"
+                tvGaji.text = formatRupiah(profile?.customerDetails?.gaji)
+                tvRekening.text = profile?.customerDetails?.noRek ?: "-"
+                tvStatusRumah.text = profile?.customerDetails?.statusRumah ?: "-"
+
+                val plafond = profile?.customerDetails?.plafond
+                tvPlafondType.text = plafond?.name ?: "-"
+                tvPlafondMax.text = "Rp${plafond?.maxAmount ?: "-"}"
+                tvBunga.text = "${plafond?.interestRate ?: "-"}%"
+                tvTenor.text = "${plafond?.minTenor ?: "-"} - ${plafond?.maxTenor ?: "-"} bulan"
+            }
+            stopAllShimmers()
+        }
+
+        customerViewModel.error.observe(this) { error ->
+            showSnackbar(error, isSuccess = false)
+        }
+    }
+
+    private fun formatRupiah(value: BigDecimal?): String {
+        return if (value == null) "-" else NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(value)
+    }
+
+    private fun startAllShimmers() = with(binding) {
+        listOf(
+            shimmerNama, shimmerEmail, shimmerJenisKelamin, shimmerTtl, shimmerAlamat,
+            shimmerPhone, shimmerNIK, shimmerNamaIbu, shimmerPekerjaan,
+            shimmerGaji, shimmerRekening, shimmerStatusRumah, shimmerPlafondType, shimmerPlafondMax, shimmerBunga, shimmerTenor
+        ).forEach {
+            it.startShimmer()
+            it.visibility = View.VISIBLE
+        }
+    }
+
+    private fun stopAllShimmers() = with(binding) {
+        listOf(
+            shimmerNama, shimmerEmail, shimmerJenisKelamin, shimmerTtl, shimmerAlamat,
+            shimmerPhone, shimmerNIK, shimmerNamaIbu, shimmerPekerjaan,
+            shimmerGaji, shimmerRekening, shimmerStatusRumah, shimmerPlafondType, shimmerPlafondMax, shimmerBunga, shimmerTenor
+        ).forEach {
+            it.stopShimmer()
+            it.visibility = View.GONE
+        }
     }
 
     private fun setupButtonActions() {
         binding.btnLengkapiProfil.setOnClickListener {
-            // Aksi untuk melengkapi profil
             showSnackbar("Fitur ini belum tersedia", isSuccess = false)
         }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            true
+        } else super.onOptionsItemSelected(item)
+    }
 }
+

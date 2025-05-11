@@ -13,6 +13,27 @@ data class ApiResponse<T>(
             else -> "Terjadi kesalahan"
         }
     }
+
+    companion object {
+        fun <T> success(data: T, message: Any? = null): ApiResponse<T> {
+            return ApiResponse(
+                timestamp = System.currentTimeMillis().toString(),
+                status = 200,
+                message = message,
+                data = data
+            )
+        }
+
+        // Static factory method untuk respons error
+        fun <T> error(message: Any?, data: T? = null): ApiResponse<T> {
+            return ApiResponse(
+                timestamp = System.currentTimeMillis().toString(),
+                status = 400,
+                message = message,
+                data = data
+            )
+        }
+    }
 }
 
 

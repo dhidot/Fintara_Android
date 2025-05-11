@@ -7,34 +7,22 @@ import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.config.network.SessionManager
 import kotlinx.coroutines.launch
 
-class LogoutViewModel(private val context: Context) : ViewModel() {
+class LogoutViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val authRepository = AuthRepository()
-    private val sessionManager = SessionManager(context) // Inisialisasi dengan konteks yang benar
+    fun logout(onSuccess: (String) -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            try {
+                // Panggil function logout dari AuthRepository
+                val result = authRepository.logout()
 
-    fun logout(
-        onSuccess: (String) -> Unit,
-        onError: (String) -> Unit
-    ) {
-        // Mendapatkan token dari SessionManager
-        val token = sessionManager.getToken()
-
-        if (token != null) {
-            viewModelScope.launch {
-                try {
-                    // Memanggil API untuk logout
-                    val result = authRepository.logout()
-                    if (result.isSuccess) {
-                        onSuccess(result.getOrNull() ?: "Logout berhasil")
-                    } else {
-                        onError(result.exceptionOrNull()?.message ?: "Unknown error")
-                    }
-                } catch (e: Exception) {
-                    onError(e.message ?: "Unknown error")
+                if (result.isSuccess) {
+                    onSuccess(result.getOrNull() ?: "Logout berhasil")
+                } else {
+                    onError(result.exceptionOrNull()?.message ?: "Error logging out")
                 }
+            } catch (e: Exception) {
+                onError(e.message ?: "Unexpected error occurred during logout")
             }
-        } else {
-            onError("Token tidak ditemukan")
         }
     }
 }
