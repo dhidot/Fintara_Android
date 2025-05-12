@@ -44,7 +44,6 @@ class AuthRepository {
                 val token = loginResponse?.data?.jwt?.token ?: ""
                 val message = loginResponse?.message ?: "Login successful"
                 val firstLogin = loginResponse?.data?.firstLogin ?: false
-                val userName = loginResponse?.data?.jwt?.username ?: "Unknown"
 
                 Log.d("UserRepository", "Login successful, token: $token, firstLogin: $firstLogin")
                 // Return message, token, and firstLogin status
@@ -60,28 +59,23 @@ class AuthRepository {
         }
     }
 
-    suspend fun loginWithGoogle(idToken: String): Result<Pair<String, Boolean>> {
+    suspend fun loginWithGoogle(idToken: String): Result<Triple<String, String, Boolean>> {
         return try {
+            Log.d("UserRepository", "Sending Google login request with ID token: $idToken")
             val response = apiService.loginWithGoogle(idToken)
-            val loginResponse = response.body()
-            if (response.isSuccessful) {
-                val loginResponse = response.body()
-                val token = loginResponse?.data?.jwt?.token ?: ""
-                val message = loginResponse?.message ?: "Login successful"
-                val firstLogin = loginResponse?.data?.firstLogin ?: false
-                val userName = loginResponse?.data?.jwt?.username ?: "Unknown"
 
-                // Kembalikan token dan status login pertama kali
-                Result.success(token to firstLogin)
+            if (response.isSuccessful) {
+                val loginData = response.body()?.data
+                val jwt = loginData?.jwt?.token ?: ""
+                val firstLogin = loginData?.firstLogin ?: false
+                val message = response.body()?.message?.toString() ?: "Login Google berhasil"
+
+                Result.success(Triple(message, jwt, firstLogin))
             } else {
-                Result.failure(Exception("Login failed: "))
+                val error = response.errorBody()?.string() ?: "Terjadi kesalahan"
+                Result.failure(Exception("Login Google gagal: $error"))
             }
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            Log.e("LoginError", "HTTP ${e.code()}, body: $errorBody", e)
-            Result.failure(Exception("HTTP ${e.code()} - $errorBody"))
         } catch (e: Exception) {
-            Log.e("UserRepository", "Exception during login: ${e.localizedMessage}", e)
             Result.failure(e)
         }
     }

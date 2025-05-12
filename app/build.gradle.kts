@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("kotlin-kapt")
 }
 
 android {
@@ -90,8 +91,15 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // room implementation
-    implementation("androidx.room:room-runtime:2.4.3")
-    annotationProcessor("androidx.room:room-compiler:2.4.3")
-    implementation("androidx.room:room-ktx:2.4.3")
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    kapt("androidx.room:room-compiler:2.6.1")
+
+    // JWT
+    implementation("com.auth0:java-jwt:3.18.1")
+    implementation("com.auth0.android:jwtdecode:2.0.1")
+
 
 }

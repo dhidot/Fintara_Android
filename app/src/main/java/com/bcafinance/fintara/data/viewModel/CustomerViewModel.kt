@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.bcafinance.fintara.data.model.dto.UserWithCustomerResponse
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import kotlinx.coroutines.launch
+import android.util.Log
 
 class CustomerViewModel(private val repository: CustomerRepository) : ViewModel() {
 
@@ -16,10 +17,11 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
-    fun fetchProfile() {
+    fun fetchProfile(userId: String) {
         viewModelScope.launch {
             try {
-                val response = repository.getProfile()
+                val response = repository.getProfile(userId)
+                Log.d("CustomerViewModel", "userId dari SessionManager: $userId")
                 _profile.postValue(response.data)
             } catch (e: Exception) {
                 _error.postValue(e.message ?: "Terjadi kesalahan")

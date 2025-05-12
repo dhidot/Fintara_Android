@@ -1,10 +1,10 @@
 package com.bcafinance.fintara.data.model.dao
 
-import CustomerProfileEntity
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.bcafinance.fintara.data.model.room.CustomerProfileEntity
 
 @Dao
 interface CustomerProfileDao {

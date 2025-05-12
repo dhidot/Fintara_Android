@@ -2,11 +2,24 @@ package com.bcafinance.fintara.config.network
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 
 class SessionManager(context: Context) {
 
     private val prefs: SharedPreferences =
         context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+
+    // Manyimpan id pengguna
+    fun saveUserId(userId: String) {
+        Log.d("SessionManager", "Menyimpan userId: $userId")
+        prefs.edit().putString("user_id", userId).apply()
+    }
+
+    fun getUserId(): String? {
+        val userId = prefs.getString("user_id", null)
+        Log.d("SessionManager", "Mengambil userId: $userId")
+        return userId
+    }
 
     // Menyimpan nama pengguna
     fun saveUserName(name: String) {
@@ -56,6 +69,7 @@ class SessionManager(context: Context) {
         editor.remove("token")
         editor.remove("name")
         editor.remove("first_login")
+        editor.remove("user_id")
         editor.apply()
     }
 

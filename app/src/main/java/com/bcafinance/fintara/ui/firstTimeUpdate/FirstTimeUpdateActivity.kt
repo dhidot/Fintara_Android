@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.bcafinance.fintara.data.model.dto.FirstTimeUpdateRequest
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.FirstTimeUpdateViewModel
@@ -14,6 +15,7 @@ import com.bcafinance.fintara.databinding.ActivityFirstTimeUpdateBinding
 import com.bcafinance.fintara.ui.dashboard.DashboardActivity
 import com.bcafinance.fintara.data.factory.FirstTimeUpdateViewModelFactory
 import com.bcafinance.fintara.config.network.SessionManager
+import com.bcafinance.fintara.data.model.room.AppDatabase
 import com.bcafinance.fintara.utils.showSnackbar
 import java.util.Calendar
 
@@ -22,6 +24,13 @@ class FirstTimeUpdateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFirstTimeUpdateBinding
     private lateinit var viewModel: FirstTimeUpdateViewModel
     private lateinit var sessionManager: SessionManager
+    private val customerProfileDao by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "fintara_db"
+        ).build().customerProfileDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +40,7 @@ class FirstTimeUpdateActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         val token = sessionManager.getToken() ?: ""
 
-        val repository = CustomerRepository(RetrofitClient.customerApiService)
+        val repository = CustomerRepository(RetrofitClient.customerApiService, customerProfileDao)
         val factory = FirstTimeUpdateViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[FirstTimeUpdateViewModel::class.java]
 

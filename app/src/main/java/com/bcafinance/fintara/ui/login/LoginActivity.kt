@@ -23,6 +23,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+//import com.auth0.android.jwt.JWT
+import com.auth0.jwt.JWT
 
 class LoginActivity : AppCompatActivity() {
 
@@ -39,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("322824276751-tlarf1kjgvqablnfvu00clodp3jmd49k.apps.googleusercontent.com") // Ganti sesuai client_id kamu
+            .requestIdToken("124749850521-rjebupase6asr2pngv30p8bt2npevgs5.apps.googleusercontent.com") // Ganti sesuai client_id kamu
             .requestEmail()
             .requestProfile()
             .build()
@@ -47,8 +49,18 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val spannableString = SpannableString("Belum punya akun? Register")
-        spannableString.setSpan(UnderlineSpan(), 17, 26, 0)  // Menambahkan garis bawah pada "Register"
-        spannableString.setSpan(ForegroundColorSpan(Color.BLUE), 17, 26, 0)  // Menambahkan warna biru pada "Register"
+        spannableString.setSpan(
+            UnderlineSpan(),
+            17,
+            26,
+            0
+        )  // Menambahkan garis bawah pada "Register"
+        spannableString.setSpan(
+            ForegroundColorSpan(Color.BLUE),
+            17,
+            26,
+            0
+        )  // Menambahkan warna biru pada "Register"
         binding.tvRegisterLink.text = spannableString
 
         binding.tvRegisterLink.setOnClickListener {
@@ -79,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
             binding.btnLogin.isEnabled = !it
         }
 
+        // Di bagian observer successMessage dan loginResult
         viewModel.successMessage.observe(this) { message ->
             showSnackbar(message, true)
 
@@ -86,9 +99,12 @@ class LoginActivity : AppCompatActivity() {
             val isFirstLogin = viewModel.firstLogin.value ?: false
             val userName = viewModel.userName.value ?: "Nama Pengguna"
 
-            Log.d("LoginActivity", "Login success, token: $token, firstLogin: $isFirstLogin")
-
             if (!token.isNullOrBlank()) {
+                val jwt = JWT.decode(token) // Dekode token JWT
+                val userId = jwt.getClaim("userId").asString()
+
+                // Simpan ID ke session manager
+                sessionManager.saveUserId(userId ?: "Unknown")
                 sessionManager.saveToken(token)
                 sessionManager.saveUserName(userName)
                 sessionManager.saveFirstLogin(isFirstLogin)
@@ -103,6 +119,7 @@ class LoginActivity : AppCompatActivity() {
                     )
                 }
 
+                // Redirect ke activity yang sesuai berdasarkan firstLogin
                 val intent = if (isFirstLogin) {
                     Intent(this, FirstTimeUpdateActivity::class.java)
                 } else {
@@ -117,16 +134,18 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-
-
         viewModel.errorMessage.observe(this, Observer { message ->
             showSnackbar(message, false)  // Menampilkan pesan error yang diproses
         })
 
         viewModel.loginResult.observe(this) { result ->
             showSnackbar(result.message, true)
-
+            val jwt = JWT() // Dekode token JWT
+            val userId = jwt.decodeJwt(result.token).getClaim("userId").asString()
+            sessionManager.saveUserId(userId)
+            Log.d("UserId", "User ID: $userId")
             sessionManager.saveToken(result.token)
+            Log.d("Token", "Token: ${result.token}")
 
             val intent = if (result.firstLogin) {
                 Intent(this, FirstTimeUpdateActivity::class.java)
@@ -137,22 +156,6 @@ class LoginActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
-        }
-
-        viewModel.googleLoginResult.observe(this) { result ->
-            result.onSuccess { (token, firstLogin) ->
-                sessionManager.saveToken(token)
-                val intent = if (firstLogin) {
-                    Intent(this, FirstTimeUpdateActivity::class.java)
-                } else {
-                    Intent(this, DashboardActivity::class.java)
-                }
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
-            }.onFailure { error ->
-                showSnackbar("Google login failed: ${error.message}", false)
-            }
         }
     }
 
@@ -165,14 +168,19 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 Log.d("GoogleLogin", "Google sign-in succeeded: ${account?.displayName}")
+
                 val idToken = account?.idToken
+                Log.d("GoogleLogin", "ID Token: $idToken")
+
                 if (!idToken.isNullOrEmpty()) {
                     viewModel.loginWithGoogle(idToken)
+                } else {
+                    showSnackbar("ID Token Google kosong", false)
                 }
             } catch (e: ApiException) {
                 Log.e("GoogleLogin", "Google sign in failed", e)
+                showSnackbar("Google login gagal: ${e.message}", false)
             }
         }
     }
-
 }

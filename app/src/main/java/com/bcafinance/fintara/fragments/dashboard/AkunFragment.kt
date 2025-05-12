@@ -2,10 +2,12 @@ package com.bcafinance.fintara.fragments.dashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.bcafinance.fintara.MainActivity
 import com.bcafinance.fintara.R
 import com.bcafinance.fintara.data.repository.CustomerRepository
@@ -20,6 +22,7 @@ import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.ui.document.DokumenPribadiActivity
 import com.bcafinance.fintara.data.factory.LogoutViewModelFactory
+import com.bcafinance.fintara.data.model.room.AppDatabase
 import com.bcafinance.fintara.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -29,8 +32,10 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
     private val binding get() = _binding!!
     private lateinit var sessionManager: SessionManager
     private lateinit var logoutViewModel: LogoutViewModel
+    private val customerProfileDao by lazy { Room.databaseBuilder(requireContext(), AppDatabase::class.java, "fintara_db").build().customerProfileDao() }
+    private val customerRepository by lazy { CustomerRepository(RetrofitClient.customerApiService, customerProfileDao) }
     private val customerViewModel: CustomerViewModel by viewModels {
-        CustomerViewModelFactory(CustomerRepository(RetrofitClient.customerApiService))
+        CustomerViewModelFactory(customerRepository)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,7 +86,10 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
             contentNama.visibility = View.GONE
             contentEmail.visibility = View.GONE
 
-            customerViewModel.fetchProfile()
+            val userId = sessionManager.getUserId() ?: "default_user_id"
+            customerViewModel.fetchProfile(userId)
+            Log.d("AkunFragment", "userId dari SessionManager: $userId")
+
 
             customerViewModel.profile.observe(viewLifecycleOwner) { profile ->
                 // Update Nama dan Email

@@ -12,7 +12,20 @@
           "package_name": "com.bcafinance.fintara"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "124749850521-p1rbms3l0f58hjf1gmgqrvalkt4jf2be.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bcafinance.fintara",
+            "certificate_hash": "44f92c59369037b9fb00a60c3dc62c35ebf13ce7"
+          }
+        },
+        {
+          "client_id": "124749850521-rjebupase6asr2pngv30p8bt2npevgs5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB_3WLkluukL5TCIBRMGdXlx3laFFM-oVU"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124749850521-rjebupase6asr2pngv30p8bt2npevgs5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

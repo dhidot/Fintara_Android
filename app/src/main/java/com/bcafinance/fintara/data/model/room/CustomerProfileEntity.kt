@@ -1,3 +1,5 @@
+package com.bcafinance.fintara.data.model.room
+
 import java.math.BigDecimal
 import androidx.room.Entity
 import androidx.room.PrimaryKey

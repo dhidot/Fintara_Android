@@ -1,7 +1,8 @@
 package com.bcafinance.fintara.data.model.dto
 
-import CustomerProfileEntity
+
 import com.bcafinance.fintara.data.model.CustomerDetails
+import com.bcafinance.fintara.data.model.room.CustomerProfileEntity
 import java.math.BigDecimal
 
 data class UserWithCustomerResponse(

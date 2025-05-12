@@ -5,11 +5,13 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.CustomerViewModel
 import com.bcafinance.fintara.databinding.ActivityDetailAkunBinding
 import com.bcafinance.fintara.data.factory.CustomerViewModelFactory
 import com.bcafinance.fintara.config.network.SessionManager
+import com.bcafinance.fintara.data.model.room.AppDatabase
 import com.bcafinance.fintara.utils.showSnackbar
 import java.math.BigDecimal
 import java.text.NumberFormat
@@ -19,9 +21,16 @@ class DetailAkunActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailAkunBinding
     private lateinit var sessionManager: SessionManager
+    private val customerProfileDao by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "fintara_db"
+        ).build().customerProfileDao()
+    }
 
     private val customerViewModel: CustomerViewModel by viewModels {
-        CustomerViewModelFactory(CustomerRepository(RetrofitClient.customerApiService))
+        CustomerViewModelFactory(CustomerRepository(RetrofitClient.customerApiService, customerProfileDao))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +49,7 @@ class DetailAkunActivity : AppCompatActivity() {
         }
 
         startAllShimmers()
-        customerViewModel.fetchProfile()
+        customerViewModel.fetchProfile(userId = sessionManager.getUserId() ?: "")
 
         observeViewModel()
         setupButtonActions()

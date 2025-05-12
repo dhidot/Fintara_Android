@@ -1,6 +1,7 @@
 package com.bcafinance.fintara.data.viewModel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,8 +22,12 @@ class LoginViewModel : ViewModel() {
 
     private val authRepository = AuthRepository()
 
+    // Login Biasa
     val loginResult = MutableLiveData<LoginResult>()
-    val googleLoginResult: MutableLiveData<Result<Pair<String, Boolean>>> = MutableLiveData()
+
+    // Login Google
+    val googleLoginResult = MutableLiveData<Result<Triple<String, String, Boolean>>>()
+
 
     fun loginUser(request: LoginRequest) {
         isLoading.value = true
@@ -49,10 +54,20 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    // Fungsi login dengan Google
     fun loginWithGoogle(idToken: String) {
         viewModelScope.launch {
+            isLoading.postValue(true)
             val result = authRepository.loginWithGoogle(idToken)
-            googleLoginResult.value = result
+            isLoading.postValue(false)
+            result.onSuccess { (message, jwt, isFirstLogin) ->
+                successMessage.postValue(message)
+                token.postValue(jwt)
+                firstLogin.postValue(isFirstLogin)
+                googleLoginResult.postValue(result)
+            }.onFailure { exception ->
+                errorMessage.postValue(exception.message)
+            }
         }
     }
 }

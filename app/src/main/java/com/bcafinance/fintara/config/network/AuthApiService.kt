@@ -19,7 +19,7 @@ interface AuthApiService {
 
     @POST("/api/v1/auth/login-google")
     suspend fun loginWithGoogle(
-        @Body idToken: String
+        @Header("Authorization") idToken: String
     ): Response<LoginResponse>
 
     @POST("/api/v1/auth/logout")
