@@ -8,6 +8,8 @@ import com.bcafinance.fintara.data.model.dto.UserWithCustomerResponse
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import kotlinx.coroutines.launch
 import android.util.Log
+import okhttp3.MultipartBody
+import java.io.File
 
 class CustomerViewModel(private val repository: CustomerRepository) : ViewModel() {
 
@@ -16,6 +18,9 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
+
+    private val _uploadResult = MutableLiveData<Result<String>>()
+    val uploadResult: LiveData<Result<String>> = _uploadResult
 
     fun fetchProfile(userId: String) {
         viewModelScope.launch {
@@ -26,6 +31,13 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
             } catch (e: Exception) {
                 _error.postValue(e.message ?: "Terjadi kesalahan")
             }
+        }
+    }
+
+    fun uploadKtp(filePart: MultipartBody.Part) {
+        viewModelScope.launch {
+            val result = repository.uploadKtp(filePart)
+            _uploadResult.postValue(result)
         }
     }
 }

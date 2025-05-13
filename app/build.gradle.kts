@@ -101,5 +101,12 @@ dependencies {
     implementation("com.auth0:java-jwt:3.18.1")
     implementation("com.auth0.android:jwtdecode:2.0.1")
 
+    // Firebase Notification
+    implementation("com.google.firebase:firebase-messaging:23.4.0")
+
+    implementation("io.grpc:grpc-okhttp:1.45.1") // Sesuaikan dengan versi yang dibutuhkan
+    implementation("io.grpc:grpc-protobuf:1.45.1")
+    implementation("io.grpc:grpc-stub:1.45.1")
+
 
 }

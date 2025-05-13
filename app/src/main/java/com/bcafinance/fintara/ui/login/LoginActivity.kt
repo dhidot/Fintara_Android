@@ -82,8 +82,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnGoogleSignIn.setOnClickListener {
-            val signInIntent = googleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
+            googleSignInClient.signOut().addOnCompleteListener {
+                val signInIntent = googleSignInClient.signInIntent
+                startActivityForResult(signInIntent, RC_SIGN_IN)
+            }
         }
 
         viewModel.isLoading.observe(this) {
@@ -111,6 +113,9 @@ class LoginActivity : AppCompatActivity() {
 
                 // Ambil akun Google dan simpan profil
                 val account = GoogleSignIn.getLastSignedInAccount(this)
+                Log.d("GoogleLogin", "Account Email: ${account?.email}")
+                Log.d("GoogleLogin", "Account Name: ${account?.displayName}")
+                Log.d("GoogleLogin", "Account ID Token: ${account?.idToken}")
                 account?.let {
                     sessionManager.saveUserProfile(
                         it.displayName ?: "Unknown",
@@ -157,30 +162,56 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        viewModel.googleLoginResult.observe(this) { result ->
+            result.onSuccess { (token, userId, firstLogin) ->
+                showSnackbar("Login Google berhasil", true)
 
-        if (requestCode == RC_SIGN_IN) {
-            Log.d("GoogleLogin", "onActivityResult called")
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                Log.d("GoogleLogin", "Google sign-in succeeded: ${account?.displayName}")
+                sessionManager.saveUserId(userId)
+                sessionManager.saveToken(token)
+                Log.d("UserId", "User ID: $userId")
+                Log.d("Token", "Token: $token")
 
-                val idToken = account?.idToken
-                Log.d("GoogleLogin", "ID Token: $idToken")
-
-                if (!idToken.isNullOrEmpty()) {
-                    viewModel.loginWithGoogle(idToken)
+                val intent = if (firstLogin) {
+                    Intent(this, FirstTimeUpdateActivity::class.java)
                 } else {
-                    showSnackbar("ID Token Google kosong", false)
+                    Intent(this, DashboardActivity::class.java)
                 }
-            } catch (e: ApiException) {
-                Log.e("GoogleLogin", "Google sign in failed", e)
-                showSnackbar("Google login gagal: ${e.message}", false)
+
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+
+            result.onFailure {
+                showSnackbar("Login Google gagal: ${it.message}", false)
             }
         }
+
     }
+
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+
+            if (requestCode == RC_SIGN_IN) {
+                Log.d("GoogleLogin", "onActivityResult called")
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                try {
+                    val account = task.getResult(ApiException::class.java)
+                    Log.d("GoogleLogin", "Google sign-in succeeded: ${account?.displayName}")
+
+                    val idToken = account?.idToken
+                    Log.d("GoogleLogin", "ID Token: $idToken")
+
+                    if (!idToken.isNullOrEmpty()) {
+                        viewModel.loginWithGoogle(idToken)
+                    } else {
+                        showSnackbar("ID Token Google kosong", false)
+                    }
+                } catch (e: ApiException) {
+                    Log.e("GoogleLogin", "Google sign in failed", e)
+                    showSnackbar("Google login gagal: ${e.message}", false)
+                }
+            }
+        }
 }

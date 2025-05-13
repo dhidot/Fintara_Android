@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.data.model.dto.LoginRequest
 import com.bcafinance.fintara.data.model.dto.LoginResult
 import com.bcafinance.fintara.data.repository.AuthRepository
@@ -60,14 +61,18 @@ class LoginViewModel : ViewModel() {
             isLoading.postValue(true)
             val result = authRepository.loginWithGoogle(idToken)
             isLoading.postValue(false)
-            result.onSuccess { (message, jwt, isFirstLogin) ->
-                successMessage.postValue(message)
-                token.postValue(jwt)
-                firstLogin.postValue(isFirstLogin)
-                googleLoginResult.postValue(result)
-            }.onFailure { exception ->
-                errorMessage.postValue(exception.message)
-            }
+
+            result.fold(
+                onSuccess = { (message, jwt, isFirstLogin) ->
+                    Log.d("LoginViewModel", "Google login success: $message, token: $jwt, firstLogin: $isFirstLogin")
+                    loginResult.postValue(LoginResult(message, jwt, isFirstLogin))
+                },
+                onFailure = { exception ->
+                    Log.e("LoginViewModel", "Google login failed: ${exception.message}")
+                    errorMessage.postValue(exception.message ?: "Login Google gagal")
+                }
+            )
         }
     }
+
 }

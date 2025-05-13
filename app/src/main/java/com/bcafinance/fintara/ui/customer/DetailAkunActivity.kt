@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import com.bcafinance.fintara.config.network.RetrofitClient
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.CustomerViewModel
 import com.bcafinance.fintara.databinding.ActivityDetailAkunBinding

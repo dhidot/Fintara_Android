@@ -15,40 +15,41 @@ import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
+        Log.d("FCM", "==> onMessageReceived called")
         super.onMessageReceived(message)
         Log.d("FCM", "From: ${message.from}")
 
-        message.data.isNotEmpty().let {
-            Log.d("FCM", "Message data payload: ${message.data}")
+        // Ambil dari data payload
+        val data = message.data
+        if (data.isNotEmpty()) {
+            val title = data["title"]
+            val body = data["body"]
+            Log.d("FCM", "Data payload: title=$title, body=$body")
+            showNotification(title, body)
+        } else {
+            // Fallback ke notification payload jika tidak ada data
+            val title = message.notification?.title
+            val body = message.notification?.body
+            Log.d("FCM", "Notification payload: title=$title, body=$body")
+            showNotification(title, body)
         }
-
-        message.notification?.let {
-            Log.d("FCM", "Message Notification Body: ${it.body}")
-        }
-        // Tampilkan notifikasi
-        showNotification(
-            message.notification?.title,
-            message.notification?.body
-        )
     }
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d("FCM", "Refreshed token: $token")
+        Log.d("FCM", "Token baru: $token")
     }
 
-    //shownotificationmessage to device
     private fun showNotification(title: String?, message: String?) {
         val channelId = "default_channel_id"
         val channelName = "Default Channel"
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Buat channel (Android 8+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_HIGH // HIGH = untuk heads-up
+                NotificationManager.IMPORTANCE_HIGH
             ).apply {
                 enableVibration(true)
                 enableLights(true)
@@ -64,16 +65,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.logo_white) // ikon notifikasi
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.logo_white)
             .setContentTitle(title ?: "Notifikasi")
             .setContentText(message ?: "")
-            .setPriority(NotificationCompat.PRIORITY_HIGH) // ini penting untuk heads-up di Android < 8
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
-            .setDefaults(Notification.DEFAULT_ALL) // untuk bunyi & getar default
+            .setDefaults(Notification.DEFAULT_ALL)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .build()
 
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(System.currentTimeMillis().toInt(), notification)
     }
-
 }

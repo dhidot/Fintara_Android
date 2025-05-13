@@ -1,19 +1,11 @@
 package com.bcafinance.fintara
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.bcafinance.fintara.config.network.RetrofitClient
 import com.bcafinance.fintara.ui.dashboard.DashboardActivity
-import com.bcafinance.fintara.ui.login.LoginActivity
-import com.bcafinance.fintara.config.network.SessionManager
-import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {

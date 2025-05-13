@@ -1,6 +1,7 @@
 package com.bcafinance.fintara.data.repository
 
 import android.util.Log
+import com.bcafinance.fintara.config.network.RetrofitClient
 import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.data.model.dto.LoginRequest
 import com.bcafinance.fintara.data.model.dto.LoginResponse

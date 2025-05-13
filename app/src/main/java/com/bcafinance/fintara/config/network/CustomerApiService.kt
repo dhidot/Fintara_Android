@@ -22,5 +22,11 @@ interface CustomerApiService {
     suspend fun updateFirstTimeProfile(
         @Body request: FirstTimeUpdateRequest
     ): ApiResponse<String>
+
+    @Multipart
+    @POST("api/v1/profilecustomer/upload-ktp")
+    suspend fun uploadKtp(
+        @Part file: MultipartBody.Part
+    ): ApiResponse<String>
 }
 

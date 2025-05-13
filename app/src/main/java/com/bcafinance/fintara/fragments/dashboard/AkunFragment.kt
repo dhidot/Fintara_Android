@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.bcafinance.fintara.MainActivity
 import com.bcafinance.fintara.R
+import com.bcafinance.fintara.config.network.RetrofitClient
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.CustomerViewModel
 import com.bcafinance.fintara.data.viewModel.LogoutViewModel

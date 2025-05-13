@@ -6,13 +6,12 @@ import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.CustomerViewModel
 
 class CustomerViewModelFactory(
-    private val repository: CustomerRepository
+    private val customerRepository: CustomerRepository
 ) : ViewModelProvider.Factory {
-
-    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CustomerViewModel::class.java)) {
-            return CustomerViewModel(repository) as T
+            @Suppress("UNCHECKED_CAST")
+            return CustomerViewModel(customerRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
