@@ -1,11 +1,11 @@
 package com.bcafinance.fintara.data.repository
 
-import com.bcafinance.fintara.config.network.CustomerApiService
+import com.bcafinance.fintara.config.network.api.CustomerApiService
 import com.bcafinance.fintara.data.model.ApiResponse
-import com.bcafinance.fintara.data.model.dto.FirstTimeUpdateRequest
-import com.bcafinance.fintara.data.model.dto.UserWithCustomerResponse
+import com.bcafinance.fintara.data.model.dto.auth.FirstTimeUpdateRequest
+import com.bcafinance.fintara.data.model.dto.auth.UserWithCustomerResponse
 import com.bcafinance.fintara.data.model.dao.CustomerProfileDao
-import com.bcafinance.fintara.data.model.dto.toEntity
+import com.bcafinance.fintara.data.model.dto.auth.toEntity
 import com.bcafinance.fintara.data.model.room.toDto
 import android.util.Log
 import okhttp3.MultipartBody
@@ -41,6 +41,26 @@ class CustomerRepository(
             val response = customerApiService.uploadKtp(filePart)
             Log.d("UploadKtp", "Response isSuccessful: ${response.status}")
             Log.d("UploadKtp", "Raw Response Body: ${response.data}")
+            if (response.status == 200) {
+                val body = response.data
+                if (body != null) {
+                    Result.success(body)
+                } else {
+                    Result.failure(Exception("Upload gagal: ${response.message}"))
+                }
+            } else {
+                Result.failure(Exception("Upload gagal: ${response.message}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun uploadSelfieKtp(filePart: MultipartBody.Part): Result<String> {
+        return try {
+            val response = customerApiService.uploadSelfieKtp(filePart)
+            Log.d("UploadSelfieKtp", "Response isSuccessful: ${response.status}")
+            Log.d("UploadSelfieKtp", "Raw Response Body: ${response.data}")
             if (response.status == 200) {
                 val body = response.data
                 if (body != null) {

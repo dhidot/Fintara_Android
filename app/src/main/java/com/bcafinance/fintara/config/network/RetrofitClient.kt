@@ -1,13 +1,12 @@
 package com.bcafinance.fintara.config.network
 
 import android.content.Context
-import com.bcafinance.fintara.config.network.AuthApiService
-import com.bcafinance.fintara.config.network.CustomerApiService
-import com.bcafinance.fintara.config.network.PlafondApiService
-import com.bcafinance.fintara.config.network.SessionManager
+import com.bcafinance.fintara.config.network.api.AuthApiService
+import com.bcafinance.fintara.config.network.api.CustomerApiService
+import com.bcafinance.fintara.config.network.api.PlafondApiService
+import com.bcafinance.fintara.config.network.api.LoanApiService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -15,14 +14,15 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     // Ganti dengan URL API kamu
     //https://d7aa-114-124-209-179.ngrok-free.app
-    //http://34.28.17.46/
-    private const val BASE_URL = "https://af93-2001-448a-2061-c117-9c52-b7c4-7470-c603.ngrok-free.app"
+    //http://34.55.162.194/
+    private const val BASE_URL = "https://1ba8-114-124-238-82.ngrok-free.app"
     private lateinit var retrofit: Retrofit
 
     // Service instances
     val authApiService: AuthApiService by lazy { retrofit.create(AuthApiService::class.java) }
     val customerApiService: CustomerApiService by lazy { retrofit.create(CustomerApiService::class.java) }
     val plafondApiService: PlafondApiService by lazy { retrofit.create(PlafondApiService::class.java) }
+    val loanApiService: LoanApiService by lazy { retrofit.create(LoanApiService::class.java) }
 
     fun init(context: Context) {
         val sessionManager = SessionManager(context)

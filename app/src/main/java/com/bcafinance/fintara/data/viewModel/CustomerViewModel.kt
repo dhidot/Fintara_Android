@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bcafinance.fintara.data.model.dto.UserWithCustomerResponse
+import com.bcafinance.fintara.data.model.dto.auth.UserWithCustomerResponse
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import kotlinx.coroutines.launch
 import android.util.Log
 import okhttp3.MultipartBody
-import java.io.File
 
 class CustomerViewModel(private val repository: CustomerRepository) : ViewModel() {
 
@@ -37,6 +36,13 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
     fun uploadKtp(filePart: MultipartBody.Part) {
         viewModelScope.launch {
             val result = repository.uploadKtp(filePart)
+            _uploadResult.postValue(result)
+        }
+    }
+
+    fun uploadSelfieKtp(filePart: MultipartBody.Part) {
+        viewModelScope.launch {
+            val result = repository.uploadSelfieKtp(filePart)
             _uploadResult.postValue(result)
         }
     }

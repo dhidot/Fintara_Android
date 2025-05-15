@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bcafinance.fintara.data.model.CustomerDetails
 import com.bcafinance.fintara.data.model.Plafond
-import com.bcafinance.fintara.data.model.dto.UserWithCustomerResponse
+import com.bcafinance.fintara.data.model.dto.auth.UserWithCustomerResponse
 
 @Entity(tableName = "customer_profile")
 data class CustomerProfileEntity(

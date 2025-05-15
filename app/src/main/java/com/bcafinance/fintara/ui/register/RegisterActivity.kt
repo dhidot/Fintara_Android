@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.bcafinance.fintara.R
-import com.bcafinance.fintara.data.model.dto.RegisterRequest
+import com.bcafinance.fintara.data.model.dto.auth.RegisterRequest
 import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.data.viewModel.RegisterViewModel
 import com.bcafinance.fintara.databinding.ActivityRegisterBinding

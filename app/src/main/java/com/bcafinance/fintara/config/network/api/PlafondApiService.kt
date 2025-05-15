@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.config.network
+package com.bcafinance.fintara.config.network.api
 
 import com.bcafinance.fintara.data.model.ApiResponse
 import com.bcafinance.fintara.data.model.Plafond

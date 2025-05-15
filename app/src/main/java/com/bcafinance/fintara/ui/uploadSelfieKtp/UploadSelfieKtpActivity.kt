@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.ui.uploadKtp
+package com.bcafinance.fintara.ui.uploadSelfieKtp
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -21,8 +21,9 @@ import com.bcafinance.fintara.data.factory.CustomerViewModelFactory
 import com.bcafinance.fintara.data.model.room.AppDatabase
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import com.bcafinance.fintara.data.viewModel.CustomerViewModel
-import com.bcafinance.fintara.databinding.ActivityUploadKtpBinding
+import com.bcafinance.fintara.databinding.ActivityUploadSelfieKtpBinding
 import com.bcafinance.fintara.ui.document.DokumenPribadiActivity
+import com.bcafinance.fintara.ui.uploadKtp.UploadKtpActivity
 import com.bcafinance.fintara.utils.showSnackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -31,9 +32,9 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class UploadKtpActivity : AppCompatActivity() {
+class UploadSelfieKtpActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityUploadKtpBinding
+    private lateinit var binding: ActivityUploadSelfieKtpBinding
     private lateinit var viewModel: CustomerViewModel
     private var selectedImageUri: Uri? = null
     private var photoUri: Uri? = null
@@ -46,7 +47,7 @@ class UploadKtpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUploadKtpBinding.inflate(layoutInflater)
+        binding = ActivityUploadSelfieKtpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Init ViewModel
@@ -62,13 +63,13 @@ class UploadKtpActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     hideLoading()
                     delay(2000)
-                    val intent = Intent(this@UploadKtpActivity, DokumenPribadiActivity::class.java)
+                    val intent = Intent(this@UploadSelfieKtpActivity, DokumenPribadiActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(intent)
                     finish()
                 }
             }.onFailure {
-                Log.e("UploadKtpActivity", "Upload gagal: ${it.message}")
+                Log.e("UploadSelfieKtpActivity", "Upload gagal: ${it.message}")
                 showSnackbar("Upload gagal: ${it.message}", false)
                 hideLoading()
             }
@@ -80,15 +81,15 @@ class UploadKtpActivity : AppCompatActivity() {
         }
 
         // Upload
-        binding.btnUploadKtp.setOnClickListener {
+        binding.btnUploadSelfieKtp.setOnClickListener {
             selectedImageUri?.let { uri ->
                 try {
                     val file = uriToFile(uri)
                     val filePart = createMultipart(file)
                     showLoading()
-                    viewModel.uploadKtp(filePart)
+                    viewModel.uploadSelfieKtp(filePart)
                 } catch (e: Exception) {
-                    Log.e("UploadKtpActivity", "Gagal menyiapkan file: ${e.message}")
+                    Log.e("UploadSelfieKtpActivity", "Gagal menyiapkan file: ${e.message}")
                     showSnackbar("Gagal membaca gambar", false)
                 }
             } ?: Toast.makeText(this, "Pilih gambar terlebih dahulu", Toast.LENGTH_SHORT).show()
@@ -107,7 +108,7 @@ class UploadKtpActivity : AppCompatActivity() {
                 }
             }
             selectedImageUri?.let {
-                binding.imageViewKtp.setImageURI(it)
+                binding.imageViewSelfieKtp.setImageURI(it)
             }
         }
     }
@@ -157,7 +158,7 @@ class UploadKtpActivity : AppCompatActivity() {
     }
 
     private fun openCamera() {
-        val photoFile = File.createTempFile("ktp_photo_", ".jpg", cacheDir)
+        val photoFile = File.createTempFile("selfie_ktp_photo_", ".jpg", cacheDir)
         photoUri = FileProvider.getUriForFile(
             this,
             "${packageName}.fileprovider", // pastikan fileprovider ini sesuai
@@ -176,7 +177,7 @@ class UploadKtpActivity : AppCompatActivity() {
             val inputStream = contentResolver.openInputStream(uri)
                 ?: throw IllegalArgumentException("Tidak bisa buka gambar")
 
-            val tempFile = File.createTempFile("ktp_", ".jpg", cacheDir)
+            val tempFile = File.createTempFile("selfie_ktp", ".jpg", cacheDir)
             tempFile.outputStream().use { output ->
                 inputStream.copyTo(output)
             }

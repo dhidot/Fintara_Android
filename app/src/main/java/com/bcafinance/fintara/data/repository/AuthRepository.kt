@@ -2,12 +2,10 @@ package com.bcafinance.fintara.data.repository
 
 import android.util.Log
 import com.bcafinance.fintara.config.network.RetrofitClient
-import com.bcafinance.fintara.config.network.SessionManager
-import com.bcafinance.fintara.data.model.dto.LoginRequest
-import com.bcafinance.fintara.data.model.dto.LoginResponse
-import com.bcafinance.fintara.data.model.dto.RegisterRequest
+import com.bcafinance.fintara.data.model.dto.auth.LoginRequest
+import com.bcafinance.fintara.data.model.dto.auth.LoginResponse
+import com.bcafinance.fintara.data.model.dto.auth.RegisterRequest
 import com.bcafinance.fintara.utils.parseApiError
-import retrofit2.HttpException
 import retrofit2.Response
 
 class AuthRepository {

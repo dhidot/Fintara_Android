@@ -1,13 +1,11 @@
 package com.bcafinance.fintara.data.viewModel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bcafinance.fintara.config.network.SessionManager
-import com.bcafinance.fintara.data.model.dto.LoginRequest
-import com.bcafinance.fintara.data.model.dto.LoginResult
+import com.bcafinance.fintara.data.model.dto.auth.LoginRequest
+import com.bcafinance.fintara.data.model.dto.auth.LoginResult
 import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.utils.parseErrorMessage
 import kotlinx.coroutines.launch

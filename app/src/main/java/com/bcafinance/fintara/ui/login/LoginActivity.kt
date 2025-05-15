@@ -11,7 +11,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.bcafinance.fintara.data.model.dto.LoginRequest
+import com.bcafinance.fintara.data.model.dto.auth.LoginRequest
 import com.bcafinance.fintara.data.viewModel.LoginViewModel
 import com.bcafinance.fintara.databinding.ActivityLoginBinding
 import com.bcafinance.fintara.ui.dashboard.DashboardActivity

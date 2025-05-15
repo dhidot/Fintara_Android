@@ -1,13 +1,10 @@
-package com.bcafinance.fintara.config.network
+package com.bcafinance.fintara.config.network.api
 
 import com.bcafinance.fintara.data.model.ApiResponse
-import com.bcafinance.fintara.data.model.dto.FirstTimeUpdateRequest
-import com.bcafinance.fintara.data.model.dto.UserWithCustomerResponse
+import com.bcafinance.fintara.data.model.dto.auth.FirstTimeUpdateRequest
+import com.bcafinance.fintara.data.model.dto.auth.UserWithCustomerResponse
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -26,6 +23,12 @@ interface CustomerApiService {
     @Multipart
     @POST("api/v1/profilecustomer/upload-ktp")
     suspend fun uploadKtp(
+        @Part file: MultipartBody.Part
+    ): ApiResponse<String>
+
+    @Multipart
+    @POST("api/v1/profilecustomer/upload-selfie-ktp")
+    suspend fun uploadSelfieKtp(
         @Part file: MultipartBody.Part
     ): ApiResponse<String>
 }

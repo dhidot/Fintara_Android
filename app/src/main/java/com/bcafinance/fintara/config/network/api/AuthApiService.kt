@@ -1,10 +1,10 @@
-package com.bcafinance.fintara.config.network
+package com.bcafinance.fintara.config.network.api
 
 import com.bcafinance.fintara.data.model.ApiResponse
-import com.bcafinance.fintara.data.model.dto.LoginRequest
-import com.bcafinance.fintara.data.model.dto.LoginResponse
-import com.bcafinance.fintara.data.model.dto.RegisterCustomerResponse
-import com.bcafinance.fintara.data.model.dto.RegisterRequest
+import com.bcafinance.fintara.data.model.dto.auth.LoginRequest
+import com.bcafinance.fintara.data.model.dto.auth.LoginResponse
+import com.bcafinance.fintara.data.model.dto.auth.RegisterCustomerResponse
+import com.bcafinance.fintara.data.model.dto.auth.RegisterRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header

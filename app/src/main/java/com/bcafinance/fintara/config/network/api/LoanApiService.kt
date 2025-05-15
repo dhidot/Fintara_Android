@@ -1,0 +1,16 @@
+package com.bcafinance.fintara.config.network.api
+
+import com.bcafinance.fintara.data.model.ApiResponse
+import retrofit2.http.Body
+import retrofit2.http.POST
+import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
+import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
+import retrofit2.http.GET
+
+interface LoanApiService {
+    @POST("api/v1/loan-requests")
+    suspend fun createLoanRequest(@Body request : LoanRequest): ApiResponse<LoanRequestResponse>
+
+    @GET("api/v1/loan-requests/in-progress")
+    suspend fun getInProgressLoanRequests(): ApiResponse<List<LoanRequestResponse>>
+}

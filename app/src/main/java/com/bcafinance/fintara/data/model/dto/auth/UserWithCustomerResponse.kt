@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.data.model.dto
+package com.bcafinance.fintara.data.model.dto.auth
 
 
 import com.bcafinance.fintara.data.model.CustomerDetails

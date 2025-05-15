@@ -108,5 +108,7 @@ dependencies {
     implementation("io.grpc:grpc-protobuf:1.45.1")
     implementation("io.grpc:grpc-stub:1.45.1")
 
+    // google location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
 }
