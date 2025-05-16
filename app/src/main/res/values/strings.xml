@@ -21,6 +21,7 @@
     <string name="ajukan">Ajukan</string>
     <string name="akun">Akun</string>
     <string name="history">History</string>
+    <string name="base_url">https://71e5-182-3-51-110.ngrok-free.app</string>
     <string name="default_web_client_id">322824276751-tlarf1kjgvqablnfvu00clodp3jmd49k.apps.googleusercontent.com</string>
     <string-array name="jenis_kelamin">
         <item>PEREMPUAN</item>

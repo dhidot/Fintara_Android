@@ -2,9 +2,15 @@ package com.bcafinance.fintara.data.repository
 
 import android.util.Log
 import com.bcafinance.fintara.config.network.RetrofitClient
-import com.bcafinance.fintara.data.model.dto.auth.LoginRequest
-import com.bcafinance.fintara.data.model.dto.auth.LoginResponse
+import com.bcafinance.fintara.data.model.ApiResponse
+import com.bcafinance.fintara.data.model.dto.auth.ChangePasswordRequest
+import com.bcafinance.fintara.data.model.dto.auth.googleLogin.GoogleLoginRequest
+import com.bcafinance.fintara.data.model.dto.auth.googleLogin.GoogleLoginResponse
+import com.bcafinance.fintara.data.model.dto.auth.login.LoginRequest
+import com.bcafinance.fintara.data.model.dto.auth.login.LoginResponse
 import com.bcafinance.fintara.data.model.dto.auth.RegisterRequest
+import com.bcafinance.fintara.data.model.dto.auth.setPassword.SetPasswordRequest
+import com.bcafinance.fintara.data.model.dto.auth.setPassword.SetPasswordResponse
 import com.bcafinance.fintara.utils.parseApiError
 import retrofit2.Response
 
@@ -58,24 +64,46 @@ class AuthRepository {
         }
     }
 
-    suspend fun loginWithGoogle(idToken: String): Result<Triple<String, String, Boolean>> {
+
+    suspend fun loginWithGoogle(idToken: String, fcmToken: String, deviceInfo: String): Result<GoogleLoginResponse> {
         return try {
-            Log.d("UserRepository", "Sending Google login request with ID token: $idToken")
-            val response = apiService.loginWithGoogle(idToken)
+            val request = GoogleLoginRequest(fcmToken, deviceInfo)
+            val response = apiService.loginWithGoogle(idToken, request)
 
             if (response.isSuccessful) {
-                val loginData = response.body()?.data
+                val body = response.body()
+                val loginData = body?.data
                 val jwt = loginData?.jwt?.token ?: ""
                 val firstLogin = loginData?.firstLogin ?: false
-                val message = response.body()?.message?.toString() ?: "Login Google berhasil"
+                val hasPassword = loginData?.hasPassword ?: true
+                val message = body?.message ?: "Login Google berhasil"
 
-                Result.success(Triple(message, jwt, firstLogin))
+                Result.success(GoogleLoginResponse(message, jwt, firstLogin, hasPassword))
             } else {
                 val error = response.errorBody()?.string() ?: "Terjadi kesalahan"
                 Result.failure(Exception("Login Google gagal: $error"))
             }
         } catch (e: Exception) {
             Result.failure(e)
+        }
+    }
+
+    suspend fun setPassword(request: SetPasswordRequest): Result<ApiResponse<String>> {
+        return try {
+            val response = apiService.setPassword(request)
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun changePassword(request: ChangePasswordRequest): ApiResponse<Unit> {
+        val response = apiService.changePassword(request)
+        if (response.isSuccessful) {
+            return response.body() ?: throw Exception("Response body kosong")
+        } else {
+            val errorMsg = response.errorBody()?.string() ?: "Terjadi kesalahan"
+            throw Exception(errorMsg)
         }
     }
 
@@ -92,7 +120,6 @@ class AuthRepository {
             Result.failure(e)
         }
     }
-
 
     private fun parseErrorBody(response: Response<LoginResponse>): String {
         return try {

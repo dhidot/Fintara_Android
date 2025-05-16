@@ -97,8 +97,10 @@ class FirstTimeUpdateActivity : AppCompatActivity() {
                 val intent = Intent(this, DashboardActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
-                finish() // Tutup RegisterActivity agar tidak bisa di-back
+                finish()
             }, 2000)
+
+            sessionManager.saveFirstLogin(false)
         }
 
         viewModel.errorMessage.observe(this) { message ->

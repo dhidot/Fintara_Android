@@ -103,6 +103,8 @@ dependencies {
 
     // Firebase Notification
     implementation("com.google.firebase:firebase-messaging:23.4.0")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+
 
     implementation("io.grpc:grpc-okhttp:1.45.1") // Sesuaikan dengan versi yang dibutuhkan
     implementation("io.grpc:grpc-protobuf:1.45.1")

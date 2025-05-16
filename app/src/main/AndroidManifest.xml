@@ -26,6 +26,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.changePassword.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.setPassword.SetPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.loanRequest.LoanRequestActivity"
             android:exported="false" />
         <activity

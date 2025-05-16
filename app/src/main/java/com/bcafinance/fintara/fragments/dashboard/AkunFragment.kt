@@ -24,6 +24,7 @@ import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.ui.document.DokumenPribadiActivity
 import com.bcafinance.fintara.data.factory.LogoutViewModelFactory
 import com.bcafinance.fintara.data.model.room.AppDatabase
+import com.bcafinance.fintara.ui.changePassword.ChangePasswordActivity
 import com.bcafinance.fintara.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -160,6 +161,10 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
 
         btnLogout.setOnClickListener {
             showLogoutConfirmationDialog()
+        }
+
+        itemUbahPassword.setOnClickListener {
+            startActivity(Intent(requireContext(), ChangePasswordActivity::class.java))
         }
     }
 

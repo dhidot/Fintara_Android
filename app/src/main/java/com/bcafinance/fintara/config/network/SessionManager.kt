@@ -44,6 +44,15 @@ class SessionManager(context: Context) {
 
     fun getToken(): String? = prefs.getString("token", null)
     fun isFirstLogin(): Boolean = prefs.getBoolean("firstLogin", false)
+
+    fun setShouldSetPassword(shouldSet: Boolean) {
+        prefs.edit().putBoolean("should_set_password", shouldSet).apply()
+    }
+
+    fun shouldSetPassword(): Boolean {
+        return prefs.getBoolean("should_set_password", false)
+    }
+
     fun getName(): String? = prefs.getString("name", null)
     fun getEmail(): String? = prefs.getString("email", null)
     fun getPhotoUrl(): String? = prefs.getString("photoUrl", null)

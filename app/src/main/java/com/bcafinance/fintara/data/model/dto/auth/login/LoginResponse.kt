@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.data.model.dto.auth
+package com.bcafinance.fintara.data.model.dto.auth.login
 
 data class LoginResponse(
     val status: String,
@@ -8,7 +8,8 @@ data class LoginResponse(
 
 data class LoginData(
     val firstLogin: Boolean,
-    val jwt: Jwt
+    val jwt: Jwt,
+    val hasPassword: Boolean
 )
 
 data class Jwt(

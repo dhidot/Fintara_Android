@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bcafinance.fintara.data.model.dto.auth.LoginRequest
-import com.bcafinance.fintara.data.model.dto.auth.LoginResult
+import com.bcafinance.fintara.data.model.dto.auth.googleLogin.GoogleLoginResponse
+import com.bcafinance.fintara.data.model.dto.auth.googleLogin.GoogleLoginResult
+import com.bcafinance.fintara.data.model.dto.auth.login.LoginRequest
+import com.bcafinance.fintara.data.model.dto.auth.login.LoginResult
 import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.utils.parseErrorMessage
 import kotlinx.coroutines.launch
@@ -25,7 +27,7 @@ class LoginViewModel : ViewModel() {
     val loginResult = MutableLiveData<LoginResult>()
 
     // Login Google
-    val googleLoginResult = MutableLiveData<Result<Triple<String, String, Boolean>>>()
+    val googleLoginResponse = MutableLiveData<GoogleLoginResponse>()
 
 
     fun loginUser(request: LoginRequest) {
@@ -42,6 +44,7 @@ class LoginViewModel : ViewModel() {
                         message = message,
                         token = jwtToken,
                         firstLogin = firstLoginStatus,
+                        hasPassword = true
                     )
 
                 },
@@ -53,21 +56,21 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    // Fungsi login dengan Google
-    fun loginWithGoogle(idToken: String) {
+
+    fun loginWithGoogle(idToken: String, fcmToken: String, deviceInfo: String) {
+        isLoading.value = true
         viewModelScope.launch {
-            isLoading.postValue(true)
-            val result = authRepository.loginWithGoogle(idToken)
-            isLoading.postValue(false)
+            val result = authRepository.loginWithGoogle(idToken, fcmToken, deviceInfo)
+            isLoading.value = false
 
             result.fold(
-                onSuccess = { (message, jwt, isFirstLogin) ->
-                    Log.d("LoginViewModel", "Google login success: $message, token: $jwt, firstLogin: $isFirstLogin")
-                    loginResult.postValue(LoginResult(message, jwt, isFirstLogin))
+                onSuccess = { response ->
+                    Log.d("LoginViewModel", "Login success: $response")
+                    googleLoginResponse.value = response
                 },
-                onFailure = { exception ->
-                    Log.e("LoginViewModel", "Google login failed: ${exception.message}")
-                    errorMessage.postValue(exception.message ?: "Login Google gagal")
+                onFailure = { error ->
+                    Log.e("LoginViewModel", "Login failed: ${error.localizedMessage}")
+                    errorMessage.value = parseErrorMessage(error.localizedMessage)
                 }
             )
         }

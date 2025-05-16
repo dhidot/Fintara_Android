@@ -30,10 +30,14 @@ class DashboardActivity : AppCompatActivity() {
 
         // Check if navigation to a specific fragment is requested
         intent.getStringExtra("navigate_to")?.let {
-            if (it == "ajukan") {
-                binding.bottomNavigation.selectedItemId = R.id.menu_ajukan
+            val menuId = when (it) {
+                "ajukan" -> R.id.menu_ajukan
+                "akun" -> R.id.menu_akun
+                else -> R.id.menu_home
             }
+            binding.bottomNavigation.selectedItemId = menuId
         }
+
 
         // Handle bottom navigation item selection
         binding.bottomNavigation.setOnItemSelectedListener { item ->
