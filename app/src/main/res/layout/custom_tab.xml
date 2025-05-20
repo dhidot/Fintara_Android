@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:gravity="center"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:background="@drawable/tab_unselected_background">
+
+<TextView
+android:id="@+id/tabText"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Tab"
+android:textColor="@color/black"
+android:textSize="16sp"
+    android:textStyle="bold" />
+
+    </LinearLayout>

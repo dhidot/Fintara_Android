@@ -6,6 +6,7 @@ import com.bcafinance.fintara.config.network.api.LoanApiService
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
 import com.bcafinance.fintara.data.model.ApiResponse
+import com.bcafinance.fintara.data.model.dto.loan.LoanHistoryResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 
 class LoanRepository(private val apiService: LoanApiService) {
@@ -25,5 +26,13 @@ class LoanRepository(private val apiService: LoanApiService) {
             throw Exception(response.getFormattedMessages())
         }
         return response.data!!
+    }
+
+    suspend fun getLoanHistory(status: String): List<LoanHistoryResponse>? {
+        val response = apiService.getLoanHistory(status)
+        if (response.status == 200) {
+            return response.data!!
+        }
+        return null
     }
 }

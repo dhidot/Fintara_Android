@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- 1. Header -->
+        <!-- Header -->
         <TextView
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
@@ -19,20 +19,81 @@
             android:text="Halo, Selamat Datang di Fintara!"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="12dp" />
 
-        <!-- 2. Banner Promo (placeholder image) -->
+        <!-- Banner -->
         <ImageView
             android:id="@+id/imgBanner"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_gallery"
+            android:src="@drawable/card_platinum"
             android:background="@drawable/bg_rounded_blue"
             android:contentDescription="Promo Banner"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="20dp" />
 
-        <!-- 3. Simulasi Pinjaman -->
+        <!-- PINJAMAN AKTIF -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPinjamanAktif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvJudulPinjaman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pinjaman Aktif"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvNominalPinjaman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 10.000.000"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvStatusTenor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Disetujui • 12 bulan"
+                    android:textSize="14sp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    android:id="@+id/tvCicilanBulanan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cicilan: Rp 900.000 / bulan"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLihatDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lihat Detail"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- SIMULASI PINJAMAN -->
         <TextView
             android:text="Simulasi Pinjaman"
             android:textStyle="bold"
@@ -53,123 +114,26 @@
             android:id="@+id/spinnerTenor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="12dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSimulate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Simulasikan" />
 
-        <Button
-            android:id="@+id/btnAjukanPromo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ajukan Sekarang"
-            android:layout_marginTop="12dp" />
-
-        <!-- Hasil simulasi (nanti bisa disembunyikan jika belum ditekan) -->
+        <!-- Hasil simulasi -->
         <TextView
             android:id="@+id/tvResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Estimasi cicilan: Rp0/bulan"
+            android:text="Estimasi cicilan: Rp0 / bulan"
             android:textStyle="italic"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:visibility="gone" />
 
-        <!-- 4. Jenis Produk -->
-        <TextView
-            android:text="Pilih Jenis Pinjaman"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:background="@drawable/bg_card_rounded"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@android:drawable/ic_menu_gallery"
-                    android:contentDescription="Multiguna" />
-
-                <TextView
-                    android:text="Multiguna"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:layout_marginTop="4dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:background="@drawable/bg_card_rounded"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@android:drawable/ic_menu_gallery"
-                    android:contentDescription="Kendaraan" />
-
-                <TextView
-                    android:text="Kendaraan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:layout_marginTop="4dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:background="@drawable/bg_card_rounded"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@android:drawable/ic_menu_gallery"
-                    android:contentDescription="Pendidikan" />
-
-                <TextView
-                    android:text="Pendidikan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:layout_marginTop="4dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- 5. CTA -->
-        <Button
+        <!-- CTA -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAjukanSekarang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

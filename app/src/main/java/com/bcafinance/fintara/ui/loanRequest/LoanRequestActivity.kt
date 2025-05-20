@@ -113,12 +113,31 @@ class LoanRequestActivity : AppCompatActivity() {
                 longitude = location.longitude
                 submitLoanRequest()
             } else {
-                Toast.makeText(this, "Gagal mendapatkan lokasi", Toast.LENGTH_SHORT).show()
+                // Fallback: request lokasi baru
+                val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
+                    priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+                    interval = 1000
+                    numUpdates = 1
+                }
+
+                fusedLocationClient.requestLocationUpdates(locationRequest, object : com.google.android.gms.location.LocationCallback() {
+                    override fun onLocationResult(result: com.google.android.gms.location.LocationResult) {
+                        val newLocation = result.lastLocation
+                        if (newLocation != null) {
+                            latitude = newLocation.latitude
+                            longitude = newLocation.longitude
+                            submitLoanRequest()
+                        } else {
+                            Toast.makeText(this@LoanRequestActivity, "Lokasi tidak tersedia", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }, null)
             }
         }.addOnFailureListener {
             Toast.makeText(this, "Gagal mendapatkan lokasi: ${it.message}", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun submitLoanRequest() {
         val amountStr = etAmount.text.toString().replace("[Rp,.\\s]".toRegex(), "")

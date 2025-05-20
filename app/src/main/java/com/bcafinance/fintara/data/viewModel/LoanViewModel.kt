@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bcafinance.fintara.data.model.dto.loan.LoanHistoryResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
@@ -33,6 +34,18 @@ class LoanViewModel(private val repository: LoanRepository) : ViewModel() {
 
     private val _loanPreview = MutableLiveData<LoanPreviewResponse>()
     val loanPreview: LiveData<LoanPreviewResponse> = _loanPreview
+
+    private val _approvedLoans = MutableLiveData<List<LoanHistoryResponse>>()
+    val approvedLoans: LiveData<List<LoanHistoryResponse>> get() = _approvedLoans
+
+    private val _rejectedLoans = MutableLiveData<List<LoanHistoryResponse>>()
+    val rejectedLoans: LiveData<List<LoanHistoryResponse>> get() = _rejectedLoans
+
+    private val _isLoadingApproved = MutableLiveData<Boolean>()
+    val isLoadingApproved: LiveData<Boolean> get() = _isLoadingApproved
+
+    private val _isLoadingRejected = MutableLiveData<Boolean>()
+    val isLoadingRejected: LiveData<Boolean> get() = _isLoadingRejected
 
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
@@ -74,6 +87,33 @@ class LoanViewModel(private val repository: LoanRepository) : ViewModel() {
                 _error.value = e.message
             } finally {
                 _isLoading.value = false
+            }
+        }
+    }
+
+    fun fetchApprovedLoans() {
+        viewModelScope.launch {
+            _isLoadingApproved.value = true      // start loading
+            try {
+                _approvedLoans.value = repository.getLoanHistory("APPROVED")
+            } catch (e: Exception) {
+                _approvedLoans.value = emptyList()
+            } finally {
+                _isLoadingApproved.value = false  // selesai loading
+            }
+        }
+    }
+
+
+    fun fetchRejectedLoans() {
+        viewModelScope.launch {
+            _isLoadingRejected.value = true
+            try {
+                _rejectedLoans.value = repository.getLoanHistory("REJECTED")
+            } catch (e: Exception) {
+                _rejectedLoans.value = emptyList()
+            } finally {
+                _isLoadingRejected.value = false
             }
         }
     }
