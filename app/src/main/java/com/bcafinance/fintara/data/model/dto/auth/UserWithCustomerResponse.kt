@@ -1,8 +1,11 @@
 package com.bcafinance.fintara.data.model.dto.auth
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.bcafinance.fintara.data.model.CustomerDetails
 import com.bcafinance.fintara.data.model.room.CustomerProfileEntity
+import com.bcafinance.fintara.utils.parseBackendDateTimeToEpochMillis
 import java.math.BigDecimal
 
 data class UserWithCustomerResponse(
@@ -13,6 +16,7 @@ data class UserWithCustomerResponse(
     val customerDetails: CustomerDetails?
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun UserWithCustomerResponse.toEntity(): CustomerProfileEntity {
     return CustomerProfileEntity(
         id = this.id,
@@ -35,7 +39,7 @@ fun UserWithCustomerResponse.toEntity(): CustomerProfileEntity {
         plafondInterestRate = this.customerDetails?.plafond?.interestRate ?: 0.0, // default value jika null
         plafondMinTenor = this.customerDetails?.plafond?.minTenor ?: 0, // default value jika null
         plafondMaxTenor = this.customerDetails?.plafond?.maxTenor ?: 0, // default value jika null
-        updatedAt = System.currentTimeMillis() // Menyimpan waktu data diambil
+        updatedAt = this.customerDetails?.updatedAt?.let { parseBackendDateTimeToEpochMillis(it) } ?: 0L
     )
 }
 

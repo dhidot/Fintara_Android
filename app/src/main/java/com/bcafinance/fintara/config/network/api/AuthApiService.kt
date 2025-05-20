@@ -7,6 +7,7 @@ import com.bcafinance.fintara.data.model.dto.auth.login.LoginRequest
 import com.bcafinance.fintara.data.model.dto.auth.login.LoginResponse
 import com.bcafinance.fintara.data.model.dto.auth.RegisterCustomerResponse
 import com.bcafinance.fintara.data.model.dto.auth.RegisterRequest
+import com.bcafinance.fintara.data.model.dto.auth.forgotPassword.ForgotPasswordRequest
 import com.bcafinance.fintara.data.model.dto.auth.setPassword.SetPasswordRequest
 import com.bcafinance.fintara.data.model.dto.auth.setPassword.SetPasswordResponse
 import retrofit2.Response
@@ -40,4 +41,9 @@ interface AuthApiService {
     suspend fun changePassword(
         @Body request: ChangePasswordRequest
     ): Response<ApiResponse<Unit>>
+
+    @POST("/api/v1/auth/forgot-password")
+    suspend fun forgotPassword(
+        @Body request: ForgotPasswordRequest
+    ):Response<ApiResponse<Unit>>
 }

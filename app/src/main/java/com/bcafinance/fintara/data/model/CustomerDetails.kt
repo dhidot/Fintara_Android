@@ -14,5 +14,6 @@ data class CustomerDetails(
     val gaji: BigDecimal?,
     val noRek: String?,
     val statusRumah: String?,
-    val plafond: Plafond?
+    val plafond: Plafond?,
+    val updatedAt: String? // Format: "yyyy-MM-ddTHH:mm:ss" (sesuaikan dengan format backend jika berbeda
 )

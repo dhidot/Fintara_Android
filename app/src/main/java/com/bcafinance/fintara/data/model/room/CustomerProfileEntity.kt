@@ -57,7 +57,8 @@ fun CustomerProfileEntity.toDto(): UserWithCustomerResponse {
                 interestRate = this.plafondInterestRate ?: 0.0,
                 minTenor = this.plafondMinTenor ?: 0,
                 maxTenor = this.plafondMaxTenor ?: 0
-            )
+            ),
+            updatedAt = this.updatedAt.toString()
         )
     )
 }

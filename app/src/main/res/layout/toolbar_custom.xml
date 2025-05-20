@@ -12,18 +12,14 @@
     android:contentInsetEnd="0dp"
     android:padding="0dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <!-- Back Button -->
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginStart="0dp"
-            android:src="@drawable/arrow_left" />
+<!--        <ImageView-->
+<!--            android:id="@+id/btnBack"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_gravity="start|center_vertical"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:src="@drawable/arrow_left" />-->
 
         <!-- Title Centered -->
         <TextView
@@ -36,5 +32,4 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:fontFamily="@font/poppins_medium" />
-    </FrameLayout>
 </androidx.appcompat.widget.Toolbar>

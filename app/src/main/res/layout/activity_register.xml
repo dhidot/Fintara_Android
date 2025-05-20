@@ -1,114 +1,139 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@drawable/bg_gradient">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="121dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="84dp"
+        android:src="@drawable/logo_white" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:orientation="vertical"
-        android:background="@drawable/rectangle"
-        android:padding="20dp">
+        android:layout_height="match_parent"
+        android:layout_below="@id/logoImage"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp">
 
-        <!-- Nama -->
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Nama"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/primary">
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            android:background="@drawable/rectangle"
+            android:padding="20dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etName"
+            <!-- Name -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:fontFamily="@font/poppins_medium"
-                android:padding="12dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="12dp"
+                android:hint="Nama Lengkap"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxStrokeColor="@color/primary">
 
-        <!-- Email -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Email"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/primary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:padding="12dp"
+                    android:fontFamily="@font/poppins_medium" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
+            <!-- Email -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:fontFamily="@font/poppins_medium"
-                android:padding="12dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="12dp"
+                android:hint="Email"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxStrokeColor="@color/primary">
 
-        <!-- Password -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Password"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/primary"
-            app:passwordToggleEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:fontFamily="@font/poppins_medium" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
+            <!-- Password -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:fontFamily="@font/poppins_medium"
-                android:padding="12dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="12dp"
+                android:hint="Password"
+                app:passwordToggleEnabled="true"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxStrokeColor="@color/primary">
 
-        <!-- Button Register -->
-        <FrameLayout
-            android:id="@+id/btnRegisterContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:fontFamily="@font/poppins_medium" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRegister"
+            <!-- Tombol Register -->
+            <FrameLayout
+                android:id="@+id/btnRegisterContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Register"
-                android:textAllCaps="false"
-                android:textSize="17sp"
-                app:cornerRadius="8dp"
-                android:fontFamily="@font/poppins_medium"
-                android:backgroundTint="@color/primary" />
+                android:layout_marginTop="16dp">
 
-            <ProgressBar
-                android:id="@+id/progressRegister"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:indeterminate="true"
-                android:visibility="gone" />
-        </FrameLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
+                    android:text="Register"
+                    android:textAllCaps="false"
+                    android:textSize="17sp"
+                    app:cornerRadius="8dp"
+                    app:iconPadding="8dp"
+                    android:fontFamily="@font/poppins_medium" />
 
-        <!-- Login Link -->
-        <TextView
-            android:id="@+id/tvLoginLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="Already have an account? Login here"
-            android:textColor="@android:color/holo_blue_dark"
-            android:fontFamily="@font/poppins_medium" />
-    </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/progressRegister"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+            </FrameLayout>
 
+            <!-- Link Login -->
+            <TextView
+                android:id="@+id/tvLoginLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="Sudah punya akun? Login Sekarang"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

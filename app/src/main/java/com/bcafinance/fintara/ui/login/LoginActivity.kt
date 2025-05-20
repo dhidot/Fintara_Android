@@ -5,13 +5,15 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.core.content.ContextCompat
 import com.bcafinance.fintara.data.model.dto.auth.login.LoginRequest
 import com.bcafinance.fintara.data.viewModel.LoginViewModel
 import com.bcafinance.fintara.databinding.ActivityLoginBinding
@@ -20,12 +22,14 @@ import com.bcafinance.fintara.ui.firstTimeUpdate.FirstTimeUpdateActivity
 import com.bcafinance.fintara.ui.register.RegisterActivity
 import com.bcafinance.fintara.utils.showSnackbar
 import com.bcafinance.fintara.config.network.SessionManager
+import com.bcafinance.fintara.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.messaging.FirebaseMessaging
 import com.auth0.jwt.JWT
+import com.bcafinance.fintara.ui.forgotPassword.ForgotPasswordActivity
 import com.bcafinance.fintara.ui.setPassword.SetPasswordActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -64,25 +68,21 @@ class LoginActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        val spannableString = SpannableString("Belum punya akun? Register")
-        spannableString.setSpan(UnderlineSpan(), 17, 26, 0)
-        spannableString.setSpan(ForegroundColorSpan(Color.BLUE), 17, 26, 0)
-        binding.tvRegisterLink.text = spannableString
-
-        binding.tvRegisterLink.setOnClickListener { startActivity(Intent(this, RegisterActivity::class.java)) }
-
         binding.btnLogin.backgroundTintList = null
+
+        binding.tvForgotPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
             if (email.isNotBlank() && password.isNotBlank()) {
-                // Buat request login dengan tambahan fcmToken dan deviceInfo
                 val request = LoginRequest(
                     email = email,
                     password = password,
-                    fcmToken = fcmToken ?: "",  // pastikan ada token walau kosong
+                    fcmToken = fcmToken ?: "",
                     deviceInfo = deviceInfo
                 )
                 viewModel.loginUser(request)
@@ -145,9 +145,9 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.errorMessage.observe(this, Observer { message ->
+        viewModel.errorMessage.observe(this) { message ->
             showSnackbar(message, false)
-        })
+        }
 
         viewModel.loginResult.observe(this) { result ->
             showSnackbar(result.message, true)
@@ -156,7 +156,8 @@ class LoginActivity : AppCompatActivity() {
             val userId = jwt.getClaim("userId").asString()
             sessionManager.saveUserId(userId)
             sessionManager.saveToken(result.token)
-            sessionManager.saveFirstLogin(result.firstLogin) // Tambahkan ini
+            sessionManager.saveFirstLogin(result.firstLogin)
+
             Log.d("UserId", "User ID: $userId")
 
             val intent = if (result.firstLogin) {
@@ -170,7 +171,6 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-
         viewModel.googleLoginResponse.observe(this) { response ->
             showSnackbar(response.message, true)
 
@@ -178,18 +178,18 @@ class LoginActivity : AppCompatActivity() {
             val jwt = JWT.decode(response.token)
             val userId = jwt.getClaim("userId").asString() ?: "Unknown"
             sessionManager.saveUserId(userId)
-            sessionManager.saveFirstLogin(response.firstLogin) // Tambahkan ini
+            sessionManager.saveFirstLogin(response.firstLogin)
 
             Log.d("UserId", "User ID: $userId")
             Log.d("Token", "Token: ${response.token}")
 
             val intent = when {
                 !response.hasPassword && response.firstLogin -> {
-                    sessionManager.setShouldSetPassword(true) // <-- Tambahkan ini
+                    sessionManager.setShouldSetPassword(true)
                     Intent(this, SetPasswordActivity::class.java)
                 }
                 response.firstLogin -> {
-                    sessionManager.setShouldSetPassword(false) // <-- Pastikan flag lain di-reset
+                    sessionManager.setShouldSetPassword(false)
                     Intent(this, FirstTimeUpdateActivity::class.java)
                 }
                 else -> {
@@ -202,7 +202,33 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        // Tambahkan ini di akhir onCreate() untuk buat teks "Register" jadi bisa diklik
+        val fullText = "Belum punya akun? Register"
+        val clickableText = "Register"
+        val spannableString = SpannableString(fullText)
+        val startIndex = fullText.indexOf(clickableText)
+        val endIndex = startIndex + clickableText.length
+
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+                startActivity(intent)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = true
+                ds.color = ContextCompat.getColor(this@LoginActivity, R.color.primary)
+            }
+        }
+
+        spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.tvRegisterLink.text = spannableString
+        binding.tvRegisterLink.movementMethod = LinkMovementMethod.getInstance()
+        binding.tvRegisterLink.highlightColor = Color.TRANSPARENT
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

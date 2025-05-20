@@ -1,10 +1,12 @@
 package com.bcafinance.fintara.data.repository
 
 import android.util.Log
+import com.bcafinance.fintara.config.network.RetrofitClient
 import com.bcafinance.fintara.config.network.api.LoanApiService
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
 import com.bcafinance.fintara.data.model.ApiResponse
+import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 
 class LoanRepository(private val apiService: LoanApiService) {
     suspend fun createLoanRequest(loanRequest: LoanRequest): ApiResponse<LoanRequestResponse> {
@@ -15,5 +17,13 @@ class LoanRepository(private val apiService: LoanApiService) {
     suspend fun getInProgressLoan(): LoanRequestResponse? {
         val response = apiService.getInProgressLoanRequests()
         return response.data?.firstOrNull() // ambil satu jika ada
+    }
+
+    suspend fun getLoanPreview(request: LoanRequest): LoanPreviewResponse {
+        val response = apiService.previewLoan(request)
+        if (response.status != 200) {
+            throw Exception(response.getFormattedMessages())
+        }
+        return response.data!!
     }
 }

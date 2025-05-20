@@ -1,5 +1,6 @@
 package com.bcafinance.fintara.data.repository
 
+import android.os.Build
 import com.bcafinance.fintara.config.network.api.CustomerApiService
 import com.bcafinance.fintara.data.model.ApiResponse
 import com.bcafinance.fintara.data.model.dto.auth.FirstTimeUpdateRequest
@@ -8,29 +9,58 @@ import com.bcafinance.fintara.data.model.dao.CustomerProfileDao
 import com.bcafinance.fintara.data.model.dto.auth.toEntity
 import com.bcafinance.fintara.data.model.room.toDto
 import android.util.Log
+import androidx.annotation.RequiresApi
+import com.bcafinance.fintara.utils.parseBackendDateTimeToEpochMillis
 import okhttp3.MultipartBody
 
 class CustomerRepository(
     private val customerApiService: CustomerApiService,
     private val customerProfileDao: CustomerProfileDao // Tambahkan DAO sebagai dependency
 ) {
+    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getProfile(userId: String): ApiResponse<UserWithCustomerResponse> {
-        val localProfile = customerProfileDao.getProfile(userId) // Sesuaikan ID sesuai kebutuhan
-        return if (localProfile != null) {
-            Log.d("CustomerRepository", "Mengambil profil dari lokal Room DB")
-            ApiResponse.success(localProfile.toDto()) // Convert dari Entity ke DTO
-        } else {
-            val response = customerApiService.getMyProfile()
-            if (response.status == 200) {
-                // Jika response dari API berhasil, simpan ke lokal
-                Log.d("CustomerRepository", "Profil berhasil diambil dari backend. Menyimpan ke lokal Room DB")
-                val entity = response.data!!.toEntity()
-                Log.d("CustomerRepository", "Menyimpan profile ke Room: id=${entity.id}")
-                customerProfileDao.insertProfile(entity)
+        val localProfile = customerProfileDao.getProfile(userId)
+        val localUpdatedAt = localProfile?.updatedAt ?: 0L
+
+        return try {
+            val apiResponse = customerApiService.getMyProfile()
+
+            if (apiResponse.status == 200 && apiResponse.data != null) {
+                val remoteProfile = apiResponse.data
+                val remoteUpdatedAt = remoteProfile.customerDetails?.updatedAt
+                    ?.let { parseBackendDateTimeToEpochMillis(it) } ?: 0L
+
+                if (remoteUpdatedAt > localUpdatedAt) {
+                    val entity = remoteProfile.toEntity()
+                    customerProfileDao.insertProfile(entity)
+                    Log.d("CustomerRepository", "Data backend lebih baru. Update lokal dan return data backend.")
+                    ApiResponse.success(remoteProfile)
+                } else {
+                    Log.d("CustomerRepository", "Data lokal terbaru. Return data lokal.")
+                    ApiResponse.success(localProfile!!.toDto())
+                }
+            } else {
+                // API error tapi tidak exception (misal status 400)
+                if (localProfile != null) {
+                    Log.d("CustomerRepository", "API error (bukan exception). Return data lokal.")
+                    ApiResponse.success(localProfile.toDto())
+                } else {
+                    apiResponse
+                }
             }
-            response
+        } catch (e: Exception) {
+            Log.e("CustomerRepository", "Exception saat call API: ${e.message}")
+            if (localProfile != null) {
+                Log.d("CustomerRepository", "API gagal (exception). Return data lokal.")
+                ApiResponse.success(localProfile.toDto())
+            } else {
+                ApiResponse.error("Gagal mengambil data profil dan data lokal tidak tersedia.")
+            }
         }
     }
+
+
+
 
     suspend fun updateFirstTimeProfile(request: FirstTimeUpdateRequest): ApiResponse<String> {
         return customerApiService.updateFirstTimeProfile(request)

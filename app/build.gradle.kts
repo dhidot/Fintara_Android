@@ -105,7 +105,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:23.4.0")
     implementation("com.google.firebase:firebase-auth:22.3.1")
 
-
+    // grpc
     implementation("io.grpc:grpc-okhttp:1.45.1") // Sesuaikan dengan versi yang dibutuhkan
     implementation("io.grpc:grpc-protobuf:1.45.1")
     implementation("io.grpc:grpc-stub:1.45.1")
@@ -113,4 +113,9 @@ dependencies {
     // google location
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
+    // Lottie Animation
+    implementation("com.airbnb.android:lottie:6.1.0")
+
+    // SVG Library
+    implementation("com.caverock:androidsvg:1.4")
 }

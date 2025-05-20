@@ -1,9 +1,11 @@
 package com.bcafinance.fintara.data.viewModel
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
 import com.bcafinance.fintara.data.repository.LoanRepository
@@ -22,10 +24,18 @@ class LoanViewModel(private val repository: LoanRepository) : ViewModel() {
 
     private val _state = MutableStateFlow<LoanRequestState>(LoanRequestState.Idle)
     val state: StateFlow<LoanRequestState> = _state
+
     private val _loan = MutableLiveData<LoanRequestResponse?>()
     val loan: LiveData<LoanRequestResponse?> get() = _loan
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _loanPreview = MutableLiveData<LoanPreviewResponse>()
+    val loanPreview: LiveData<LoanPreviewResponse> = _loanPreview
+
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> = _error
 
     fun createLoanRequest(request: LoanRequest) {
         viewModelScope.launch {
@@ -47,6 +57,21 @@ class LoanViewModel(private val repository: LoanRepository) : ViewModel() {
                 _loan.value = response
             } catch (e: Exception) {
                 _loan.value = null
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun fetchLoanPreview(request: LoanRequest) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val result = repository.getLoanPreview(request)
+                _loanPreview.value = result
+                _error.value = null
+            } catch (e: Exception) {
+                _error.value = e.message
             } finally {
                 _isLoading.value = false
             }

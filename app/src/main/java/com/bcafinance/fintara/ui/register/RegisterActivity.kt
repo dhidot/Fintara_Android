@@ -2,10 +2,16 @@ package com.bcafinance.fintara.ui.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bcafinance.fintara.R
 import com.bcafinance.fintara.data.model.dto.auth.RegisterRequest
@@ -13,6 +19,7 @@ import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.data.viewModel.RegisterViewModel
 import com.bcafinance.fintara.databinding.ActivityRegisterBinding
 import com.bcafinance.fintara.data.factory.RegisterViewModelFactory
+import com.bcafinance.fintara.ui.common.StatusBottomSheetDialogFragment
 import com.bcafinance.fintara.ui.login.LoginActivity
 import com.bcafinance.fintara.utils.showSnackbar
 import com.bcafinance.fintara.utils.parseFieldValidationErrors
@@ -60,26 +67,66 @@ class RegisterActivity : AppCompatActivity() {
         })
 
         viewModel.successMessage.observe(this, Observer { message ->
-            showSnackbar(message, true)
+            val dialog = StatusBottomSheetDialogFragment.newInstance(
+                isSuccess = true,
+                message = "$message\nSilakan cek email untuk verifikasi."
+            )
 
-            // Delay sebentar agar user bisa melihat Snackbar terlebih dahulu (opsional)
-            binding.root.postDelayed({
-                val intent = Intent(this, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-                finish() // Tutup RegisterActivity agar tidak bisa di-back
-            }, 1500) // 1.5 detik delay
+            dialog.setOnStatusActionListener(object : StatusBottomSheetDialogFragment.OnStatusActionListener {
+                override fun onSuccessAction() {
+                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+
+                override fun onErrorDismiss() {
+                    // do nothing
+                }
+            })
+
+            dialog.show(supportFragmentManager, "SuccessDialog")
         })
 
         viewModel.errorMessage.observe(this, Observer { message ->
-            handleValidationError(message)
+            val dialog = StatusBottomSheetDialogFragment.newInstance(
+                isSuccess = false,
+                message = parseErrorMessage(message)
+            )
+
+            dialog.setOnStatusActionListener(object : StatusBottomSheetDialogFragment.OnStatusActionListener {
+                override fun onSuccessAction() {}
+                override fun onErrorDismiss() {
+                }
+            })
+
+            dialog.show(supportFragmentManager, "ErrorDialog")
         })
 
-        binding.tvLoginLink.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()  // Optional, to prevent back navigation to RegisterActivity
+
+        val fullText = "Sudah punya akun? Login Sekarang"
+        val spannableString = SpannableString(fullText)
+
+        val loginText = "Login Sekarang"
+        val startIndex = fullText.indexOf(loginText)
+        val endIndex = startIndex + loginText.length
+
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = true // opsional: hilangkan garis bawah
+                ds.color = ContextCompat.getColor(this@RegisterActivity, R.color.primary)
+            }
         }
+
+        spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.tvLoginLink.text = spannableString
+        binding.tvLoginLink.movementMethod = LinkMovementMethod.getInstance()
+
     }
 
     private fun handleValidationError(errorMessage: String) {
@@ -91,7 +138,6 @@ class RegisterActivity : AppCompatActivity() {
                     "name" -> binding.etName.error = message
                     "email" -> binding.etEmail.error = message
                     "password" -> binding.etPassword.error = message
-                    "jenisKelamin" -> showSnackbar(message, false)
                     else -> showSnackbar(message, false)
                 }
             }

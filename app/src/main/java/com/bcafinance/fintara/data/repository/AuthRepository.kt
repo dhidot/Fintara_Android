@@ -9,6 +9,7 @@ import com.bcafinance.fintara.data.model.dto.auth.googleLogin.GoogleLoginRespons
 import com.bcafinance.fintara.data.model.dto.auth.login.LoginRequest
 import com.bcafinance.fintara.data.model.dto.auth.login.LoginResponse
 import com.bcafinance.fintara.data.model.dto.auth.RegisterRequest
+import com.bcafinance.fintara.data.model.dto.auth.forgotPassword.ForgotPasswordRequest
 import com.bcafinance.fintara.data.model.dto.auth.setPassword.SetPasswordRequest
 import com.bcafinance.fintara.data.model.dto.auth.setPassword.SetPasswordResponse
 import com.bcafinance.fintara.utils.parseApiError
@@ -106,6 +107,16 @@ class AuthRepository {
             throw Exception(errorMsg)
         }
     }
+
+    suspend fun forgotPassword(request: ForgotPasswordRequest): ApiResponse<Unit> {
+        val response = apiService.forgotPassword(request)
+        if (response.isSuccessful) {
+            return response.body() ?: throw Exception("Unexpected empty response")
+        } else {
+            throw Exception(response.errorBody()?.string() ?: "Terjadi kesalahan")
+        }
+    }
+
 
     suspend fun logout(): Result<String> {
         return try {

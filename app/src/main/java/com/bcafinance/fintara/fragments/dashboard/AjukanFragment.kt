@@ -58,4 +58,3 @@ class AjukanFragment : Fragment(R.layout.fragment_ajukan) {
     }
 }
 
-
