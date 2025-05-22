@@ -9,7 +9,10 @@
     <color name="green_approved">#4CAF50</color>
     <color name="red_rejected">#F44336</color>
     <color name="gray">#9E9E9E</color>
-    <color name="tab_active_color">#000000</color> <!-- Default, akan diubah dari kode -->
+    <color name="tab_active_color">#000000</color>
+<!--  blue_500  -->
+    <color name="blue_500">#0057FF</color>
+
 
     <!-- Gradient -->
 

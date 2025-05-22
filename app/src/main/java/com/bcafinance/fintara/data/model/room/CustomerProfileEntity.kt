@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bcafinance.fintara.data.model.CustomerDetails
 import com.bcafinance.fintara.data.model.Plafond
-import com.bcafinance.fintara.data.model.dto.auth.UserWithCustomerResponse
+import com.bcafinance.fintara.data.model.dto.customer.UserWithCustomerResponse
 
 @Entity(tableName = "customer_profile")
 data class CustomerProfileEntity(
@@ -13,6 +13,7 @@ data class CustomerProfileEntity(
     val name: String,
     val email: String,
     val role: String,
+    val fotoUrl: String,
     val jenisKelamin: String?,
     val ttl: String?,
     val alamat: String?,
@@ -37,6 +38,7 @@ fun CustomerProfileEntity.toDto(): UserWithCustomerResponse {
         id = this.id,
         name = this.name,
         email = this.email,
+        fotoUrl = this.fotoUrl,
         role = this.role,
         customerDetails = CustomerDetails(
             id = this.id,

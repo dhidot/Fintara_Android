@@ -4,14 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bcafinance.fintara.R
 import com.bcafinance.fintara.data.factory.ChangePasswordViewModelFactory
-import com.bcafinance.fintara.data.model.dto.auth.ChangePasswordRequest
+import com.bcafinance.fintara.data.model.dto.customer.ChangePasswordRequest
 import com.bcafinance.fintara.data.repository.AuthRepository
 import com.bcafinance.fintara.data.viewModel.ChangePasswordViewModel
 import com.bcafinance.fintara.databinding.ActivityChangePasswordBinding

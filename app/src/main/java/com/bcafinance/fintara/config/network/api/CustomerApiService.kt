@@ -1,9 +1,11 @@
 package com.bcafinance.fintara.config.network.api
 
 import com.bcafinance.fintara.data.model.ApiResponse
-import com.bcafinance.fintara.data.model.dto.auth.FirstTimeUpdateRequest
-import com.bcafinance.fintara.data.model.dto.auth.UserWithCustomerResponse
+import com.bcafinance.fintara.data.model.dto.customer.CustomerUpdateProfileRequestDTO
+import com.bcafinance.fintara.data.model.dto.customer.FirstTimeUpdateRequest
+import com.bcafinance.fintara.data.model.dto.customer.UserWithCustomerResponse
 import okhttp3.MultipartBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -18,6 +20,11 @@ interface CustomerApiService {
     @PUT("api/v1/profilecustomer/first-time_update")
     suspend fun updateFirstTimeProfile(
         @Body request: FirstTimeUpdateRequest
+    ): ApiResponse<String>
+
+    @PUT("api/v1/profilecustomer/update-my-profile")
+    suspend fun updateMyProfile(
+        @Body request: CustomerUpdateProfileRequestDTO
     ): ApiResponse<String>
 
     @Multipart

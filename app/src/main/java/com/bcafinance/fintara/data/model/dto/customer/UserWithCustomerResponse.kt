@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.data.model.dto.auth
+package com.bcafinance.fintara.data.model.dto.customer
 
 
 import android.os.Build
@@ -12,6 +12,7 @@ data class UserWithCustomerResponse(
     val id: String,
     val name: String,
     val email: String,
+    val fotoUrl: String,
     val role: String,
     val customerDetails: CustomerDetails?
 )
@@ -22,6 +23,7 @@ fun UserWithCustomerResponse.toEntity(): CustomerProfileEntity {
         id = this.id,
         name = this.name,
         email = this.email,
+        fotoUrl = this.fotoUrl,
         role = this.role,
         jenisKelamin = this.customerDetails?.jenisKelamin ?: "-", // default value jika null
         ttl = this.customerDetails?.ttl ?: "-", // default value jika null

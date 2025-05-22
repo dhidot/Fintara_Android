@@ -3,7 +3,7 @@ package com.bcafinance.fintara.data.repository
 import android.util.Log
 import com.bcafinance.fintara.config.network.RetrofitClient
 import com.bcafinance.fintara.data.model.ApiResponse
-import com.bcafinance.fintara.data.model.dto.auth.ChangePasswordRequest
+import com.bcafinance.fintara.data.model.dto.customer.ChangePasswordRequest
 import com.bcafinance.fintara.data.model.dto.auth.googleLogin.GoogleLoginRequest
 import com.bcafinance.fintara.data.model.dto.auth.googleLogin.GoogleLoginResponse
 import com.bcafinance.fintara.data.model.dto.auth.login.LoginRequest
@@ -11,7 +11,6 @@ import com.bcafinance.fintara.data.model.dto.auth.login.LoginResponse
 import com.bcafinance.fintara.data.model.dto.auth.RegisterRequest
 import com.bcafinance.fintara.data.model.dto.auth.forgotPassword.ForgotPasswordRequest
 import com.bcafinance.fintara.data.model.dto.auth.setPassword.SetPasswordRequest
-import com.bcafinance.fintara.data.model.dto.auth.setPassword.SetPasswordResponse
 import com.bcafinance.fintara.utils.parseApiError
 import retrofit2.Response
 

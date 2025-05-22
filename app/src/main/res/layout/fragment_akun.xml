@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:padding="0dp">
 
-            <!-- 🟡 semua isi kamu sebelumnya tetap di sini -->
             <!-- Layout saat belum login -->
             <LinearLayout
                 android:id="@+id/layoutBelumLogin"

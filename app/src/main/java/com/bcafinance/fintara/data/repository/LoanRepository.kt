@@ -8,8 +8,17 @@ import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
 import com.bcafinance.fintara.data.model.ApiResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanHistoryResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
+import com.bcafinance.fintara.data.model.dto.loan.LoanSimulationRequest
 
 class LoanRepository(private val apiService: LoanApiService) {
+    suspend fun simulateLoan(request: LoanSimulationRequest): LoanPreviewResponse {
+        val response = apiService.simulateLoan(request)
+        if (response.status != 200) {
+            throw Exception(response.getFormattedMessages())
+        }
+        return response.data!!
+    }
+
     suspend fun createLoanRequest(loanRequest: LoanRequest): ApiResponse<LoanRequestResponse> {
         Log.d("LoanRepository", "Request Data: Amount = ${loanRequest.amount}, Tenor = ${loanRequest.tenor}, Latitude = ${loanRequest.latitude}, Longitude = ${loanRequest.longitude}")
         return apiService.createLoanRequest(loanRequest)

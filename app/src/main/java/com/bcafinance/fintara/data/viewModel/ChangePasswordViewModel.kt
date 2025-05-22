@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bcafinance.fintara.data.model.dto.auth.ChangePasswordRequest
+import com.bcafinance.fintara.data.model.dto.customer.ChangePasswordRequest
 import com.bcafinance.fintara.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 

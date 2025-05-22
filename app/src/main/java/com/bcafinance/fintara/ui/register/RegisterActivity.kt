@@ -41,13 +41,6 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val spinnerAdapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.jenis_kelamin,
-            android.R.layout.simple_spinner_item
-        )
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         binding.btnRegister.setOnClickListener {
             val name = binding.etName.text.toString()
             val email = binding.etEmail.text.toString()

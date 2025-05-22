@@ -1,5 +1,7 @@
 package com.bcafinance.fintara.ui.customer
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -14,9 +16,10 @@ import com.bcafinance.fintara.data.factory.CustomerViewModelFactory
 import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.data.model.room.AppDatabase
 import com.bcafinance.fintara.utils.showSnackbar
-import java.math.BigDecimal
-import java.text.NumberFormat
-import java.util.Locale
+import com.bcafinance.fintara.ui.editProfile.EditProfileActivity
+import com.bcafinance.fintara.utils.formatRupiah
+import com.bumptech.glide.Glide
+import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 
 class DetailAkunActivity : AppCompatActivity() {
 
@@ -54,6 +57,10 @@ class DetailAkunActivity : AppCompatActivity() {
 
         observeViewModel()
         setupButtonActions()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            customerViewModel.fetchProfile(userId = sessionManager.getUserId() ?: "")
+        }
     }
 
     private fun setupToolbar() {
@@ -80,20 +87,24 @@ class DetailAkunActivity : AppCompatActivity() {
 
                 val plafond = profile?.customerDetails?.plafond
                 tvPlafondType.text = plafond?.name ?: "-"
-                tvPlafondMax.text = "Rp${plafond?.maxAmount ?: "-"}"
+                tvPlafondMax.text = formatRupiah(plafond?.maxAmount)
                 tvBunga.text = "${plafond?.interestRate ?: "-"}%"
                 tvTenor.text = "${plafond?.minTenor ?: "-"} - ${plafond?.maxTenor ?: "-"} bulan"
+
+                Glide.with(this@DetailAkunActivity)
+                    .load(profile?.fotoUrl)
+                    .placeholder(android.R.drawable.ic_menu_camera)
+                    .error(android.R.drawable.ic_menu_camera)
+                    .transform(CropCircleWithBorderTransformation(8, Color.parseColor("#FFD700")))
+                    .into(tvPhotoProfile)
             }
             stopAllShimmers()
+            binding.swipeRefreshLayout.isRefreshing = false
         }
 
         customerViewModel.error.observe(this) { error ->
             showSnackbar(error, isSuccess = false)
         }
-    }
-
-    private fun formatRupiah(value: BigDecimal?): String {
-        return if (value == null) "-" else NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(value)
     }
 
     private fun startAllShimmers() = with(binding) {
@@ -120,9 +131,26 @@ class DetailAkunActivity : AppCompatActivity() {
 
     private fun setupButtonActions() {
         binding.btnLengkapiProfil.setOnClickListener {
-            showSnackbar("Fitur ini belum tersedia", isSuccess = false)
+            customerViewModel.profile.value?.let { profile ->
+                val intent = Intent(this, EditProfileActivity::class.java).apply {
+                    putExtra("EXTRA_NAMA", profile.name)
+                    putExtra("EXTRA_EMAIL", profile.email)
+                    putExtra("EXTRA_JENIS_KELAMIN", profile.customerDetails?.jenisKelamin)
+                    putExtra("EXTRA_TTL", profile.customerDetails?.ttl)
+                    putExtra("EXTRA_ALAMAT", profile.customerDetails?.alamat)
+                    putExtra("EXTRA_PHONE", profile.customerDetails?.noTelp)
+                    putExtra("EXTRA_NIK", profile.customerDetails?.nik)
+                    putExtra("EXTRA_NAMA_IBU", profile.customerDetails?.namaIbuKandung)
+                    putExtra("EXTRA_PEKERJAAN", profile.customerDetails?.pekerjaan)
+                    putExtra("EXTRA_GAJI", profile.customerDetails?.gaji?.toPlainString()) // Kirim String, supaya aman
+                    putExtra("EXTRA_NO_REK", profile.customerDetails?.noRek)
+                    putExtra("EXTRA_STATUS_RUMAH", profile.customerDetails?.statusRumah)
+                }
+                startActivity(intent)
+            } ?: showSnackbar("Data profil belum tersedia", isSuccess = false)
         }
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == android.R.id.home) {

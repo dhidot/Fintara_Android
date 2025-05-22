@@ -10,6 +10,12 @@
         layout="@layout/toolbar_custom"
         android:id="@+id/customToolbar"/>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +28,17 @@
             android:orientation="vertical"
             android:background="@color/white"
             android:gravity="start">
+
+            <ImageView
+                android:id="@+id/tvPhotoProfile"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                android:contentDescription="Foto Profil"
+                android:src="@android:drawable/ic_menu_camera" />
 
             <!-- Shimmer Nama -->
             <TextView
@@ -494,11 +511,12 @@
                 android:id="@+id/btnLengkapiProfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lengkapi Profil"
-                android:layout_marginTop="16dp" />
+                android:text="Ubah Profil"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </ScrollView>
 
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
 

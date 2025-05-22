@@ -1,4 +1,4 @@
-package com.bcafinance.fintara.data.model.dto.auth
+package com.bcafinance.fintara.data.model.dto.customer
 
 data class ChangePasswordRequest(
     val oldPassword: String,

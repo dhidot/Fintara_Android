@@ -62,7 +62,6 @@ dependencies {
     // Coroutine Dependencies
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
-    implementation ("com.google.android.material:material:1.6.0")
 
     // svg
     implementation("com.caverock:androidsvg:1.4")
@@ -118,4 +117,12 @@ dependencies {
 
     // SVG Library
     implementation("com.caverock:androidsvg:1.4")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
+
+    // Swipe Refresh Layout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

@@ -25,6 +25,7 @@ import com.bcafinance.fintara.ui.document.DokumenPribadiActivity
 import com.bcafinance.fintara.data.factory.LogoutViewModelFactory
 import com.bcafinance.fintara.data.model.room.AppDatabase
 import com.bcafinance.fintara.ui.changePassword.ChangePasswordActivity
+import com.bcafinance.fintara.utils.formatRupiah
 import com.bcafinance.fintara.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -110,7 +111,7 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
 
                 val plafond = profile?.customerDetails?.plafond
                 if (plafond != null) {
-                    binding.tvPlafond.text = "Plafond: Rp${plafond.maxAmount}"
+                    binding.tvPlafond.text = "Plafond: ${formatRupiah(plafond.maxAmount)}"
                     binding.tvPlafondType.text = "Tipe: ${plafond.name}"
 
                     val plafondCard = binding.userPlafondCard

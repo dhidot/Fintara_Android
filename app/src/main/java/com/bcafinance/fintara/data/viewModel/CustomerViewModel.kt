@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bcafinance.fintara.data.model.dto.auth.UserWithCustomerResponse
+import com.bcafinance.fintara.data.model.dto.customer.UserWithCustomerResponse
 import com.bcafinance.fintara.data.repository.CustomerRepository
 import kotlinx.coroutines.launch
 import android.util.Log

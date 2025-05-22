@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Nama -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Nama">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Email -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Jenis Kelamin -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutJenisKelamin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Jenis Kelamin">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etJenisKelamin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TTL -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutTtl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Tanggal Lahir">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTtl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Alamat -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Alamat">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAlamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- No Telp -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNoTelp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="No. Telepon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNoTelp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- NIK -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="NIK">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Nama Ibu Kandung -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNamaIbu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Nama Ibu Kandung">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNamaIbu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Pekerjaan -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutPekerjaan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Pekerjaan">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPekerjaan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Gaji -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutGaji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Gaji">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etGaji"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- No Rekening -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNoRek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="No. Rekening">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNoRek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Status Rumah -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutStatusRumah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Status Rumah">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etStatusRumah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Tombol Simpan -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Simpan"
+            android:layout_marginTop="24dp"
+            app:cornerRadius="8dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+</ScrollView>

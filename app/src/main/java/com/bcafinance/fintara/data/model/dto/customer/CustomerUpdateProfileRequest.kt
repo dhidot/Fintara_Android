@@ -1,7 +1,6 @@
-package com.bcafinance.fintara.data.model.dto.auth
+package com.bcafinance.fintara.data.model.dto.customer
 
-data class FirstTimeUpdateRequest(
-    val jenisKelamin: String,
+data class CustomerUpdateProfileRequestDTO(
     val ttl: String,
     val alamat: String,
     val noTelp: String,

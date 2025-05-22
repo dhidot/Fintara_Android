@@ -1,145 +1,548 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:paddingBottom="90dp"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg_gradient">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:orientation="vertical">
 
-        <!-- Header -->
-        <TextView
-            android:id="@+id/tvWelcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Halo, Selamat Datang di Fintara!"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingBottom="12dp" />
-
-        <!-- Banner -->
-        <ImageView
-            android:id="@+id/imgBanner"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/card_platinum"
-            android:background="@drawable/bg_rounded_blue"
-            android:contentDescription="Promo Banner"
-            android:layout_marginBottom="20dp" />
-
-        <!-- PINJAMAN AKTIF -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardPinjamanAktif"
+        <!-- Header Saat Sudah Login-->
+        <!-- Section greeting dan info pinjaman aktif (hidden by default) -->
+        <LinearLayout
+            android:id="@+id/LoggedInSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:visibility="gone"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            android:padding="16dp">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="24dp"
+            >
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvJudulPinjaman"
+                    android:id="@+id/tvGreetingLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pinjaman Aktif"
-                    android:textSize="16sp"
+                    android:text="Halo,"
+                    android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="#1C1C1E" />
 
-                <TextView
-                    android:id="@+id/tvNominalPinjaman"
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerGreeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rp 10.000.000"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/black" />
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:visibility="visible"
+                    app:shimmer_auto_start="true"
+                    app:shimmer_duration="1000">
 
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/bg_placeholder" />
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <!--     Value Asli      -->
                 <TextView
-                    android:id="@+id/tvStatusTenor"
+                    android:id="@+id/tvGreeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Disetujui • 12 bulan"
-                    android:textSize="14sp"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/gray" />
+                    android:text="User"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="#1C1C1E" />
 
                 <TextView
-                    android:id="@+id/tvCicilanBulanan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cicilan: Rp 900.000 / bulan"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp" />
+                    android:layout_marginTop="8dp"
+                    android:text="Ajukan pinjaman dalam hitungan menit. Aman, mudah, dan terpercaya."
+                    android:textColor="#ffff"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="14sp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLihatDetail"
+                    android:id="@+id/btnApplyNows"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lihat Detail"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="16dp"
+                    android:text="Ajukan Sekarang"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="@android:color/black"
+                    style="@style/Widget.MaterialComponents.Button" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <!-- SIMULASI PINJAMAN -->
-        <TextView
-            android:text="Simulasi Pinjaman"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:paddingEnd="12dp"
+                app:lottie_rawRes="@raw/person_animation"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/etAmount"
+        <!-- Hero Section -->
+        <LinearLayout
+            android:id="@+id/HeroSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Masukkan jumlah pinjaman"
-            android:inputType="number"
-            android:layout_marginBottom="8dp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:padding="24dp"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spinnerTenor"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Butuh Dana Cepat?\nFintara Solusinya!"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="#1C1C1E" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Ajukan pinjaman dalam hitungan menit. Aman, mudah, dan terpercaya."
+                    android:textColor="#ffff"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnApplyNow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Ajukan Sekarang"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="@android:color/black"
+                    style="@style/Widget.MaterialComponents.Button" />
+            </LinearLayout>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:paddingEnd="12dp"
+                app:lottie_rawRes="@raw/person_animation"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+        </LinearLayout>
+
+        <!-- Fitur Utama -->
+        <LinearLayout
+            android:id="@+id/BenefitSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp" />
+            android:orientation="vertical"
+            android:layout_marginBottom="14dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_corner_top">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSimulate"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Simulasikan" />
+            android:id="@+id/layoutFeatures"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="12dp"
+            android:weightSum="3">
 
-        <!-- Hasil simulasi -->
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Estimasi cicilan: Rp0 / bulan"
-            android:textStyle="italic"
-            android:layout_marginTop="12dp"
-            android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <!-- CTA -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAjukanSekarang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ajukan Sekarang"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/primary" />
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:lottie_rawRes="@raw/fast_animation"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cepat"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:lottie_rawRes="@raw/safe_animation"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aman"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:lottie_rawRes="@raw/lowrate_animation"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bunga Rendah"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</ScrollView>
+
+        <!-- Fitur Simulasi -->
+        <LinearLayout
+            android:id="@+id/SimulasiSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_corner_top"
+            android:layout_marginBottom="14dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="20dp">
+
+            <!-- Simulasi Pinjaman -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Simulasi Pinjaman"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvJumlahPinjaman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jumlah Pinjaman: Rp 10.000.000"
+                android:layout_marginTop="8dp" />
+
+            <SeekBar
+                android:id="@+id/seekJumlahPinjaman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvTenor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tenor: 12 Bulan"
+                android:layout_marginTop="8dp" />
+
+            <SeekBar
+                android:id="@+id/seekTenor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="24"
+                android:progress="12" />
+
+            <!-- Shimmer untuk tvCicilan -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerCicilan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="6dp"
+                android:visibility="visible"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!-- TextView asli -->
+            <TextView
+                android:id="@+id/tvCicilan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estimasi Cicilan: Rp -"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="6dp"
+                android:visibility="gone" />
+
+            <!-- Shimmer untuk tvTotalTagihan -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerTotalTagihan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginBottom="6dp"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/tvTotalTagihan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jumlah Dicairkan: Rp -"
+                android:layout_marginBottom="6dp"
+                android:visibility="gone" />
+
+
+            <!-- shimmerJumlahPencairan -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerJumlahPencairan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginBottom="6dp"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/tvJumlahPencairan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Total Bunga: Rp -"
+                android:visibility="gone" />
+
+            <!-- shimmerBunga -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerBunga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginBottom="6dp"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="150dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/tvBunga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Total Pengembalian: Rp -"
+                android:visibility="gone" />
+
+            <!-- shimmerBiayaAdmin -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerBiayaAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginBottom="6dp"
+                app:shimmer_auto_start="true"
+                app:shimmer_duration="1000">
+
+                <View
+                    android:layout_width="150dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_placeholder" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/tvBiayaAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Total Pengembalian: Rp -"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnResetSimulasi"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:visibility="gone"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <!-- Fitur Apa Kata Mereka -->
+        <LinearLayout
+            android:id="@+id/FeedbackSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_corner_top"
+            android:layout_marginBottom="14dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apa Kata Mereka"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:background="@drawable/bg_card_rounded">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    app:lottie_rawRes="@raw/person_animation"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nadia"
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Proses pengajuan cepat dan mudah!"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_card_rounded">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    app:lottie_rawRes="@raw/person_animation"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rizai"
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pelayanan cepat dan terpercaya!"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+        <!-- Footer -->
+        <LinearLayout
+            android:id="@+id/FooterSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:src="@drawable/logo_ojk"
+                android:contentDescription="OJK" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terdaftar dan diawasi oleh OJK"
+                android:textSize="12sp"
+                android:textColor="#000"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kontak: info@fintara.id"
+                android:textSize="12sp"
+                android:textColor="#000"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

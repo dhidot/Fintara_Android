@@ -9,6 +9,7 @@ import com.bcafinance.fintara.data.model.dto.loan.LoanHistoryResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
+import com.bcafinance.fintara.data.model.dto.loan.LoanSimulationRequest
 import com.bcafinance.fintara.data.repository.LoanRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +26,9 @@ class LoanViewModel(private val repository: LoanRepository) : ViewModel() {
 
     private val _state = MutableStateFlow<LoanRequestState>(LoanRequestState.Idle)
     val state: StateFlow<LoanRequestState> = _state
+
+    private val _previewResult = MutableLiveData<LoanPreviewResponse>()
+    val previewResult: LiveData<LoanPreviewResponse> get() = _previewResult
 
     private val _loan = MutableLiveData<LoanRequestResponse?>()
     val loan: LiveData<LoanRequestResponse?> get() = _loan
@@ -47,8 +51,25 @@ class LoanViewModel(private val repository: LoanRepository) : ViewModel() {
     private val _isLoadingRejected = MutableLiveData<Boolean>()
     val isLoadingRejected: LiveData<Boolean> get() = _isLoadingRejected
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
+
+    fun simulateLoan(request: LoanSimulationRequest) {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val result = repository.simulateLoan(request)
+                _previewResult.value = result
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Terjadi kesalahan"
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
 
     fun createLoanRequest(request: LoanRequest) {
         viewModelScope.launch {

@@ -3,13 +3,14 @@ package com.bcafinance.fintara.data.repository
 import android.os.Build
 import com.bcafinance.fintara.config.network.api.CustomerApiService
 import com.bcafinance.fintara.data.model.ApiResponse
-import com.bcafinance.fintara.data.model.dto.auth.FirstTimeUpdateRequest
-import com.bcafinance.fintara.data.model.dto.auth.UserWithCustomerResponse
+import com.bcafinance.fintara.data.model.dto.customer.FirstTimeUpdateRequest
+import com.bcafinance.fintara.data.model.dto.customer.UserWithCustomerResponse
 import com.bcafinance.fintara.data.model.dao.CustomerProfileDao
-import com.bcafinance.fintara.data.model.dto.auth.toEntity
+import com.bcafinance.fintara.data.model.dto.customer.toEntity
 import com.bcafinance.fintara.data.model.room.toDto
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.bcafinance.fintara.data.model.dto.customer.CustomerUpdateProfileRequestDTO
 import com.bcafinance.fintara.utils.parseBackendDateTimeToEpochMillis
 import okhttp3.MultipartBody
 
@@ -59,11 +60,12 @@ class CustomerRepository(
         }
     }
 
-
-
-
     suspend fun updateFirstTimeProfile(request: FirstTimeUpdateRequest): ApiResponse<String> {
         return customerApiService.updateFirstTimeProfile(request)
+    }
+
+    suspend fun updateMyProfile(request: CustomerUpdateProfileRequestDTO): ApiResponse<String> {
+        return customerApiService.updateMyProfile(request)
     }
 
     suspend fun uploadKtp(filePart: MultipartBody.Part): Result<String> {

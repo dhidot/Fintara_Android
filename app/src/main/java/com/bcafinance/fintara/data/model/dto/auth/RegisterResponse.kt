@@ -1,13 +1,6 @@
 package com.bcafinance.fintara.data.model.dto.auth
 
 data class RegisterCustomerResponse(
-    val timestamp: String,
-    val status: Int,
-    val message: String,
-    val data: CustomerData
-)
-
-data class CustomerData(
     val id: String,
     val email: String,
     val name: String,

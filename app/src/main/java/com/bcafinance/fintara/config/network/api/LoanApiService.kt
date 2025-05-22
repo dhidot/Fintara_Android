@@ -7,10 +7,14 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
+import com.bcafinance.fintara.data.model.dto.loan.LoanSimulationRequest
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface LoanApiService {
+    @POST("api/v1/loan-requests/loan-simulate")
+    suspend fun simulateLoan(@Body request: LoanSimulationRequest): ApiResponse<LoanPreviewResponse>
+
     @POST("api/v1/loan-requests")
     suspend fun createLoanRequest(@Body request : LoanRequest): ApiResponse<LoanRequestResponse>
 
