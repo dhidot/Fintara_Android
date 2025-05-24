@@ -31,8 +31,6 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvTitle.text = "Riwayat Pengajuan"
-
         historyPagerAdapter = HistoryPagerAdapter(this)
         binding.viewPagerHistory.adapter = historyPagerAdapter
 

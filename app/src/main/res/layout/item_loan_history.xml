@@ -9,31 +9,47 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView android:id="@+id/tvPlafondName"
-            android:text="Plafon: Gold"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView android:id="@+id/tvAmount"
-            android:text="Rp10.000.000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:orientation="vertical"
+        android:background="@drawable/bg_corner_top"
+        android:padding="16dp">
 
         <TextView android:id="@+id/tvStatus"
             android:text="DISBURSED"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="6dp"
             android:textColor="#4CAF50"/>
 
+        <TextView android:id="@+id/tvAmount"
+            android:text="Amount Pinjaman : Rp-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <TextView android:id="@+id/tvDate"
-            android:text="2025-05-20"
+            android:text="Tanggal Pengajuan : 0000-00-00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvTenor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"/>
+            android:text="Tenor : 0 bulan" />
+
+        <TextView
+            android:id="@+id/tvInterestAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bunga :  Rp-" />
+
+        <TextView
+            android:id="@+id/tvDisbursedAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pencairan : Rp-" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

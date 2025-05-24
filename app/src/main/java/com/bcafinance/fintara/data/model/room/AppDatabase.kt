@@ -8,7 +8,7 @@ import com.bcafinance.fintara.data.model.dao.CustomerProfileDao  // Pastikan ini
 import androidx.room.TypeConverters
 
 @Database(entities = [CustomerProfileEntity::class], version = 1, exportSchema = false)
-@TypeConverters(BigDecimalTypeConverter::class) // Daftarkan TypeConverter di sini
+@TypeConverters(BigDecimalTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun customerProfileDao(): CustomerProfileDao
 

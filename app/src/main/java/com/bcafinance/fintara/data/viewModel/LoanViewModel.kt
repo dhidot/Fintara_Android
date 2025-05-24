@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bcafinance.fintara.data.model.dto.loan.LoanHistoryResponse
+import com.bcafinance.fintara.data.model.dto.loan.LoanInProgressResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
@@ -30,8 +31,8 @@ class LoanViewModel(private val repository: LoanRepository) : ViewModel() {
     private val _previewResult = MutableLiveData<LoanPreviewResponse>()
     val previewResult: LiveData<LoanPreviewResponse> get() = _previewResult
 
-    private val _loan = MutableLiveData<LoanRequestResponse?>()
-    val loan: LiveData<LoanRequestResponse?> get() = _loan
+    private val _loan = MutableLiveData<LoanInProgressResponse?>()
+    val loan: LiveData<LoanInProgressResponse?> get() = _loan
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading

@@ -68,19 +68,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         _binding = FragmentHomeBinding.bind(view)
         session = SessionManager(requireContext())
 
-        // Init ViewModels
-        loanViewModel = ViewModelProvider(this, LoanViewModelFactory(LoanRepository(RetrofitClient.loanApiService)))
-            .get(LoanViewModel::class.java)
+        // LoanViewModel
+        val repository = LoanRepository(RetrofitClient.loanApiService)
+        loanViewModel = ViewModelProvider(this, LoanViewModelFactory(repository))[LoanViewModel::class.java]
 
-        plafondViewModel = ViewModelProvider(this, PlafondViewModelFactory(PlafondRepository()))
-            .get(PlafondViewModel::class.java)
+        // PlafondViewModel
+        plafondViewModel = ViewModelProvider(this, PlafondViewModelFactory(PlafondRepository()))[PlafondViewModel::class.java]
+
+        // Setup Ajukan Sekarang button
+        setupAjukanSekarangButton()
 
         // Observe plafonds
         plafondViewModel.plafonds.observe(viewLifecycleOwner) { list ->
             val bronze = list.find { it.name.equals("Bronze", ignoreCase = true) }
             if (bronze != null) {
                 setupSimulasiSeekBars(bronze)
-                setupAjukanSekarangButton()
             } else {
                 Log.e("HomeFragment", "Plafon Bronze tidak ditemukan.")
             }
@@ -92,25 +94,38 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         plafondViewModel.fetchPlafonds()
 
+        // Cek login dan tampilkan nama customer
         if (session.isLoggedIn()) {
-            showLoggedInLayout()
+            binding.layoutFeatures.visibility = View.GONE
+            binding.HeroSection.visibility = View.GONE
+            binding.FeedbackSection.visibility = View.GONE
+            binding.LoggedInSection.visibility = View.VISIBLE
+
+            // Tampilkan shimmer & sembunyikan nama dulu
+            binding.shimmerGreeting.visibility = View.VISIBLE
+            binding.tvGreeting.visibility = View.GONE
+
+            // Observe profile
             customerViewModel.profile.observe(viewLifecycleOwner) { customer ->
-                binding.shimmerGreeting.stopShimmer()
+                // Matikan shimmer, tampilkan nama
                 binding.shimmerGreeting.visibility = View.GONE
                 binding.tvGreeting.visibility = View.VISIBLE
-                binding.tvGreeting.text = "Halo, ${customer?.name ?: "Pengguna"}!"
-            }
-        }
-    }
 
-    private fun showLoggedInLayout() {
-        binding.layoutFeatures.visibility = View.GONE
-        binding.HeroSection.visibility = View.GONE
-        binding.FeedbackSection.visibility = View.GONE
-        binding.LoggedInSection.visibility = View.VISIBLE
-        binding.shimmerGreeting.visibility = View.VISIBLE
-        binding.tvGreeting.visibility = View.GONE
-        binding.shimmerGreeting.startShimmer()
+                if (customer != null) {
+                    binding.tvGreeting.text = "${customer.name}!"
+                } else {
+                    binding.tvGreeting.text = "Pengguna!"
+                }
+            }
+
+            customerViewModel.fetchProfile(userId = session.getUserId() ?: "")
+        } else {
+            // Tampilkan langsung greeting default
+            binding.tvGreetingLabel.visibility = View.VISIBLE
+            binding.tvGreeting.visibility = View.VISIBLE
+            binding.shimmerGreeting.visibility = View.GONE
+            binding.tvGreeting.text = "Pengguna!"
+        }
     }
 
     private fun setupAjukanSekarangButton() {

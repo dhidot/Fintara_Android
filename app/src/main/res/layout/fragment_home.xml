@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:gravity="center_vertical"
             android:padding="24dp"
             >
@@ -32,6 +33,7 @@
                 android:padding="8dp"
                 android:orientation="vertical">
 
+                <!--    Greetings   -->
                 <TextView
                     android:id="@+id/tvGreetingLabel"
                     android:layout_width="wrap_content"
@@ -78,16 +80,6 @@
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="14sp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnApplyNows"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Ajukan Sekarang"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="@android:color/black"
-                    style="@style/Widget.MaterialComponents.Button" />
             </LinearLayout>
 
             <com.airbnb.lottie.LottieAnimationView
@@ -106,7 +98,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:visibility="gone"
             android:padding="24dp"
             >
             <LinearLayout

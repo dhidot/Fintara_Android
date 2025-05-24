@@ -7,6 +7,7 @@ import com.bcafinance.fintara.data.model.dto.loan.LoanRequest
 import com.bcafinance.fintara.data.model.dto.loan.LoanRequestResponse
 import com.bcafinance.fintara.data.model.ApiResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanHistoryResponse
+import com.bcafinance.fintara.data.model.dto.loan.LoanInProgressResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 import com.bcafinance.fintara.data.model.dto.loan.LoanSimulationRequest
 
@@ -24,7 +25,7 @@ class LoanRepository(private val apiService: LoanApiService) {
         return apiService.createLoanRequest(loanRequest)
     }
 
-    suspend fun getInProgressLoan(): LoanRequestResponse? {
+    suspend fun getInProgressLoan(): LoanInProgressResponse? {
         val response = apiService.getInProgressLoanRequests()
         return response.data?.firstOrNull() // ambil satu jika ada
     }

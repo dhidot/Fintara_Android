@@ -1,0 +1,19 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:elevation="4dp"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView android:id="@+id/tvInstallment" android:textStyle="bold"/>
+        <TextView android:id="@+id/tvAmount"/>
+        <TextView android:id="@+id/tvDueDate"/>
+        <TextView android:id="@+id/tvStatus" android:textStyle="italic"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
