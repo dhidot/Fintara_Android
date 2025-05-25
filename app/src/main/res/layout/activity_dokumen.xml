@@ -1,33 +1,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
         layout="@layout/toolbar_custom"
-        android:id="@+id/customToolbar"/>
+        android:id="@+id/customToolbar" />
 
-    <TextView
-        android:id="@+id/tvKtp"
-        android:text="KTP"
-        android:textSize="18sp"
-        android:padding="8dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_corner_top"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/tvSelfieKtp"
-        android:text="Selfie KTP"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <!-- KTP -->
+        <LinearLayout
+            android:id="@+id/ktpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_card_rounded_red"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
 
-    <TextView
-        android:id="@+id/tvNpwp"
-        android:text="NPWP"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieKtp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:lottie_rawRes="@raw/not_check_animation"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+
+            <TextView
+                android:id="@+id/tvKtp"
+                android:text="KTP"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Selfie KTP -->
+        <LinearLayout
+            android:id="@+id/selfieKtpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_card_rounded_red"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieSelfieKtp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:lottie_rawRes="@raw/not_check_animation"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+
+            <TextView
+                android:id="@+id/tvSelfieKtp"
+                android:text="Selfie KTP"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -16,15 +16,18 @@ import com.bcafinance.fintara.R
 import com.bcafinance.fintara.config.network.RetrofitClient
 import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.data.factory.CustomerViewModelFactory
+import com.bcafinance.fintara.data.factory.DebtInfoViewModelFactory
 import com.bcafinance.fintara.data.factory.LoanViewModelFactory
 import com.bcafinance.fintara.data.factory.PlafondViewModelFactory
 import com.bcafinance.fintara.data.model.Plafond
 import com.bcafinance.fintara.data.model.dto.loan.LoanSimulationRequest
 import com.bcafinance.fintara.data.model.room.AppDatabase
 import com.bcafinance.fintara.data.repository.CustomerRepository
+import com.bcafinance.fintara.data.repository.DebtInfoRepository
 import com.bcafinance.fintara.data.repository.LoanRepository
 import com.bcafinance.fintara.data.repository.PlafondRepository
 import com.bcafinance.fintara.data.viewModel.CustomerViewModel
+import com.bcafinance.fintara.data.viewModel.DebtInfoViewModel
 import com.bcafinance.fintara.data.viewModel.LoanViewModel
 import com.bcafinance.fintara.data.viewModel.PlafondViewModel
 import com.bcafinance.fintara.databinding.FragmentHomeBinding
@@ -42,6 +45,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var session: SessionManager
     private lateinit var loanViewModel: LoanViewModel
     private lateinit var plafondViewModel: PlafondViewModel
+    private lateinit var debtInfoViewModel: DebtInfoViewModel  // Tambahkan ini
 
     private val customerProfileDao by lazy {
         Room.databaseBuilder(
@@ -75,6 +79,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // PlafondViewModel
         plafondViewModel = ViewModelProvider(this, PlafondViewModelFactory(PlafondRepository()))[PlafondViewModel::class.java]
 
+        // DebtInfoViewModel - Tambahkan ini
+        val debtInfoRepository = DebtInfoRepository(RetrofitClient.debtApiService)
+        debtInfoViewModel = ViewModelProvider(this, DebtInfoViewModelFactory(debtInfoRepository))[DebtInfoViewModel::class.java]
+
         // Setup Ajukan Sekarang button
         setupAjukanSekarangButton()
 
@@ -100,6 +108,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.HeroSection.visibility = View.GONE
             binding.FeedbackSection.visibility = View.GONE
             binding.LoggedInSection.visibility = View.VISIBLE
+            binding.InformasiDebtSection.visibility = View.VISIBLE
 
             // Tampilkan shimmer & sembunyikan nama dulu
             binding.shimmerGreeting.visibility = View.VISIBLE
@@ -119,6 +128,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
 
             customerViewModel.fetchProfile(userId = session.getUserId() ?: "")
+
+            // Observe Debt Info (Remaining Plafond, Active Loans, Total Repayment)
+            debtInfoViewModel.debtInfo.observe(viewLifecycleOwner) { debtInfo ->
+                debtInfo?.let {
+                    binding.tvRemainingPlafond.text = "Rp ${it.remainingPlafond}"
+                    binding.tvActiveLoansCount.text = it.activeLoansCount.toString()
+                    binding.tvTotalRepayment.text = "Rp ${it.totalRepayment}"
+                }
+            }
+
+            debtInfoViewModel.fetchDebtInfo()
         } else {
             // Tampilkan langsung greeting default
             binding.tvGreetingLabel.visibility = View.VISIBLE

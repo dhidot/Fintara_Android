@@ -2,6 +2,6 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="false">34.55.162.194</domain>
-        <domain includeSubdomains="false">https://26af-114-124-242-119.ngrok-free.app</domain>
+        <domain includeSubdomains="false">https://28a1-2001-448a-2061-c117-6104-8fbe-d406-71dc.ngrok-free.app</domain>
     </domain-config>
 </network-security-config>

@@ -63,7 +63,6 @@ class EditProfileActivity : AppCompatActivity() {
                     "gaji" -> binding.etGaji.error = message
                     "noRek" -> binding.etNoRek.error = message
                     "statusRumah" -> binding.etStatusRumah.error = message
-                    // tambahkan field lain kalau ada
                 }
             }
         }

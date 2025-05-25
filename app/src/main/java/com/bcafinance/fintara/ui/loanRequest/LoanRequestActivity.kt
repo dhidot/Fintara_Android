@@ -20,6 +20,7 @@ import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 import com.bcafinance.fintara.data.repository.LoanRepository
 import com.bcafinance.fintara.data.viewModel.LoanRequestState
 import com.bcafinance.fintara.data.viewModel.LoanViewModel
+import com.bcafinance.fintara.utils.showSnackbar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -211,7 +212,7 @@ class LoanRequestActivity : AppCompatActivity() {
                     is LoanRequestState.Success -> {
                         progressBar.visibility = ProgressBar.GONE
                         btnAjukan.isEnabled = true
-                        Toast.makeText(this@LoanRequestActivity, "Pengajuan berhasil", Toast.LENGTH_LONG).show()
+                        showSnackbar("Pengajuan pinjaman berhasil dikirim", isSuccess = true)
                         finish()
                     }
                     is LoanRequestState.Error -> {

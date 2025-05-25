@@ -25,7 +25,11 @@
       <androidx.viewpager2.widget.ViewPager2
           android:id="@+id/viewPagerPlafond"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"/>
+          android:layout_height="wrap_content"
+          android:paddingStart="60dp"
+          android:paddingEnd="60dp"
+          android:clipToPadding="false"
+          android:clipChildren="false"/>
 
       <!-- Card showing Benefits -->
       <androidx.cardview.widget.CardView

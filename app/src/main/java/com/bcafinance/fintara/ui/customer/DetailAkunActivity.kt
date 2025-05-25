@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
@@ -18,6 +19,8 @@ import com.bcafinance.fintara.data.model.room.AppDatabase
 import com.bcafinance.fintara.utils.showSnackbar
 import com.bcafinance.fintara.ui.editProfile.EditProfileActivity
 import com.bcafinance.fintara.utils.formatRupiah
+// FileUtils
+import com.bcafinance.fintara.utils.FileUtils
 import com.bumptech.glide.Glide
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 
@@ -44,6 +47,7 @@ class DetailAkunActivity : AppCompatActivity() {
 
         setupToolbar()
         sessionManager = SessionManager(this)
+        binding.customToolbar.tvTitle.text = "Detail Akun"
 
         val token = sessionManager.getToken()
         if (token.isNullOrEmpty()) {
@@ -70,6 +74,21 @@ class DetailAkunActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        customerViewModel.uploadResult.observe(this) { result ->
+            result.onSuccess { url ->
+                showSnackbar("Foto profil berhasil di-upload!", isSuccess = true)
+                // Update foto profil secara langsung
+                Glide.with(this)
+                    .load(url)
+                    .placeholder(android.R.drawable.ic_menu_camera)
+                    .error(android.R.drawable.ic_menu_camera)
+                    .transform(CropCircleWithBorderTransformation(8, Color.parseColor("#FFD700")))
+                    .into(binding.tvPhotoProfile)
+            }.onFailure { e ->
+                showSnackbar("Upload gagal: ${e.message}", isSuccess = false)
+            }
+        }
+
         customerViewModel.profile.observe(this) { profile ->
             with(binding) {
                 tvNama.text = profile?.name ?: "-"
@@ -130,6 +149,10 @@ class DetailAkunActivity : AppCompatActivity() {
     }
 
     private fun setupButtonActions() {
+        binding.ivAddPhoto.setOnClickListener {
+            pickImageLauncher.launch("image/*")
+        }
+
         binding.btnLengkapiProfil.setOnClickListener {
             customerViewModel.profile.value?.let { profile ->
                 val intent = Intent(this, EditProfileActivity::class.java).apply {
@@ -157,6 +180,14 @@ class DetailAkunActivity : AppCompatActivity() {
             onBackPressed()
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let {
+            val file = FileUtils.uriToFile(this, it)
+            val filePart = FileUtils.prepareFilePart("file", file)
+            customerViewModel.uploadProfilePhoto(filePart)
+        }
     }
 }
 

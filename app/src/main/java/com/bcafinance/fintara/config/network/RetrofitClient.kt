@@ -3,6 +3,7 @@ package com.bcafinance.fintara.config.network
 import android.content.Context
 import com.bcafinance.fintara.config.network.api.AuthApiService
 import com.bcafinance.fintara.config.network.api.CustomerApiService
+import com.bcafinance.fintara.config.network.api.DebtApiService
 import com.bcafinance.fintara.config.network.api.PlafondApiService
 import com.bcafinance.fintara.config.network.api.LoanApiService
 import okhttp3.Interceptor
@@ -15,7 +16,7 @@ object RetrofitClient {
     // Ganti dengan URL API kamu
     //https://d7aa-114-124-209-179.ngrok-free.app
     //http://34.55.162.194/
-    private const val BASE_URL = "https://26af-114-124-242-119.ngrok-free.app"
+    private const val BASE_URL = "https://28a1-2001-448a-2061-c117-6104-8fbe-d406-71dc.ngrok-free.app"
     private lateinit var retrofit: Retrofit
 
     // Service instances
@@ -23,6 +24,7 @@ object RetrofitClient {
     val customerApiService: CustomerApiService by lazy { retrofit.create(CustomerApiService::class.java) }
     val plafondApiService: PlafondApiService by lazy { retrofit.create(PlafondApiService::class.java) }
     val loanApiService: LoanApiService by lazy { retrofit.create(LoanApiService::class.java) }
+    val debtApiService: DebtApiService by lazy { retrofit.create(DebtApiService::class.java) }
 
     fun init(context: Context) {
         val sessionManager = SessionManager(context)

@@ -103,9 +103,42 @@ class FirstTimeUpdateActivity : AppCompatActivity() {
             sessionManager.saveFirstLogin(false)
         }
 
+        viewModel.fieldErrors.observe(this) { fieldErrors ->
+            clearFieldErrors() // Hapus error sebelumnya dulu
+            fieldErrors?.forEach { (field, message) ->
+                when (field) {
+                    "jenisKelamin" -> binding.etJenisKelamin.error = message
+                    "ttl" -> binding.etTtl.error = message
+                    "alamat" -> binding.etAlamat.error = message
+                    "noTelp" -> binding.etNoTelp.error = message
+                    "nik" -> binding.etNik.error = message
+                    "namaIbuKandung" -> binding.etNamaIbuKandung.error = message
+                    "pekerjaan" -> binding.etPekerjaan.error = message
+                    "gaji" -> binding.etGaji.error = message
+                    "noRek" -> binding.etNoRek.error = message
+                    "statusRumah" -> binding.etStatusRumah.error = message
+                    else -> {} // skip kalau field tidak dikenal
+                }
+            }
+        }
+
         viewModel.errorMessage.observe(this) { message ->
             showSnackbar(message, false)
         }
     }
+
+    private fun clearFieldErrors() {
+        binding.etJenisKelamin.error = null
+        binding.etTtl.error = null
+        binding.etAlamat.error = null
+        binding.etNoTelp.error = null
+        binding.etNik.error = null
+        binding.etNamaIbuKandung.error = null
+        binding.etPekerjaan.error = null
+        binding.etGaji.error = null
+        binding.etNoRek.error = null
+        binding.etStatusRumah.error = null
+    }
+
 }
 

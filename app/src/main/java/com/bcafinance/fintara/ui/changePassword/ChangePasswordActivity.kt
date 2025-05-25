@@ -27,6 +27,8 @@ class ChangePasswordActivity : AppCompatActivity() {
         val factory = ChangePasswordViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[ChangePasswordViewModel::class.java]
 
+        binding.customToolbar.tvTitle.text = "Ubah Password"
+
         binding.btnChangePassword.setOnClickListener {
             val request = ChangePasswordRequest(
                 binding.etOldPassword.text.toString(),

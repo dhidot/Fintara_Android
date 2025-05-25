@@ -46,4 +46,11 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
             _uploadResult.postValue(result)
         }
     }
+
+    fun uploadProfilePhoto(filePart: MultipartBody.Part) {
+        viewModelScope.launch {
+            val result = repository.uploadProfilePhoto(filePart)
+            _uploadResult.postValue(result)
+        }
+    }
 }

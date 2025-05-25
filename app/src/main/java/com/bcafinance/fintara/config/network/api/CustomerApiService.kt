@@ -2,6 +2,7 @@ package com.bcafinance.fintara.config.network.api
 
 import com.bcafinance.fintara.data.model.ApiResponse
 import com.bcafinance.fintara.data.model.dto.customer.CustomerUpdateProfileRequestDTO
+import com.bcafinance.fintara.data.model.dto.customer.DebtInfoResponse
 import com.bcafinance.fintara.data.model.dto.customer.FirstTimeUpdateRequest
 import com.bcafinance.fintara.data.model.dto.customer.UserWithCustomerResponse
 import okhttp3.MultipartBody
@@ -16,6 +17,11 @@ import retrofit2.http.Part
 interface CustomerApiService {
     @GET("api/v1/customer/me")
     suspend fun getMyProfile(): ApiResponse<UserWithCustomerResponse>
+
+    interface ApiService {
+        @GET("api/v1/debt-info/me")
+        suspend fun getDebtInfo(): ApiResponse<DebtInfoResponse>
+    }
 
     @PUT("api/v1/profilecustomer/first-time_update")
     suspend fun updateFirstTimeProfile(
@@ -36,6 +42,12 @@ interface CustomerApiService {
     @Multipart
     @POST("api/v1/profilecustomer/upload-selfie-ktp")
     suspend fun uploadSelfieKtp(
+        @Part file: MultipartBody.Part
+    ): ApiResponse<String>
+
+    @Multipart
+    @POST("api/v1/profilecustomer/upload-photo")
+    suspend fun uploadProfilePhoto(
         @Part file: MultipartBody.Part
     ): ApiResponse<String>
 }

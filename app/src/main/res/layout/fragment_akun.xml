@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/bg_gradient"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -386,6 +387,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/danger_button"
                     android:text="Logout"
+                    android:layout_gravity="center"
                     android:layout_marginTop="32dp"
                     android:visibility="gone" />
 

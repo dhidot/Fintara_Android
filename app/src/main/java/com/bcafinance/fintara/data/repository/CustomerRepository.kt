@@ -11,6 +11,7 @@ import com.bcafinance.fintara.data.model.room.toDto
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.bcafinance.fintara.data.model.dto.customer.CustomerUpdateProfileRequestDTO
+import com.bcafinance.fintara.data.model.dto.customer.DebtInfoResponse
 import com.bcafinance.fintara.utils.parseBackendDateTimeToEpochMillis
 import okhttp3.MultipartBody
 
@@ -107,5 +108,26 @@ class CustomerRepository(
             Result.failure(e)
         }
     }
+
+    suspend fun uploadProfilePhoto(filePart: MultipartBody.Part): Result<String> {
+        return try {
+            val response = customerApiService.uploadProfilePhoto(filePart)
+            Log.d("UploadProfilePhoto", "Response isSuccessful: ${response.status}")
+            Log.d("UploadProfilePhoto", "Raw Response Body: ${response.data}")
+            if (response.status == 200) {
+                val body = response.data
+                if (body != null) {
+                    Result.success(body)
+                } else {
+                    Result.failure(Exception("Upload gagal: ${response.message}"))
+                }
+            } else {
+                Result.failure(Exception("Upload gagal: ${response.message}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 }
 

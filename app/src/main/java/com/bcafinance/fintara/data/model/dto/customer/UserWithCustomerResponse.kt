@@ -35,6 +35,9 @@ fun UserWithCustomerResponse.toEntity(): CustomerProfileEntity {
         gaji = this.customerDetails?.gaji ?: BigDecimal.ZERO, // default value jika null
         noRek = this.customerDetails?.noRek ?: "-", // default value jika null
         statusRumah = this.customerDetails?.statusRumah ?: "-", // default value jika null
+        ktpUrl = this.customerDetails?.ktpUrl ?: "-", // default value jika null
+        selfieKtpUrl = this.customerDetails?.selfieKtpUrl ?: "-", // default value jika null
+        remainingPlafond = this.customerDetails?.remainingPlafond ?: BigDecimal.ZERO, // default value jika null
         plafondId = this.customerDetails?.plafond?.id ?: "-", // default value jika null
         plafondName = this.customerDetails?.plafond?.name ?: "-", // default value jika null
         plafondMaxAmount = this.customerDetails?.plafond?.maxAmount ?: BigDecimal.ZERO, // default value jika null
