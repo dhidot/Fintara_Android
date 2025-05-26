@@ -8,8 +8,8 @@ data class RepaymentsScheduleResponse (
     val installmentNumber: Int,
     val amountToPay: BigDecimal,
     val amountPaid: BigDecimal,
-    val dueDate: LocalDate,
+    val dueDate: String,  // change to String
     val isLate: Boolean,
     val penaltyAmount: BigDecimal,
-    val paidAt: LocalDate?
+    val paidAt: String?   // change to String?
 )

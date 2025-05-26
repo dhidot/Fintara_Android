@@ -107,15 +107,17 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Hilt (Dependency Injection)
-    implementation("com.google.dagger:hilt-android:2.46.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
-    // Untuk integrasi dengan Jetpack (jika pakai ViewModel, Lifecycle, dll)
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+// AndroidX Hilt integration (stable)
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
+// Lifecycle ViewModel SavedState (optional tapi sering dibutuhkan)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2")
     // Jika kamu pakai Hilt untuk testing
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.46.1")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.46.1")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.51.1")
 }
 

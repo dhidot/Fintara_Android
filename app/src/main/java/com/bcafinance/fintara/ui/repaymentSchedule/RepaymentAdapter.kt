@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.bcafinance.fintara.data.model.dto.loan.RepaymentsScheduleResponse
 import com.bcafinance.fintara.databinding.ItemRepaymentBinding
+import com.bcafinance.fintara.utils.formatRupiah
+import com.bcafinance.fintara.R
 
 class RepaymentAdapter : ListAdapter<RepaymentsScheduleResponse, RepaymentAdapter.ViewHolder>(
     DiffCallback()
@@ -17,15 +19,20 @@ class RepaymentAdapter : ListAdapter<RepaymentsScheduleResponse, RepaymentAdapte
 
         fun bind(item: RepaymentsScheduleResponse) {
             binding.tvInstallment.text = "Cicilan ke-${item.installmentNumber}"
-            binding.tvAmount.text = "Jumlah: Rp${item.amountToPay}"
+            binding.tvAmountToPay.text = "Jumlah Tagihan: ${formatRupiah(item.amountToPay)}"
+            binding.tvAmountPaid.text = "Jumlah Dibayar: ${formatRupiah(item.amountPaid)}"
+            binding.tvPenaltyAmount.text = "Denda: ${formatRupiah(item.penaltyAmount)}"
             binding.tvDueDate.text = "Jatuh Tempo: ${item.dueDate}"
+            binding.tvPaidAt.text = "Dibayar Pada: ${item.paidAt ?: "-"}"
 
+            // Ganti background sesuai kondisi
             if (item.paidAt != null) {
-                binding.tvStatus.text = "Lunas"
+                binding.layoutRoot.setBackgroundResource(R.drawable.bg_card_rounded_green)
             } else {
-                binding.tvStatus.text = if (item.isLate) "Terlambat" else "Belum Lunas"
+                binding.layoutRoot.setBackgroundResource(R.drawable.bg_card_rounded_red)
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -18,7 +18,8 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
-    fun provideBaseUrl() = "https://26af-114-124-242-119.ngrok-free.app"
+    @Singleton
+    fun provideBaseUrl() = "https://e4df-2001-448a-2061-c117-8991-2f52-df50-760.ngrok-free.app"
 
     @Provides
     @Singleton
@@ -51,6 +52,7 @@ object NetworkModule {
             .build()
 
     @Provides
+    @Singleton
     fun provideRepaymentApiService(retrofit: Retrofit): RepaymentApiService =
         retrofit.create(RepaymentApiService::class.java)
 }

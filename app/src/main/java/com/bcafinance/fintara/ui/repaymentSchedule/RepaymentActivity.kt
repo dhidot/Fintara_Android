@@ -1,6 +1,7 @@
 package com.bcafinance.fintara.ui.repaymentSchedule
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +23,12 @@ class RepaymentActivity : AppCompatActivity() {
 
         setupRecyclerView()
 
-        val loanRequestId = intent.getStringExtra("loanRequestId") ?: return
+        val loanRequestId = intent.getStringExtra("loanRequestId")
+        Log.d("RepaymentActivity", "loanRequestId: $loanRequestId")
+        if (loanRequestId == null) {
+            Log.e("RepaymentActivity", "loanRequestId is null!")
+            return
+        }
         viewModel.fetchRepayments(loanRequestId)
 
         viewModel.repayments.observe(this) { repayments ->
