@@ -19,7 +19,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBaseUrl() = "https://e4df-2001-448a-2061-c117-8991-2f52-df50-760.ngrok-free.app"
+    fun provideBaseUrl() = "https://9e47-103-165-222-114.ngrok-free.app"
 
     @Provides
     @Singleton

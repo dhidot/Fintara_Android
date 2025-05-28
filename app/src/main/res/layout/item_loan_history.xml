@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayoutHistory"
     android:layout_margin="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_corner_top"
     android:elevation="4dp"
     android:padding="12dp">
 
@@ -17,39 +19,45 @@
             android:text="DISBURSED"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_black"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:layout_marginBottom="6dp"
             android:textColor="#4CAF50"/>
 
         <TextView android:id="@+id/tvAmount"
             android:text="Amount Pinjaman : Rp-"
+            android:fontFamily="@font/poppins_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView android:id="@+id/tvDate"
             android:text="Tanggal Pengajuan : 0000-00-00"
+            android:fontFamily="@font/poppins_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/tvTenor"
+            android:fontFamily="@font/poppins_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tenor : 0 bulan" />
 
         <TextView
             android:id="@+id/tvInterestAmount"
+            android:text="Bunga :  Rp-"
+            android:fontFamily="@font/poppins_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bunga :  Rp-" />
+            />
 
         <TextView
             android:id="@+id/tvDisbursedAmount"
+            android:text="Pencairan : Rp-"
+            android:fontFamily="@font/poppins_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pencairan : Rp-" />
-
+            />
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>
