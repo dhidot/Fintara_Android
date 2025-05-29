@@ -119,5 +119,8 @@ dependencies {
     // Jika kamu pakai Hilt untuk testing
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.51.1")
+
+    // Midtrans
+    implementation("com.midtrans:uikit:2.3.0")
 }
 

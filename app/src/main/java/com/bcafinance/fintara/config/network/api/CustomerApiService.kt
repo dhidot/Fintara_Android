@@ -18,11 +18,6 @@ interface CustomerApiService {
     @GET("api/v1/customer/me")
     suspend fun getMyProfile(): ApiResponse<UserWithCustomerResponse>
 
-    interface ApiService {
-        @GET("api/v1/debt-info/me")
-        suspend fun getDebtInfo(): ApiResponse<DebtInfoResponse>
-    }
-
     @PUT("api/v1/profilecustomer/first-time_update")
     suspend fun updateFirstTimeProfile(
         @Body request: FirstTimeUpdateRequest
