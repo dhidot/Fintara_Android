@@ -110,17 +110,31 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
-// AndroidX Hilt integration (stable)
+    // AndroidX Hilt integration (stable)
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
-// Lifecycle ViewModel SavedState (optional tapi sering dibutuhkan)
+    // Lifecycle ViewModel SavedState (optional tapi sering dibutuhkan)
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2")
-    // Jika kamu pakai Hilt untuk testing
+
+    // Hilt untuk testing
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.51.1")
 
-    // Midtrans
-    implementation("com.midtrans:uikit:2.3.0")
+    // Coroutine Test
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
+    // LiveData Test
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+
+    // Mockito Core - Versi Terbaru
+    testImplementation("org.mockito:mockito-core:5.11.0")
+
+    // Mockito Kotlin
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.0")
+
+    // (Opsional) Byte Buddy - Versi Terbaru (ikut dinaikkan agar kompatibel)
+    testImplementation("net.bytebuddy:byte-buddy:1.14.12")
+    testImplementation("net.bytebuddy:byte-buddy-agent:1.14.12")
 }
 
