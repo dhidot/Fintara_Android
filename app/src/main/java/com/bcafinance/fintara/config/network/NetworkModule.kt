@@ -1,6 +1,7 @@
 package com.bcafinance.fintara.config.network
 
 import android.content.Context
+import com.bcafinance.fintara.config.network.api.PaymentApiService
 import com.bcafinance.fintara.config.network.api.RepaymentApiService
 import dagger.Module
 import dagger.Provides
@@ -19,7 +20,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBaseUrl() = "https://9e47-103-165-222-114.ngrok-free.app"
+    fun provideBaseUrl() = "http://34.55.162.194"
 
     @Provides
     @Singleton
@@ -55,4 +56,10 @@ object NetworkModule {
     @Singleton
     fun provideRepaymentApiService(retrofit: Retrofit): RepaymentApiService =
         retrofit.create(RepaymentApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun providePaymentApiService(retrofit: Retrofit): PaymentApiService =
+        retrofit.create(PaymentApiService::class.java)
 }
+

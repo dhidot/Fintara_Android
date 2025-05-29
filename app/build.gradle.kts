@@ -136,5 +136,9 @@ dependencies {
     // (Opsional) Byte Buddy - Versi Terbaru (ikut dinaikkan agar kompatibel)
     testImplementation("net.bytebuddy:byte-buddy:1.14.12")
     testImplementation("net.bytebuddy:byte-buddy-agent:1.14.12")
+
+    // midtrans
+    implementation("com.midtrans:uikit:2.0.0")
+
 }
 
