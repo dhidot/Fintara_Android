@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieAnimationView
 import com.bcafinance.fintara.R
 import com.bcafinance.fintara.config.network.RetrofitClient
+import com.bcafinance.fintara.config.network.SessionManager
 import com.bcafinance.fintara.data.factory.LoanViewModelFactory
 import com.bcafinance.fintara.data.repository.LoanRepository
 import com.bcafinance.fintara.data.viewModel.LoanViewModel
 import com.bcafinance.fintara.databinding.FragmentAjukanBinding
 import com.bcafinance.fintara.ui.loanRequest.LoanRequestActivity
+import com.bcafinance.fintara.ui.login.LoginActivity
 import com.bcafinance.fintara.utils.formatRupiah
 import java.math.BigDecimal
 
@@ -33,7 +35,12 @@ class AjukanFragment : Fragment(R.layout.fragment_ajukan) {
         )[LoanViewModel::class.java]
 
         binding.btnAjukanSekarang.setOnClickListener {
-            startActivity(Intent(requireContext(), LoanRequestActivity::class.java))
+            val sessionManager = SessionManager(requireContext())
+            if (sessionManager.isLoggedIn()) {
+                startActivity(Intent(requireContext(), LoanRequestActivity::class.java))
+            } else {
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
+            }
         }
 
         observeViewModel()
@@ -80,5 +87,10 @@ class AjukanFragment : Fragment(R.layout.fragment_ajukan) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchInProgressLoan()
     }
 }

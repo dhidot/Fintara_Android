@@ -11,6 +11,7 @@ import com.bcafinance.fintara.data.model.dto.loan.LoanPreviewResponse
 import com.bcafinance.fintara.utils.formatRupiah
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.io.Serializable
+import java.math.BigDecimal
 
 class LoanPreviewBottomSheet : BottomSheetDialogFragment() {
 
@@ -32,11 +33,12 @@ class LoanPreviewBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val preview = data ?: return
+        val interestRatePercentage = preview.interestRate.multiply(BigDecimal(100))
 
         view.findViewById<TextView>(R.id.tvRequestedAmount).text = formatRupiah(preview.requestedAmount)
         view.findViewById<TextView>(R.id.tvDisbursedAmount).text = formatRupiah(preview.disbursedAmount)
         view.findViewById<TextView>(R.id.tvTenor).text = "${preview.tenor} bulan"
-        view.findViewById<TextView>(R.id.tvInterestRate).text = "${preview.interestRate}%"
+        view.findViewById<TextView>(R.id.tvInterestRate).text = "${interestRatePercentage}%"
         view.findViewById<TextView>(R.id.tvInterestAmount).text = formatRupiah(preview.interestAmount)
         view.findViewById<TextView>(R.id.tvFeesAmount).text = formatRupiah(preview.feesAmount)
         view.findViewById<TextView>(R.id.tvTotalRepayment).text = formatRupiah(preview.totalRepayment)

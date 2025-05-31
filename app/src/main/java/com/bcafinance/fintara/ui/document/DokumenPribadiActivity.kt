@@ -82,12 +82,12 @@ class DokumenPribadiActivity : AppCompatActivity() {
         viewModel.fetchProfile(userId)
 
         // KTP click -> pindah ke UploadKtpActivity
-        binding.tvKtp.setOnClickListener {
+        binding.ktpLayout.setOnClickListener {
             val intent = Intent(this, UploadKtpActivity::class.java)
             startActivity(intent)
         }
 
-        binding.tvSelfieKtp.setOnClickListener {
+        binding.selfieKtpLayout.setOnClickListener {
             val intent = Intent(this, UploadSelfieKtpActivity::class.java)
             startActivity(intent)
         }
@@ -103,5 +103,12 @@ class DokumenPribadiActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh profile data when activity resumes
+        val userId = SessionManager(this).getUserId() ?: ""
+        viewModel.fetchProfile(userId)
     }
 }

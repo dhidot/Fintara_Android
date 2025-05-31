@@ -25,7 +25,7 @@ class LoanHistoryAdapter(
             tvDisbursedAmount.text = "Pencairan : ${formatRupiah(item.disbursedAmount)}"
 
             root.setOnClickListener {
-                if (item.status.uppercase() == "DISBURSED") { // Atau "APPROVED" jika itu enum-nya
+                if (item.status.uppercase() == "DISBURSED") {
                     val context = root.context
                     val intent = android.content.Intent(context, com.bcafinance.fintara.ui.repaymentSchedule.RepaymentActivity::class.java)
                     intent.putExtra("loanRequestId", item.id) // Pastikan `id` ini UUID dari loan request
@@ -52,7 +52,10 @@ class LoanHistoryAdapter(
 
     private fun getStatusColor(status: String): Int {
         return when (status.uppercase()) {
-            "DISBURSED" -> android.graphics.Color.parseColor("#4CAF50") // hijau
+            "DISBURSED" -> android.graphics.Color.parseColor("#4CAF50")
+            "DITOLAK_MARKETING" -> android.graphics.Color.RED
+            "DITOLAK_BM" -> android.graphics.Color.RED
+            "NOT_DISBURSED" -> android.graphics.Color.RED
             "REJECTED" -> android.graphics.Color.RED
             else -> android.graphics.Color.GRAY
         }

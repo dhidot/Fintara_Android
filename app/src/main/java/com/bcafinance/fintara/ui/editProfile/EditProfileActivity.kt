@@ -67,6 +67,8 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
+        binding.customToolbar.tvTitle.text = "Change Password"
+
         viewModel.isLoading.observe(this) { isLoading ->
             binding.btnSaveProfile.isEnabled = !isLoading
             binding.btnSaveProfile.text = if (isLoading) "Menyimpan..." else "Simpan"
@@ -110,9 +112,11 @@ class EditProfileActivity : AppCompatActivity() {
 
         // Format dan set gaji saat load data
         if (!gaji.isNullOrEmpty()) {
+            println("DEBUG Gaji dari intent: $gaji")
             val formattedGaji = formatRupiahInput(gaji)
+            println("DEBUG Gaji setelah format: $formattedGaji")
             binding.etGaji.setText(formattedGaji)
-            binding.etGaji.setSelection(formattedGaji.length) // cursor di akhir
+            binding.etGaji.setSelection(formattedGaji.length)
         }
 
         // TextWatcher untuk auto format Rupiah saat input di etGaji

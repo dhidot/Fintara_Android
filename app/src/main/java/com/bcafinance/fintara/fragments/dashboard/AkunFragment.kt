@@ -69,6 +69,7 @@ class AkunFragment : Fragment(R.layout.fragment_akun) {
             val shimmer = binding.shimmerPlafond
             val content = binding.plafondContent
 
+
             // Menambahkan shimmer untuk Nama dan Email
             val shimmerNama = binding.shimmerNama
             val shimmerEmail = binding.shimmerEmail

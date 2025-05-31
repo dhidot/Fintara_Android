@@ -23,6 +23,7 @@ import com.bcafinance.fintara.utils.formatRupiah
 import com.bcafinance.fintara.utils.FileUtils
 import com.bumptech.glide.Glide
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
+import java.math.BigDecimal
 
 class DetailAkunActivity : AppCompatActivity() {
 
@@ -107,7 +108,7 @@ class DetailAkunActivity : AppCompatActivity() {
                 val plafond = profile?.customerDetails?.plafond
                 tvPlafondType.text = plafond?.name ?: "-"
                 tvPlafondMax.text = formatRupiah(plafond?.maxAmount)
-                tvBunga.text = "${plafond?.interestRate ?: "-"}%"
+                tvBunga.text = "${plafond?.interestRate?.times(100) ?: "-"}%"
                 tvTenor.text = "${plafond?.minTenor ?: "-"} - ${plafond?.maxTenor ?: "-"} bulan"
 
                 Glide.with(this@DetailAkunActivity)

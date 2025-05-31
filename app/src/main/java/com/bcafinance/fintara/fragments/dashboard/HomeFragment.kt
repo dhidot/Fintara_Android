@@ -33,6 +33,7 @@ import com.bcafinance.fintara.data.viewModel.PlafondViewModel
 import com.bcafinance.fintara.databinding.FragmentHomeBinding
 import com.bcafinance.fintara.ui.loanRequest.LoanRequestActivity
 import com.bcafinance.fintara.ui.login.LoginActivity
+import com.bcafinance.fintara.utils.formatRupiah
 import com.facebook.shimmer.ShimmerFrameLayout
 import java.text.NumberFormat
 import java.util.*
@@ -132,9 +133,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             // Observe Debt Info (Remaining Plafond, Active Loans, Total Repayment)
             debtInfoViewModel.debtInfo.observe(viewLifecycleOwner) { debtInfo ->
                 debtInfo?.let {
-                    binding.tvRemainingPlafond.text = "Rp ${it.remainingPlafond}"
+                    binding.tvRemainingPlafond.text = formatRupiah(it.remainingPlafond)
                     binding.tvActiveLoansCount.text = it.activeLoansCount.toString()
-                    binding.tvTotalRepayment.text = "Rp ${it.totalRepayment}"
+                    binding.tvTotalRepayment.text = formatRupiah(it.totalRepayment)
                 }
             }
 
